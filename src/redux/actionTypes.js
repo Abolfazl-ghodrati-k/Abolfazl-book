@@ -12,6 +12,7 @@ export const OPEN_FILE_MANAGER     = "OPEN_FILE_MANAGER"
 export const CLOSE_FILE_MANAGER    = "CLOSE_FILE_MANAGER"
 export const MAXIMIZE_FILE_MANAGER = "MAXIMIZE_FILE_MANAGER"
 export const MINIMIZE_FILE_MANAGER = "MINIMIZE_FILE_MANAGER"
+export const ORDER_FILE_MANAGER    = "ORDER_FILE_MANAGER"
 
 //  File manager -------> CONTROLL PANNEL
 export const OPEN_MUSIC     = "MINIMIZE_FILE_MANAGER"
@@ -44,6 +45,8 @@ export const CLOSE_SETTING      = "CLOSE_SETTING"
 export const CHANGE_BACKGROUND  = "CHANGE_BACKGROUND"
 export const PICK_COLOR         = "PICK_COLOR"
 export const SUBMIT_CHANGES     = "SUBMIT_CHANGES"
+export const ORDER_SETTING      = "ORDER_SETTING"
+export const MINIMIZE_SETTING   = "MINIMIZE_SETTING"
 
 //ShutDown
 export const OPEN_SHUT_DOWN  = "OPEN_SHUT_DOWN"
@@ -55,10 +58,12 @@ export const OPEN_CMD      = "OPEN_CMD"
 export const CLOSE_CMD     = "CLOSE_CMD"
 export const MAXIMIZE_CMD  = "MAXIMIZE_CMD"
 export const MINIMIZE_CMD  = "MINIMIZE_CMD"
+export const ORDER_CMD     = "ORDER_CMD"
 export const OPEN_TODO     = "OPEN_TODO"
 export const CLOSE_TODO    = "CLOSE_TODO"
 export const MAXIMIZE_TODO = "MAXIMIZE_TODO"
 export const MINIMIZE_TODO = "MINIMIZE_TODO"
+export const ORDER_TODO    = "ORDER_TODO"
 
 //TODO
 export const ADD_TODO    = "ADD_TODO"

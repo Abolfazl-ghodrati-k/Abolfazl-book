@@ -5,6 +5,7 @@ import BottomNav from "./BottomNav";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/Store";
 import { PersistGate } from "redux-persist/integration/react";
+import Desktop from "./pages/Desktop";
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <div className="w-full h-screen bg-fill">
-          <BottomNav />
+          <Desktop />
         </div>
       </PersistGate>
     </Provider>

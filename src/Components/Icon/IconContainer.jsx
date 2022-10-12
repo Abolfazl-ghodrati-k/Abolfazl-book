@@ -2,7 +2,7 @@ import { React, useEffect, useState, useRef } from "react";
 import { IconContext } from "react-icons";
 import ResumeBlack from "../../Assets/Icons/ResumeBlack.png";
 
-function IconContainer({ icon, color, size, img, onClick, state }) {
+function IconContainer({ icon, color, size, img, onClick, state, isDesktop }) {
   const Component = icon;
   const Ref = useRef(null);
   useEffect(() => {
@@ -12,7 +12,6 @@ function IconContainer({ icon, color, size, img, onClick, state }) {
       setSRC(ResumeBlack);
       if(Component.name== "GrPowerShutdown"){
         Ref.current.removeAttribute("id")
-        console.log(Ref.current);
       }
     } else {
       setColor("white");
@@ -21,7 +20,6 @@ function IconContainer({ icon, color, size, img, onClick, state }) {
         setSRC(icon);
         if(Component.name== "GrPowerShutdown"){
           Ref.current.setAttribute("id","shutDown-inactive")
-          console.log(Ref.current);
         }
       }
     }

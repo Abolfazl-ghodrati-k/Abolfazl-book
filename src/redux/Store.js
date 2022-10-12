@@ -1,4 +1,3 @@
-
 import createSagaMiddleware from "redux-saga";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
@@ -13,6 +12,9 @@ import ContactMeReducer from "./reducers/contactme";
 import PortfolioReducer from "./reducers/portfolio";
 import SettingReducer from "./reducers/setting";
 import ShutDownReducer from "./reducers/shutDownReducer";
+import CMDReducer from "./reducers/cmdReducer";
+import TodoReducer from "./reducers/TodoReducer";
+import OrderReducer from "./reducers/order";
 
 const rootReducer = combineReducers({
     browser: BrowserReducer,
@@ -20,7 +22,10 @@ const rootReducer = combineReducers({
     contactme: ContactMeReducer,
     portfolio: PortfolioReducer,
     setting: SettingReducer,
-    shutdown: ShutDownReducer
+    shutdown: ShutDownReducer,
+    cmd:CMDReducer,
+    todo:TodoReducer,
+    order: OrderReducer
 });
 
 const persistConfig = {

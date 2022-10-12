@@ -40,40 +40,4 @@
 // //whatsapp
 // import { FaWhatsapp } from "react-icons/fa";
 
-import { React, useEffect, useState } from "react";
 
-export const MacNav = ({ type }) => {
-  const [BackGround, setBackGround] = useState("");
-  useEffect(() => {
-    if (type === "MINIMIZE") {
-      setBackGround("#FFC700");
-    } else if (type === "MAXIMIZE") {
-      setBackGround("#A07913");
-    } else if (type === "CLOSE") {
-      setBackGround("#840000");
-    }
-  });
-
-  const ClickHandler = (type) => {
-    switch (type) {
-      case "MINIMIZE":
-        console.log("Minimize");
-        break;
-      case "MAXIMIZE":
-        console.log("MAXIMIZE");
-        break;
-      case "CLOSE":
-        console.log("close");
-        break;
-      default:
-        break;
-    }
-  };
-  return (
-    <div style={{width:"15px", height:"15px", borderRadius:"50%",backgroundColor: BackGround}} onClick={()=>{
-        ClickHandler(type)
-    }}>
-
-    </div>
-  );
-};

@@ -10,12 +10,13 @@ import {
   OPEN_RB,
   OPEN_POP,
   OPEN_RAP,
+  ORDER_FILE_MANAGER,
 } from "../actionTypes";
 
 const initialSatate = {
-  FileManager_isOpen: false,
-  FileManager_isMaximized: false,
-  FileManager_isMinimized: false,
+  isOpen: false,
+  isMaximized: false,
+  isMinimized: false,
   Music_isOpen: false,
   Documents_isOpen: false,
   Course_isOpen: false,
@@ -23,21 +24,28 @@ const initialSatate = {
   RB_isOpen: false,
   RAP_isOpen: false,
   POP_isOpen: false,
+  order: null,
 };
 
 export default function FileManagerReducer(state = initialSatate, action) {
   switch (action.type) {
     case OPEN_FILE_MANAGER:
-      return Object.assign({}, state, { FileManager_isOpen: true });
+      return Object.assign({}, state, { isOpen: true });
       break;
     case CLOSE_FILE_MANAGER:
-      return Object.assign({}, state, { FileManager_isOpen: false });
+      return Object.assign({}, state, { isOpen: false });
 
     case MAXIMIZE_FILE_MANAGER:
-      return Object.assign({}, state, { FileManager_isMaximized: true });
+      return Object.assign({}, state, { isMaximized: true });
 
     case MINIMIZE_FILE_MANAGER:
-      return Object.assign({}, state, { FileManager_isMinimized: true });
+      return Object.assign({}, state, {
+        isMinimized: action.payload.minimze,
+        isMaximized: action.payload.maximized,
+      });
+      
+    case ORDER_FILE_MANAGER:
+      return Object.assign({}, state, { order: action.payload });
 
     case OPEN_MUSIC:
       return Object.assign({}, state, {
