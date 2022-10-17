@@ -23,6 +23,10 @@ import { VscTerminalCmd } from "react-icons/vsc";
 import { OPEN_CMD, OPEN_TODO } from "../../redux/actionTypes";
 import useOrder from "../../Hooks/useOrder";
 
+import Draggable from "react-draggable";
+import { Resizable } from "re-resizable";
+import Layout from "../../Components/Layout";
+
 // hooks
 // import useOpenedApps from "../../Hooks/useOpenedApps";
 // import useOrder from "../../Hooks/useOrder";
@@ -39,6 +43,7 @@ function Desktop() {
   const portfolio = useSelector((state) => state.portfolio);
   const setting = useSelector((state) => state.setting);
   const shutdown = useSelector((state) => state.shutdown);
+  const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
   const { Order, Orders } = useOrder();
 
@@ -89,7 +94,7 @@ function Desktop() {
     } else {
       dispatch({ type: `ORDER_${ClickedComponent.name}`, payload: Order + 1 });
       Orders.map((app) => {
-        if (app.order < ClickedComponent.order && app.order !== 0) {
+        if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
           return;
         }
@@ -98,7 +103,7 @@ function Desktop() {
   };
 
   const setOrder = (type) => {
-    if ((type == "CMD" && !cmd.isOpen) || !cmd.isMinimized) {
+    if ((type == "CMD" && !cmd.isOpen) || cmd.isMinimized) {
       return;
     }
     if (
@@ -107,10 +112,10 @@ function Desktop() {
     ) {
       return;
     }
-    if ((type == "SETTING" && !setting.isOpen) || !setting.isMinimized) {
+    if ((type == "SETTING" && !setting.isOpen) || setting.isMinimized) {
       return;
     }
-    if ((type == "TODO" && !todo.isOpen) || !todo.isMinimized) {
+    if ((type == "TODO" && !todo.isOpen) || todo.isMinimized) {
       return;
     }
     Orders.map((app) => {
@@ -126,27 +131,34 @@ function Desktop() {
   };
 
   return (
-    <div>
-      <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
-        <div>
-          <IconContainer
-            onClick={CmdClicked}
-            icon={VscTerminalCmd}
-            size={"50px"}
-            isDesktop
-          />
-        </div>
-        <div>
+    <div className="-z-[1000] h-full w-full">
+      {/* //Apps icons */}
+      {maximizedApp == 0 && (
+        <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
+          <div>
+            <IconContainer
+              onClick={CmdClicked}
+              icon={VscTerminalCmd}
+              size={"50px"}
+              isDesktop
+            />
+          </div>
+          {/* <div>
           <IconContainer
             onClick={TodoClicked}
             icon={FcTodoList}
             size={"50px"}
             isDesktop
           />
+        </div> */}
         </div>
-      </div>
-      {cmd.isOpen && (
-        <div onClick={setOrder("CMD")}>
+      )}
+      {cmd.isOpen && !cmd.isMinimized && (
+        <div
+          onClick={() => {
+            setOrder("CMD");
+          }}
+        >
           <CMD />
         </div>
       )}
@@ -166,17 +178,17 @@ function Desktop() {
         </div>
       )}
       {portfolio.isOpen && (
-        <div>
+        <Layout type={"PORTFOLIO"}>
           <Portfolio />
-        </div>
+        </Layout>
       )}
       {contactme.isOpen && (
         <div>
           <Contactme />
         </div>
       )}
-      {fileManager.isOpen && (
-        <div onClick={setOrder("FILE_MANAGER")}>
+      {fileManager.isOpen && !fileManager.isMinimized && (
+        <div onClick={() => setOrder("FILE_MANAGER")}>
           <FileManager />
         </div>
       )}

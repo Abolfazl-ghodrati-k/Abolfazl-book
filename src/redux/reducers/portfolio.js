@@ -6,6 +6,7 @@ import {
 } from "../actionTypes";
 
 const initialState = {
+  name:"PORTFOLIO",
   isOpen: false,
   isMaximized: false,
   isMinimized: false,
@@ -20,8 +21,7 @@ export default function PortfolioReducer(state = initialState, action) {
       return Object.assign({}, state, { isOpen: false });
     case MAXIMIZE_PORTFOLIO:
       return Object.assign({}, state, {
-        isMaximized: true,
-        isMinimized: false,
+        isMaximized: action.payload,
       });
     case MINIMIZE_PORTFOLIO:
       return Object.assign({}, state, {

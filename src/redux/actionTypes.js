@@ -1,8 +1,11 @@
 export const END_LOADING   = "END_LOADING";
 export const START_LOADING = "START_LOADING";
 
+export const APP_MAXIMIZED = "APP_MAXIMIZED";
+
+
 // Browser section
-export const OPEN_BROWSER         = "OPEN_BROWSER "
+export const OPEN_BROWSER         = "OPEN_BROWSER"
 export const CLOSE_BROWSER        = "CLOSE_BROWSER"
 export const OPEN_SELECTED_WINDOW = "OPEN_SELECTED_WINDOW"
 export const CLOSE_DELETED_WINDOW = "CLOSE_DELETED_WINDOW"
@@ -12,6 +15,7 @@ export const OPEN_FILE_MANAGER     = "OPEN_FILE_MANAGER"
 export const CLOSE_FILE_MANAGER    = "CLOSE_FILE_MANAGER"
 export const MAXIMIZE_FILE_MANAGER = "MAXIMIZE_FILE_MANAGER"
 export const MINIMIZE_FILE_MANAGER = "MINIMIZE_FILE_MANAGER"
+export const RESIZE_FILE_MANAGER   = "RESIZE_FILE_MANAGER"
 export const ORDER_FILE_MANAGER    = "ORDER_FILE_MANAGER"
 
 //  File manager -------> CONTROLL PANNEL
@@ -58,6 +62,7 @@ export const OPEN_CMD      = "OPEN_CMD"
 export const CLOSE_CMD     = "CLOSE_CMD"
 export const MAXIMIZE_CMD  = "MAXIMIZE_CMD"
 export const MINIMIZE_CMD  = "MINIMIZE_CMD"
+export const RESIZE_CMD    = "RESIZE_CMD"
 export const ORDER_CMD     = "ORDER_CMD"
 export const OPEN_TODO     = "OPEN_TODO"
 export const CLOSE_TODO    = "CLOSE_TODO"

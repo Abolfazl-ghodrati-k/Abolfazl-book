@@ -13,6 +13,6 @@ export default function useOrder(AppList) {
         {name: 'TODO', order: todo_Order},
         {name: 'SETTING', order: setting_Order}
     ]
-    useEffect(()=> console.log('here'))
+    // useEffect(()=> console.log('here'))
     return {Order,Orders}
 }

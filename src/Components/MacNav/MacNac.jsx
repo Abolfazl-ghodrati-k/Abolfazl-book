@@ -1,9 +1,11 @@
 import { React, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useOrder from "../../Hooks/useOrder";
+import { APP_MAXIMIZED } from "../../redux/actionTypes";
 
-const MacNav = ({ type, Page }) => {
-  const dispatch = useDispatch()
+const MacNav = ({ type, Page, name }) => {
+  const dispatch = useDispatch();
+  const CurrentOrder = useSelector((state) => state.order.order);
   const [BackGround, setBackGround] = useState("");
   useEffect(() => {
     if (type === "MINIMIZE") {
@@ -13,19 +15,31 @@ const MacNav = ({ type, Page }) => {
     } else if (type === "CLOSE") {
       setBackGround("#840000");
     }
-  },[type]);
+  }, [type]);
 
-  const ClickHandler = (type,Page) => {
+  // const PORTFOLIO = useSelector((state)=> state.portfolio)
+
+  const maximizedApp = useSelector((state) => state.desktop.Maximized);
+
+  const ClickHandler = (type, Page, name) => {
+    console.log(maximizedApp);
     switch (type) {
       case "MINIMIZE":
-        dispatch({type:`MINIMIZE_${Page}`})
+        dispatch({ type: `MINIMIZE_${name}` });
         break;
       case "MAXIMIZE":
-        dispatch({type:`MAXIMIZED_${Page}`})
+        dispatch({ type: `MAXIMIZED_${name}` });
         break;
       case "CLOSE":
-        dispatch({type:`CLOSE_${Page}`})
-        dispatch({type:`ORDER_${Page}`, payload: null})
+        dispatch({ type: `CLOSE_${name}` });
+        dispatch({ type: "CHANGE_ORDER", payload: CurrentOrder + 1 });
+        dispatch({ type: `ORDER_${name}`, payload: null });
+        if (Page.isMaximized) {
+          dispatch({ type: `MAXIMIZE_${name}`, payload: false });
+        }
+        if (maximizedApp>0) {
+          dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
+        }
         break;
       default:
         break;
@@ -40,9 +54,9 @@ const MacNav = ({ type, Page }) => {
         backgroundColor: BackGround,
         marginLeft: 5,
       }}
-      className='hover:opacity-50'
+      className="hover:opacity-50"
       onClick={() => {
-        ClickHandler(type,Page);
+        ClickHandler(type, Page, name);
       }}
     ></div>
   );

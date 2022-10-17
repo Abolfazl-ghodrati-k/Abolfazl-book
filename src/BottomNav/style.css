@@ -1,3 +1,11 @@
 #shutDown-inactive svg path{
   stroke: white ;
 }
+
+@keyframes bottomNav {
+  from {bottom : 0}
+}
+
+.hahaha{
+  display: none;
+}

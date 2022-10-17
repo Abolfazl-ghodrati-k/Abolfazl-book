@@ -25,10 +25,12 @@ import {
   CLOSE_PORTFOLIO,
   CLOSE_SETTING,
   CLOSE_SHUT_DOWN,
-  MINIMIZE_CMD,
+  RESIZE_CMD,
   MINIMIZE_TODO,
   MINIMIZE_FILE_MANAGER,
   MINIMIZE_SETTING,
+  RESIZE_FILE_MANAGER,
+  APP_MAXIMIZED,
 } from "../redux/actionTypes";
 import useOrder from "../Hooks/useOrder";
 
@@ -45,6 +47,12 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     CMD: useSelector((state) => state.cmd),
     TODO: useSelector((state) => state.todo),
   };
+
+  const maximizedApp = useSelector((state) => state.desktop.Maximized)
+
+  // useEffect(()=>{
+  //   setTimeout(()=>{console.log("horseA")},0)
+  // })
 
   const { Order, Orders } = useOrder();
 
@@ -83,12 +91,12 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       if (NavState.FILE_MANAGER.isMinimized) {
         if (NavState.FILE_MANAGER.isMaximized) {
           dispatch({
-            type: MINIMIZE_FILE_MANAGER,
+            type: RESIZE_FILE_MANAGER,
             payload: { minimized: false, maximized: true },
           });
         } else {
           dispatch({
-            type: MINIMIZE_FILE_MANAGER,
+            type: RESIZE_FILE_MANAGER,
             payload: { minimized: false, maximized: false },
           });
         }
@@ -107,6 +115,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     }
   };
   const ResumeClicked = () => {
+    dispatch({ type: APP_MAXIMIZED , payload: maximizedApp + 1 });
     dispatch({ type: OPEN_PORTFOLIO });
     if (NavState.Portfolio.isOpen) {
       dispatch({ type: CLOSE_PORTFOLIO });
@@ -145,12 +154,12 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     if (NavState.CMD.isMinimized) {
       if (NavState.CMD.isMaximized) {
         dispatch({
-          type: MINIMIZE_CMD,
+          type: RESIZE_CMD,
           payload: { maximized: true, minimized: false },
         });
       } else if (!NavState.CMD.isMaximized) {
         dispatch({
-          type: MINIMIZE_CMD,
+          type: RESIZE_CMD,
           payload: { maximized: false, minimmized: false },
         });
       }
@@ -180,8 +189,8 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
 
   return (
     <>
-      <div className=" w-full absolute bottom-2">
-        <div className="bg-CMD mx-auto max-w-[600px]  rounded-lg">
+      <div className={`w-full absolute bottom-2`}>
+        <div className={`bg-CMD mx-auto max-w-[600px]  rounded-lg`}>
           <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
             {/* Browser */}
             <div>
@@ -239,31 +248,27 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               />
             </div>
             {/* CMD */}
-            <div
-              style={
-                NavState.CMD.isOpen ? { display: "flex" } : { display: "none" }
-              }
-            >
-              <IconContainer
-                onClick={CMDClicked}
-                icon={VscTerminalCmd}
-                state={NavState.CMD.isOpen}
-                size={"50px"}
-              />
-            </div>
+            {NavState.CMD.isOpen && (
+              <div>
+                <IconContainer
+                  onClick={CMDClicked}
+                  icon={VscTerminalCmd}
+                  state={NavState.CMD.isOpen}
+                  size={"50px"}
+                />
+              </div>
+            )}
             {/* TODO */}
-            <div
-              style={
-                NavState.TODO.isOpen ? { display: "flex" } : { display: "none" }
-              }
-            >
-              <IconContainer
-                onClick={TODOClicked}
-                icon={FcTodoList}
-                state={NavState.TODO.isOpen}
-                size={"50px"}
-              />
-            </div>
+            {NavState.TODO.isOpen && (
+              <div>
+                <IconContainer
+                  onClick={TODOClicked}
+                  icon={FcTodoList}
+                  state={NavState.TODO.isOpen}
+                  size={"50px"}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

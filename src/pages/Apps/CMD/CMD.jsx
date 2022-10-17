@@ -1,14 +1,15 @@
 import React, { useRef, useState } from "react";
 import MacNav from "../../../Components/MacNav";
-import { IoChevronForwardOutline } from "react-icons/io";
 import { Resizable } from "re-resizable";
 import Draggable from "react-draggable";
 
-export default function CMD({ setOrder }) {
+export default function CMD() {
   const CommandInput = useRef();
   const PreCommand = useRef();
   const [Width, setWidth] = useState(400);
   const [Height, setHeight] = useState(400);
+  const [NotDragging, setNotDragging] = useState(true);
+  const [DragEnded, setDragEnded] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.value.includes("Abolfazl")) {
@@ -36,19 +37,33 @@ export default function CMD({ setOrder }) {
   };
 
   return (
-    <Resizable
-      defaultSize={{ width: Width, height: Height }}
-      size={{ width: Width, height: Height }}
-      onResizeStop={(e, direction, ref, d) => {
-        setWidth((Width) => Width + d.width);
-        setHeight((Height) => Height + d.height);
+    <Draggable
+      disabled={NotDragging}
+      defaultPosition={{ x: 10, y: 10 }}
+      // onStart={() => console.log("in draggable", notDragging)}
+      onStop={() => {
+        setTimeout(() => {
+          setNotDragging(true);
+          setDragEnded(true);
+        }, [100]);
       }}
     >
-      <Draggable 
-       defaultPosition={{x:20,y:20}}
+      <Resizable
+        defaultSize={{ width: Width, height: Height }}
+        onResizeStop={(e, direction, ref, d) => {
+          setWidth((Width) => Width + d.width);
+          setHeight((Height) => Height + d.height);
+        }}
       >
         <div
-          onClick={() => setOrder("CMD")}
+          onDoubleClick={() => {
+            setNotDragging(false);
+            setTimeout(() => {
+              if (!DragEnded) {
+                setNotDragging(true);
+              }
+            }, 1000);
+          }}
           className="bg-CMD rounded h-full flex flex-col gap-1 p-1 px-2"
         >
           <div className="flex justify-between content-center">
@@ -87,7 +102,7 @@ export default function CMD({ setOrder }) {
             </div>
           </div>
         </div>
-      </Draggable>
-    </Resizable>
+      </Resizable>
+    </Draggable>
   );
 }

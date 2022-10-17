@@ -3,6 +3,7 @@ import {
   CLOSE_FILE_MANAGER,
   MAXIMIZE_FILE_MANAGER,
   MINIMIZE_FILE_MANAGER,
+  RESIZE_FILE_MANAGER,
   OPEN_MUSIC,
   OPEN_DOCUMENTS,
   OPEN_COURSES,
@@ -14,6 +15,7 @@ import {
 } from "../actionTypes";
 
 const initialSatate = {
+  name:"FILE_MANAGER",
   isOpen: false,
   isMaximized: false,
   isMinimized: false,
@@ -33,6 +35,7 @@ export default function FileManagerReducer(state = initialSatate, action) {
       return Object.assign({}, state, { isOpen: true });
       break;
     case CLOSE_FILE_MANAGER:
+      console.log("Closing");
       return Object.assign({}, state, { isOpen: false });
 
     case MAXIMIZE_FILE_MANAGER:
@@ -40,9 +43,14 @@ export default function FileManagerReducer(state = initialSatate, action) {
 
     case MINIMIZE_FILE_MANAGER:
       return Object.assign({}, state, {
-        isMinimized: action.payload.minimze,
-        isMaximized: action.payload.maximized,
+        isMinimized: true
       });
+
+    case RESIZE_FILE_MANAGER:
+      return Object.assign({},state,{
+        isMinimized: action.payload.minimzed,
+        isMaximized: action.payload.maximized
+      })
       
     case ORDER_FILE_MANAGER:
       return Object.assign({}, state, { order: action.payload });
