@@ -5,8 +5,8 @@ module.exports = {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
     },
-  ],
-  theme: {
+  ], 
+  theme: {  
     fontFamily: {
       primary: "Inter",
     },

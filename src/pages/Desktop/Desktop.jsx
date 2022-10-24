@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //pages
@@ -21,11 +21,15 @@ import "./style.css";
 import { FcTodoList } from "react-icons/fc";
 import { VscTerminalCmd } from "react-icons/vsc";
 import { OPEN_CMD, OPEN_TODO } from "../../redux/actionTypes";
-import useOrder from "../../Hooks/useOrder";
 
-import Draggable from "react-draggable";
-import { Resizable } from "re-resizable";
+//HOOKS
+import useOrder from "../../Hooks/useOrder";
+import useIndex from "../../Hooks/useIndex";
+
+// import Draggable from "react-draggable";
+// import { Resizable } from "re-resizable";
 import Layout from "../../Components/Layout";
+import { useEffect } from "react";
 
 // hooks
 // import useOpenedApps from "../../Hooks/useOpenedApps";
@@ -46,6 +50,7 @@ function Desktop() {
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
   const { Order, Orders } = useOrder();
+  const Indexs = useIndex();
 
   const ChangingCurrentOrder = () => {
     if (Order == 1) {
@@ -76,7 +81,7 @@ function Desktop() {
     }
   };
 
-  const Types = ["CMD", "TODO", "SETTING", "FILE_MANAGER"];
+  // const Types = ["CMD", "TODO", "SETTING", "FILE_MANAGER"];
 
   const IncreaseLowerOrders = (ClickedComponent) => {
     //checks if all apps are on screen or not if yes then when an app is clicked thats order will be 1
@@ -92,6 +97,7 @@ function Desktop() {
       // and if all aps arnt clicked ill set clicked component to top and increase the orders by checking a condition
       //that is there any closed app or not .
     } else {
+      // console.log("you are increasing lower orders");
       dispatch({ type: `ORDER_${ClickedComponent.name}`, payload: Order + 1 });
       Orders.map((app) => {
         if (app.order < ClickedComponent.order && app.order) {
@@ -103,21 +109,6 @@ function Desktop() {
   };
 
   const setOrder = (type) => {
-    if ((type == "CMD" && !cmd.isOpen) || cmd.isMinimized) {
-      return;
-    }
-    if (
-      (type == "ّFILE_MANAGER" && !fileManager.isOpen) ||
-      !fileManager.isMinimized
-    ) {
-      return;
-    }
-    if ((type == "SETTING" && !setting.isOpen) || setting.isMinimized) {
-      return;
-    }
-    if ((type == "TODO" && !todo.isOpen) || todo.isMinimized) {
-      return;
-    }
     Orders.map((app) => {
       // 1. Checks if clicked component has latest order
       if (app.name == type && Order == app.order) {
@@ -131,9 +122,9 @@ function Desktop() {
   };
 
   return (
-    <div className="-z-[1000] h-full w-full">
+    <div className="h-full w-full -z-10 relative">
       {/* //Apps icons */}
-      {maximizedApp == 0 && (
+      {maximizedApp === 0 && (
         <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
           <div>
             <IconContainer
@@ -155,7 +146,14 @@ function Desktop() {
       )}
       {cmd.isOpen && !cmd.isMinimized && (
         <div
+          style={{
+            position: "absolute",
+            top: cmd.top,
+            left: cmd.left,
+            zIndex: Indexs[0].zIndex,
+          }}
           onClick={() => {
+            // console.log("im setting order");
             setOrder("CMD");
           }}
         >
@@ -188,7 +186,13 @@ function Desktop() {
         </div>
       )}
       {fileManager.isOpen && !fileManager.isMinimized && (
-        <div onClick={() => setOrder("FILE_MANAGER")}>
+        <div
+          onClick={() => {
+            // console.log("setting file");
+            setOrder("FILE_MANAGER")
+          }}
+          style={{ position: "absolute", zIndex: Indexs[1].zIndex }}
+        >
           <FileManager />
         </div>
       )}

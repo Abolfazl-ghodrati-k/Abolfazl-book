@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Draggable, { DraggableCore } from "react-draggable";
 import { Resizable } from "re-resizable";
 import "./style.css";
@@ -10,8 +10,6 @@ function FileManager() {
   const [Width, setWidth] = useState(400);
   const [Height, setHeight] = useState(400);
   const [DragEnded, setDragEnded] = useState(false);
-
-  useEffect(() => {}, []);
 
   return (
     <Draggable
@@ -33,7 +31,7 @@ function FileManager() {
         }}
       >
         <div
-          className="bg-CMD h-full w-full"
+          className="bg-CMD h-full w-full  "
           onDoubleClick={() => {
             setNotDragging(false);
             setTimeout(() => {
@@ -43,15 +41,27 @@ function FileManager() {
             }, 1000);
           }}
         >
-         <div>
-          <div>Filemanager</div>
           <div>
-            <MacNav type={"MINIMIZE"} Page={"FILE_MANAGER"}/>
-            <MacNav type={"MAXIMIZE"} Page={"FILE_MANAGER"}/>
-            <MacNav type={"CLOSE"} Page={"FILE_MANAGER"}/>
+            <div>Filemanager</div>
+            <div>
+              <MacNav
+                type={"MINIMIZE"}
+                Page={"FILE_MANAGER"}
+                name={"FILE_MANAGER"}
+              />
+              <MacNav
+                type={"MAXIMIZE"}
+                Page={"FILE_MANAGER"}
+                name={"FILE_MANAGER"}
+              />
+              <MacNav
+                type={"CLOSE"}
+                Page={"FILE_MANAGER"}
+                name={"FILE_MANAGER"}
+              />
+            </div>
           </div>
-         </div>
-         <div></div>
+          <div></div>
         </div>
       </Resizable>
     </Draggable>

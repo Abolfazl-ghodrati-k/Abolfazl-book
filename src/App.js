@@ -12,7 +12,7 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <div className="w-full h-screen bg-fill">
+        <div className="w-full h-screen bg-fill absolute -z-20">
           <Desktop />
         </div>
       </PersistGate>

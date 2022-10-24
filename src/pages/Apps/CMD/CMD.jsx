@@ -1,15 +1,22 @@
-import React, { useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import MacNav from "../../../Components/MacNav";
 import { Resizable } from "re-resizable";
-import Draggable from "react-draggable";
+import Draggable, { DraggableCore } from "react-draggable";
+import { useDispatch } from "react-redux";
+import { SET_CMD_LOCATION } from "../../../redux/actionTypes";
+import { useEffect } from "react";
 
-export default function CMD() {
+export default function CMD({ zIndex }) {
+  const dispatch = useDispatch();
+
+  const Element = useRef();
   const CommandInput = useRef();
   const PreCommand = useRef();
+
+  const [PositionX, setPositionX] = useState(null);
+  const [PositionY, setPositionY] = useState(null);
   const [Width, setWidth] = useState(400);
   const [Height, setHeight] = useState(400);
-  const [NotDragging, setNotDragging] = useState(true);
-  const [DragEnded, setDragEnded] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.value.includes("Abolfazl")) {
@@ -38,15 +45,21 @@ export default function CMD() {
 
   return (
     <Draggable
-      disabled={NotDragging}
-      defaultPosition={{ x: 10, y: 10 }}
-      // onStart={() => console.log("in draggable", notDragging)}
-      onStop={() => {
-        setTimeout(() => {
-          setNotDragging(true);
-          setDragEnded(true);
-        }, [100]);
-      }}
+      cancel=".cancelcmd"
+      handle=".handlecmd"
+      // onDrag={() => {
+      //   console.log(Element.current.getClientRects()[0].top);
+      // }}
+      // onStop={(e) => {
+      //   console.log("rtht",Element.current.getClientRects()[0]);
+      //   dispatch({
+      //     type: SET_CMD_LOCATION,
+      //     payload: {
+      //       top: Element.current.getClientRects()[0].y,
+      //       left: Element.current.getClientRects()[0].x,
+      //     },
+      //   });
+      // }}
     >
       <Resizable
         defaultSize={{ width: Width, height: Height }}
@@ -55,53 +68,50 @@ export default function CMD() {
           setHeight((Height) => Height + d.height);
         }}
       >
+        {/* <div style={{ position: "absolute", zIndex: z_index }} className="w-full h-full"> */}
         <div
-          onDoubleClick={() => {
-            setNotDragging(false);
-            setTimeout(() => {
-              if (!DragEnded) {
-                setNotDragging(true);
-              }
-            }, 1000);
-          }}
-          className="bg-CMD rounded h-full flex flex-col gap-1 p-1 px-2"
+          // ref={e => console.log(e.getClientRects)}
+          className={`bg-pink-200 rounded w-full h-full flex flex-col gap-1 p-1 px-2 `}
         >
-          <div className="flex justify-between content-center">
-            <div>top</div>
-            <div className="flex justify-center items-center">
-              <MacNav type={"MINIMIZE"} Page={"CMD"} />
-              <MacNav type={"MAXIMIZE"} Page={"CMD"} />
-              <MacNav type={"CLOSE"} Page={"CMD"} />
+          <div ref={Element} className="handlecmd  w-full h-full">
+            <div className="flex justify-between content-center">
+              <div>top</div>
+              <div className="flex justify-center items-center">
+                <MacNav type={"MINIMIZE"} Page={"CMD"} name={"CMD"} />
+                <MacNav type={"MAXIMIZE"} Page={"CMD"} name={"CMD"} />
+                <MacNav type={"CLOSE"} Page={"CMD"} name={"CMD"} />
+              </div>
             </div>
-          </div>
-          <hr className="-mx-2 mt-1" />
-          <div className="flex justify-start items-center">
-            <p className="" style={{ color: "white", fontSize: ".7rem" }}>
-              AbolfazlBook/IP &gt;
-            </p>
-            <div className="flex justify-start">
-              <input
-                type="text"
-                className="bg-CMD color-white border-none focus:outline-none"
-                style={{
-                  fontSize: ".7rem",
-                  color: "white",
-                  paddingLeft: "5px",
-                  width: "auto",
-                }}
-                ref={PreCommand}
-                onChange={(e) => handleChange(e)}
-              />
-              <input
-                type="text"
-                className="bg-CMD color-white border-none focus:outline-none"
-                style={{ fontSize: ".7rem", color: "white", display: "none" }}
-                ref={CommandInput}
-                onChange={(e) => handleChange2(e)}
-              />
+            <hr className="-mx-2 mt-1" />
+            <div className="flex justify-start items-center">
+              <p className="" style={{ color: "white", fontSize: ".7rem" }}>
+                AbolfazlBook/IP &gt;
+              </p>
+              <div className="flex justify-start">
+                <input
+                  type="text"
+                  className="bg-CMD color-white border-none focus:outline-none"
+                  style={{
+                    fontSize: ".7rem",
+                    color: "white",
+                    paddingLeft: "5px",
+                    width: "auto",
+                  }}
+                  ref={PreCommand}
+                  onChange={(e) => handleChange(e)}
+                />
+                <input
+                  type="text"
+                  className="bg-CMD color-white border-none focus:outline-none"
+                  style={{ fontSize: ".7rem", color: "white", display: "none" }}
+                  ref={CommandInput}
+                  onChange={(e) => handleChange2(e)}
+                />
+              </div>
             </div>
           </div>
         </div>
+        {/* </div> */}
       </Resizable>
     </Draggable>
   );
