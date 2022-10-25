@@ -31,6 +31,7 @@ import {
   MINIMIZE_SETTING,
   RESIZE_FILE_MANAGER,
   APP_MAXIMIZED,
+  OPEN_MODAL,
 } from "../redux/actionTypes";
 import useOrder from "../Hooks/useOrder";
 
@@ -47,8 +48,9 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     CMD: useSelector((state) => state.cmd),
     TODO: useSelector((state) => state.todo),
   };
+  const Modalcount = useSelector((state) => state.desktop.Modals);
 
-  const maximizedApp = useSelector((state) => state.desktop.Maximized)
+  const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
   // useEffect(()=>{
   //   setTimeout(()=>{console.log("horseA")},0)
@@ -111,11 +113,16 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
   const ContactmeClicked = () => {
     dispatch({ type: OPEN_CONTACTME });
     if (NavState.Contact.isOpen) {
-      dispatch({ type: CLOSE_CONTACTME });
+      return;
+    }
+    if (Modalcount) {
+      dispatch({ type: OPEN_MODAL, payload: Modalcount + 1 });
+    } else {
+      dispatch({ type: OPEN_MODAL, payload: 1 });
     }
   };
   const ResumeClicked = () => {
-    dispatch({ type: APP_MAXIMIZED , payload: maximizedApp + 1 });
+    dispatch({ type: APP_MAXIMIZED, payload: maximizedApp + 1 });
     dispatch({ type: OPEN_PORTFOLIO });
     if (NavState.Portfolio.isOpen) {
       dispatch({ type: CLOSE_PORTFOLIO });
@@ -147,7 +154,12 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
   const ShutDownClicked = () => {
     dispatch({ type: OPEN_SHUT_DOWN });
     if (NavState.ShutDown.isOpen) {
-      dispatch({ type: CLOSE_SHUT_DOWN });
+      return;
+    }
+    if (Modalcount) {
+      dispatch({ type: OPEN_MODAL, payload: Modalcount + 1 });
+    } else {
+      dispatch({ type: OPEN_MODAL, payload: 1 });
     }
   };
   const CMDClicked = () => {

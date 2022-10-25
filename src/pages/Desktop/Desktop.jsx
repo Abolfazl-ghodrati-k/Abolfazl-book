@@ -28,8 +28,9 @@ import useIndex from "../../Hooks/useIndex";
 
 // import Draggable from "react-draggable";
 // import { Resizable } from "re-resizable";
-import Layout from "../../Components/Layout";
+import Layout from "../../Components/Layout/Layout";
 import { useEffect } from "react";
+import ModalLayout from "../../Components/Layout/ModalLayout";
 
 // hooks
 // import useOpenedApps from "../../Hooks/useOpenedApps";
@@ -166,14 +167,15 @@ function Desktop() {
         </div>
       )}
       {shutdown.isOpen && (
-        <div>
+        <ModalLayout>
           <ShutDown />
-        </div>
+        </ModalLayout>
       )}
       {setting.isOpen && (
-        <div onClick={setOrder("SETTING")}>
-          <Setting />
-        </div>
+        <Setting
+          onClick={() => setOrder("SETTING")}
+          zIndex={Indexs[2].zIndex}
+        />
       )}
       {portfolio.isOpen && (
         <Layout type={"PORTFOLIO"}>
@@ -181,15 +183,15 @@ function Desktop() {
         </Layout>
       )}
       {contactme.isOpen && (
-        <div>
+        <ModalLayout zIndex={null}>
           <Contactme />
-        </div>
+        </ModalLayout>
       )}
       {fileManager.isOpen && !fileManager.isMinimized && (
         <div
           onClick={() => {
             // console.log("setting file");
-            setOrder("FILE_MANAGER")
+            setOrder("FILE_MANAGER");
           }}
           style={{ position: "absolute", zIndex: Indexs[1].zIndex }}
         >

@@ -1,6 +1,8 @@
 export const END_LOADING   = "END_LOADING";
 export const START_LOADING = "START_LOADING";
 
+//desktop
+export const OPEN_MODAL    = "OPEN_MODAL";
 export const APP_MAXIMIZED = "APP_MAXIMIZED";
 
 
@@ -55,7 +57,6 @@ export const MINIMIZE_SETTING   = "MINIMIZE_SETTING"
 //ShutDown
 export const OPEN_SHUT_DOWN  = "OPEN_SHUT_DOWN"
 export const CLOSE_SHUT_DOWN = "CLOSE_SHUT_DOWN"
-export const SHUT_DOWN       = "SHUT_DOWN"
 
 //APPS SECTION
 export const OPEN_CMD         = "OPEN_CMD"

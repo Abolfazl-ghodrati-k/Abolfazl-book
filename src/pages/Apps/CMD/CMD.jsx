@@ -1,10 +1,8 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import MacNav from "../../../Components/MacNav";
 import { Resizable } from "re-resizable";
-import Draggable, { DraggableCore } from "react-draggable";
+import Draggable from "react-draggable";
 import { useDispatch } from "react-redux";
-import { SET_CMD_LOCATION } from "../../../redux/actionTypes";
-import { useEffect } from "react";
 
 export default function CMD({ zIndex }) {
   const dispatch = useDispatch();
@@ -12,9 +10,6 @@ export default function CMD({ zIndex }) {
   const Element = useRef();
   const CommandInput = useRef();
   const PreCommand = useRef();
-
-  const [PositionX, setPositionX] = useState(null);
-  const [PositionY, setPositionY] = useState(null);
   const [Width, setWidth] = useState(400);
   const [Height, setHeight] = useState(400);
 
@@ -47,19 +42,6 @@ export default function CMD({ zIndex }) {
     <Draggable
       cancel=".cancelcmd"
       handle=".handlecmd"
-      // onDrag={() => {
-      //   console.log(Element.current.getClientRects()[0].top);
-      // }}
-      // onStop={(e) => {
-      //   console.log("rtht",Element.current.getClientRects()[0]);
-      //   dispatch({
-      //     type: SET_CMD_LOCATION,
-      //     payload: {
-      //       top: Element.current.getClientRects()[0].y,
-      //       left: Element.current.getClientRects()[0].x,
-      //     },
-      //   });
-      // }}
     >
       <Resizable
         defaultSize={{ width: Width, height: Height }}
@@ -68,9 +50,7 @@ export default function CMD({ zIndex }) {
           setHeight((Height) => Height + d.height);
         }}
       >
-        {/* <div style={{ position: "absolute", zIndex: z_index }} className="w-full h-full"> */}
         <div
-          // ref={e => console.log(e.getClientRects)}
           className={`bg-pink-200 rounded w-full h-full flex flex-col gap-1 p-1 px-2 `}
         >
           <div ref={Element} className="handlecmd  w-full h-full">
@@ -111,7 +91,6 @@ export default function CMD({ zIndex }) {
             </div>
           </div>
         </div>
-        {/* </div> */}
       </Resizable>
     </Draggable>
   );
