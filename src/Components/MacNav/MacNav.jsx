@@ -22,7 +22,7 @@ const MacNav = ({ type, Page, name }) => {
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
   const ClickHandler = (type, Page, name) => {
-    console.log(maximizedApp);
+    // console.log(maximizedApp);
     switch (type) {
       case "MINIMIZE":
         dispatch({ type: `MINIMIZE_${name}` });
@@ -54,7 +54,7 @@ const MacNav = ({ type, Page, name }) => {
         backgroundColor: BackGround,
         marginLeft: 5,
       }}
-      className="hover:opacity-50"
+      className="hover:opacity-50 cursor-pointer"
       onClick={() => {
         ClickHandler(type, Page, name);
       }}

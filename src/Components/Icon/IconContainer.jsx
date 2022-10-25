@@ -2,7 +2,16 @@ import { React, useEffect, useState, useRef } from "react";
 import { IconContext } from "react-icons";
 import ResumeBlack from "../../Assets/Icons/ResumeBlack.png";
 
-function IconContainer({ icon, color, size, img, onClick, state, isDesktop }) {
+function IconContainer({
+  type,
+  icon,
+  color,
+  size,
+  img,
+  onClick,
+  state,
+  isDesktop,
+}) {
   const Component = icon;
   const Ref = useRef(null);
   useEffect(() => {
@@ -10,16 +19,16 @@ function IconContainer({ icon, color, size, img, onClick, state, isDesktop }) {
       setColor("black");
       setBgColor(true);
       setSRC(ResumeBlack);
-      if(Component.name== "GrPowerShutdown"){
-        Ref.current.removeAttribute("id")
+      if (Component.name == "GrPowerShutdown") {
+        Ref.current.removeAttribute("id");
       }
     } else {
       setColor("white");
       setBgColor(false);
       if (Component) {
         setSRC(icon);
-        if(Component.name== "GrPowerShutdown"){
-          Ref.current.setAttribute("id","shutDown-inactive")
+        if (Component.name == "GrPowerShutdown") {
+          Ref.current.setAttribute("id", "shutDown-inactive");
         }
       }
     }
@@ -32,9 +41,28 @@ function IconContainer({ icon, color, size, img, onClick, state, isDesktop }) {
     onClick();
   };
 
+  if (type) {
+    return (
+      <div
+        onClick={(e) => ClickHandler(e)}
+        className={`flex content-center p-2 rounded  ${
+          BgColor ? "bg-gray-300" : "hover:bg-gray-200"
+        }`}
+      >
+        <div>
+          <IconContext.Provider value={{ color: Color, size: size }}>
+            <div>
+              <Component />
+            </div>
+          </IconContext.Provider>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-    ref={Ref}
+      ref={Ref}
       onClick={(e) => ClickHandler(e)}
       className={`flex content-center rounded ${
         BgColor ? "bg-gray-300" : ""
