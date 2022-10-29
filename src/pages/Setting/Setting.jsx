@@ -1,17 +1,24 @@
-import { Resizable } from "re-resizable";
 import React, { useState } from "react";
+import { Resizable } from "re-resizable";
 import Draggable from "react-draggable";
 import { useSelector } from "react-redux";
 import MacNav from "../../Components/MacNav";
+import ChangeColor from "./ChangeColor";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import BackgroundImage from "./BackgroundImage";
+import Disks from "../FileManager/Components/Disks";
 
-function Setting({onClick, zIndex}) {
-  const [Height, setHeight] = useState(400);
-  const [Width, setWidth] = useState(400);
+function Setting({ onClick, zIndex }) {
+  const [Height, setHeight] = useState(500);
+  const [Width, setWidth] = useState(700);
   const setting = useSelector((state) => state.setting);
 
   return (
-    <div style={{position: "absolute", zIndex: zIndex}} >
-      <Draggable handle=".handlesetting">
+    <Router>
+      <Draggable
+        handle=".handlesetting"
+        defaultClassName="react-draggable setting"
+      >
         <Resizable
           defaultSize={{ width: Width, height: Height }}
           onResizeStop={(e, direction, ref, d) => {
@@ -19,22 +26,39 @@ function Setting({onClick, zIndex}) {
             setHeight((Height) => Height + d.height);
           }}
         >
-          <div onClick={()=> onClick()} className="px-2 py-1 w-full h-full bg-gray-200">
-            <div className="wrap handlesetting w-full h-full">
-              <div className="top flex justify-between items-center">
-                <div className="nav flex justify-between items-center">top</div>
+          <div
+            onClick={() => onClick()}
+            className="w-full h-full bg-gray-200 rounded "
+          >
+            <div className="wrap handlesetting w-full h-full ">
+              <div className="top flex justify-between items-center px-2 py-1 h-[7%]">
+                <div className="nav flex justify-between items-center">
+                  Setting
+                </div>
                 <div className="ctrl flex">
                   <MacNav name={"SETTING"} Page={setting} type={"MINIMIZE"} />
                   <MacNav name={"SETTING"} Page={setting} type={"MAXIMIZE"} />
                   <MacNav name={"SETTING"} Page={setting} type={"CLOSE"} />
                 </div>
               </div>
-              <div></div>
+              <div className="w-full h-[1px] bg-white"></div>
+              <div className="flex w-full h-[92%]">
+                <div className=" bg-gray-300 text-[0.9rem] w-[30%] h-full flex flex-col [&>*]:mt-2 [&>*]:ml-1">
+                  <Disks Setting Disk={"color"} title={"Color"} />
+                  <Disks Setting Disk={"image"} title={"Background image"} />
+                </div>
+                <div>
+                  <Routes>
+                    <Route path="setting/color" element={<ChangeColor />} />
+                    <Route path="setting/image" element={<BackgroundImage />} />
+                  </Routes>
+                </div>
+              </div>
             </div>
           </div>
         </Resizable>
       </Draggable>
-    </div>
+    </Router>
   );
 }
 

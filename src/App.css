@@ -1,0 +1,24 @@
+.desktop {
+  --fileIndex: 0;
+  --settingIndex: 0;
+  --cmdIndex: 0;
+  --todoIndex: 0;
+}
+
+.react-draggable-dragged,
+.react-draggable {
+  position: absolute !important;
+}
+
+.filemanager {
+  z-index: var(--fileIndex) !important;
+}
+.cmd {
+  z-index: var(--cmdIndex) !important;
+}
+.todo {
+  z-index: var(--todoIndex) !important;
+}
+.setting {
+  z-index: var(--settingIndex) !important;
+}

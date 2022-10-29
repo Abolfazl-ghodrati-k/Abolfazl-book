@@ -52,28 +52,24 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
 
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
-  // useEffect(()=>{
-  //   setTimeout(()=>{console.log("horseA")},0)
-  // })
+  
 
   const { Order, Orders } = useOrder();
 
   const setOrder = (type) => {
-    console.log("im setting order using bottom nav");
     Orders.map((app) => {
       // 1. Checks if clicked component has latest order
       if (app.name == type && Order == app.order) {
-        console.log("CLicked component was on top");
         return;
         // 2. Checks which components have been clicked
       } else if (app.name == type) {
-        console.log(
-          "well clicked application is: ",
-          app.name,
-          " and its order is: ",
-          app.order,
-          "|| im Increasing lower orders"
-        );
+        // console.log(
+        //   "well clicked application is: ",
+        //   app.name,
+        //   " and its order is: ",
+        //   app.order,
+        //   "|| im Increasing lower orders"
+        // );
         // 3. Finds clicked component order and changes previous orders
         IncreaseLowerOrders(app);
       }
@@ -201,7 +197,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
 
   return (
     <>
-      <div className={`w-full absolute bottom-2`}>
+      <div className={`w-full absolute bottom-2 z-0`}>
         <div className={`bg-CMD mx-auto max-w-[600px]  rounded-lg`}>
           <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
             {/* Browser */}

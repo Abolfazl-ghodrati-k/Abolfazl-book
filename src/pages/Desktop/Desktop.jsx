@@ -32,6 +32,10 @@ import Layout from "../../Components/Layout/Layout";
 import { useEffect } from "react";
 import ModalLayout from "../../Components/Layout/ModalLayout";
 
+import Draggable from "react-draggable";
+import AudioPlayer from "../../Components/AudioPlayer";
+import { useRef } from "react";
+
 // hooks
 // import useOpenedApps from "../../Hooks/useOpenedApps";
 // import useOrder from "../../Hooks/useOrder";
@@ -52,6 +56,16 @@ function Desktop() {
 
   const { Order, Orders } = useOrder();
   const Indexs = useIndex();
+
+  const desktop = useRef();
+
+  useEffect(() => {
+    // console.log(Indexs[1]);
+    desktop.current.style.setProperty("--fileIndex", Indexs[1].zIndex);
+    desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
+    desktop.current.style.setProperty("--todoIndex", Indexs[1].zIndex);
+    desktop.current.style.setProperty("--settingIndex", Indexs[2].zIndex);
+  });
 
   const ChangingCurrentOrder = () => {
     if (Order == 1) {
@@ -123,8 +137,18 @@ function Desktop() {
   };
 
   return (
-    <div className="h-full w-full -z-10 relative">
+    <div className="h-full w-full -z-10 relative desktop" ref={desktop}>
+      {fileManager.Music_isOpen && (
+        <div className="absolute z-[100000]">
+          <Draggable>
+            <div className="p-1">
+              <AudioPlayer />
+            </div>
+          </Draggable>
+        </div>
+      )}
       {/* //Apps icons */}
+
       {maximizedApp === 0 && (
         <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
           <div>
@@ -146,20 +170,12 @@ function Desktop() {
         </div>
       )}
       {cmd.isOpen && !cmd.isMinimized && (
-        <div
-          style={{
-            position: "absolute",
-            top: cmd.top,
-            left: cmd.left,
-            zIndex: Indexs[0].zIndex,
-          }}
+        <CMD
           onClick={() => {
             // console.log("im setting order");
             setOrder("CMD");
           }}
-        >
-          <CMD />
-        </div>
+        />
       )}
       {todo.isOpen && (
         <div onClick={setOrder("TODO")}>
@@ -188,15 +204,13 @@ function Desktop() {
         </ModalLayout>
       )}
       {fileManager.isOpen && !fileManager.isMinimized && (
-        <div
+        <FileManager
           onClick={() => {
-            // console.log("setting file");
+            console.log("file");
             setOrder("FILE_MANAGER");
           }}
-          style={{ position: "absolute", zIndex: Indexs[1].zIndex }}
-        >
-          <FileManager />
-        </div>
+          zIndex={Indexs[1].zIndex}
+        />
       )}
 
       <BottomNav

@@ -4,7 +4,7 @@ import { Resizable } from "re-resizable";
 import Draggable from "react-draggable";
 import { useDispatch } from "react-redux";
 
-export default function CMD({ zIndex }) {
+export default function CMD({ onClick }) {
   const dispatch = useDispatch();
 
   const Element = useRef();
@@ -39,10 +39,7 @@ export default function CMD({ zIndex }) {
   };
 
   return (
-    <Draggable
-      cancel=".cancelcmd"
-      handle=".handlecmd"
-    >
+    <Draggable cancel=".cancelcmd" handle=".handlecmd" defaultClassName="react-draggable cmd">
       <Resizable
         defaultSize={{ width: Width, height: Height }}
         onResizeStop={(e, direction, ref, d) => {
@@ -51,6 +48,7 @@ export default function CMD({ zIndex }) {
         }}
       >
         <div
+          onClick={onClick}
           className={`bg-pink-200 rounded w-full h-full flex flex-col gap-1 p-1 px-2 `}
         >
           <div ref={Element} className="handlecmd  w-full h-full">

@@ -21,15 +21,12 @@ export const RESIZE_FILE_MANAGER   = "RESIZE_FILE_MANAGER"
 export const ORDER_FILE_MANAGER    = "ORDER_FILE_MANAGER"
 
 //  File manager -------> CONTROLL PANNEL
-export const OPEN_MUSIC     = "MINIMIZE_FILE_MANAGER"
-export const OPEN_DOCUMENTS = "OPEN_DOCUMENTS"
-export const OPEN_COURSES   = "OPEN_COURSES"
+export const OPEN_MUSIC     = "OPEN_MUSIC"
+export const CLOSE_MUSIC    = "CLOSE_MUSIC"
 
 // File Manager --------> Music Section
-export const OPEN_ROCK  = "OPEN_ROCK"
-export const OPEN_RB    = "OPEN_RB"
-export const OPEN_POP   = "OPEN_POP"
-export const OPEN_RAP   = "OPEN_RAP"
+export const CONTROLL_MUSIC    = "CONTROLL_MUSIC"
+export const SET_PLAYING_MUSIC = "SET_PLAYING_MUSIC"
 
 // Contact me 
 export const OPEN_CONTACTME   = "OPEN_CONTACTME"

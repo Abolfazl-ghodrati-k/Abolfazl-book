@@ -11,7 +11,7 @@ function Todo_item({ Todo }) {
 
   useEffect(() => {
     setName((Name) => (Name = Todo.name));
-    console.log(Name);
+    // console.log(Name);
   }, [useState]);
 
   const descriptionHandler = () => {

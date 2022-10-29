@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
 function Todo_EditForm({ name, onChangeName, onChangeDesc }) {
-    useEffect(()=>{
-        console.log(name)
-    })
+    // useEffect(()=>{
+    //     console.log(name)
+    // })
   return (
     <form className="flex flex-col mx-2 [&>*]:mb-1">
       <input

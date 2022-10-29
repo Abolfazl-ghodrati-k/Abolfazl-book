@@ -6,7 +6,12 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./redux/Store";
 import { PersistGate } from "redux-persist/integration/react";
 import Desktop from "./pages/Desktop";
-
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Link,
+  RouterProvider,
+} from "react-router-dom";
 
 function App() {
   return (

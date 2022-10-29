@@ -21,7 +21,7 @@ const initialState = {
 export default function CMDReducer(state = initialState, action) {
   switch (action.type) {
     case SET_CMD_LOCATION:
-      console.log("location set",action.payload)
+      // console.log("location set",action.payload)
       return Object.assign({}, state, {
         top: action.payload.top,
         left: action.payload.left,

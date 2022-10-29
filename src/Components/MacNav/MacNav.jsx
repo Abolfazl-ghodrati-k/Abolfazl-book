@@ -37,9 +37,10 @@ const MacNav = ({ type, Page, name }) => {
         if (Page.isMaximized) {
           dispatch({ type: `MAXIMIZE_${name}`, payload: false });
         }
-        if (maximizedApp>0) {
+        if (maximizedApp > 0) {
           dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
         }
+        
         break;
       default:
         break;

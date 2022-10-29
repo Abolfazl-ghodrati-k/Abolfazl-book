@@ -19,8 +19,8 @@ function useApps() {
     {name:"Portfolio"  , status:portfolio , icon: 'VscTerminalCmd'},
     {name:"Setting"    , status:setting , icon: 'VscTerminalCmd'},
     {name:"ShtDown"    , status:shutdown , icon: 'VscTerminalCmd'},
-  ]   
-  console.log(AppList)
+   ]   
+  // console.log(AppList)
 
   return (
     AppList
