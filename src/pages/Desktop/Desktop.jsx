@@ -36,6 +36,14 @@ import Draggable from "react-draggable";
 import AudioPlayer from "../../Components/AudioPlayer";
 import { useRef } from "react";
 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Outlet,
+} from "react-router-dom";
+
 // hooks
 // import useOpenedApps from "../../Hooks/useOpenedApps";
 // import useOrder from "../../Hooks/useOrder";
@@ -60,7 +68,7 @@ function Desktop() {
   const desktop = useRef();
 
   useEffect(() => {
-    // console.log(Indexs[1]);
+    console.log(Indexs);
     desktop.current.style.setProperty("--fileIndex", Indexs[1].zIndex);
     desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
     desktop.current.style.setProperty("--todoIndex", Indexs[1].zIndex);
@@ -68,8 +76,8 @@ function Desktop() {
   });
 
   const ChangingCurrentOrder = () => {
-    if (Order == 1) {
-      dispatch({ type: "CHANGE_ORDER", payload: 1 });
+    if (Order == 0) {
+      dispatch({ type: "CHANGE_ORDER", payload: 0 });
     } else {
       dispatch({ type: "CHANGE_ORDER", payload: Order - 1 });
     }
@@ -101,10 +109,11 @@ function Desktop() {
   const IncreaseLowerOrders = (ClickedComponent) => {
     //checks if all apps are on screen or not if yes then when an app is clicked thats order will be 1
     // and were sure that all aps are on screen so ican simply increase all orders
-    if (Order == 1) {
+    if (Order == 0) {
+      console.log("all aps are opened?")
       dispatch({ type: `ORDER_${ClickedComponent.name}`, payload: 1 });
       Orders.map((app) => {
-        if (app.order < ClickedComponent.order) {
+        if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
           return;
         }
@@ -112,7 +121,7 @@ function Desktop() {
       // and if all aps arnt clicked ill set clicked component to top and increase the orders by checking a condition
       //that is there any closed app or not .
     } else {
-      // console.log("you are increasing lower orders");
+      console.log("you are increasing lower orders");
       dispatch({ type: `ORDER_${ClickedComponent.name}`, payload: Order + 1 });
       Orders.map((app) => {
         if (app.order < ClickedComponent.order && app.order) {
@@ -137,29 +146,34 @@ function Desktop() {
   };
 
   return (
-    <div className="h-full w-full -z-10 relative desktop" ref={desktop}>
-      {fileManager.Music_isOpen && (
-        <div className="absolute z-[100000]">
-          <Draggable>
-            <div className="p-1">
-              <AudioPlayer />
-            </div>
-          </Draggable>
-        </div>
-      )}
-      {/* //Apps icons */}
-
-      {maximizedApp === 0 && (
-        <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
-          <div>
-            <IconContainer
-              onClick={CmdClicked}
-              icon={VscTerminalCmd}
-              size={"50px"}
-              isDesktop
-            />
+    <Router>
+      <div
+        className={`h-full w-full -z-10 relative desktop`}
+        style={{ backgroundColor: setting.color }}
+        ref={desktop}
+      >
+        {fileManager.Music_isOpen && (
+          <div className="absolute z-[100000]">
+            <Draggable>
+              <div className="p-1">
+                <AudioPlayer />
+              </div>
+            </Draggable>
           </div>
-          {/* <div>
+        )}
+        {/* //Apps icons */}
+
+        {maximizedApp === 0 && (
+          <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
+            <div>
+              <IconContainer
+                onClick={CmdClicked}
+                icon={VscTerminalCmd}
+                size={"50px"}
+                isDesktop
+              />
+            </div>
+            {/* <div>
           <IconContainer
             onClick={TodoClicked}
             icon={FcTodoList}
@@ -167,57 +181,57 @@ function Desktop() {
             isDesktop
           />
         </div> */}
-        </div>
-      )}
-      {cmd.isOpen && !cmd.isMinimized && (
-        <CMD
-          onClick={() => {
-            // console.log("im setting order");
-            setOrder("CMD");
-          }}
-        />
-      )}
-      {todo.isOpen && (
-        <div onClick={setOrder("TODO")}>
-          <Todo />
-        </div>
-      )}
-      {shutdown.isOpen && (
-        <ModalLayout>
-          <ShutDown />
-        </ModalLayout>
-      )}
-      {setting.isOpen && (
-        <Setting
-          onClick={() => setOrder("SETTING")}
-          zIndex={Indexs[2].zIndex}
-        />
-      )}
-      {portfolio.isOpen && (
-        <Layout type={"PORTFOLIO"}>
-          <Portfolio />
-        </Layout>
-      )}
-      {contactme.isOpen && (
-        <ModalLayout zIndex={null}>
-          <Contactme />
-        </ModalLayout>
-      )}
-      {fileManager.isOpen && !fileManager.isMinimized && (
-        <FileManager
-          onClick={() => {
-            console.log("file");
-            setOrder("FILE_MANAGER");
-          }}
-          zIndex={Indexs[1].zIndex}
-        />
-      )}
+          </div>
+        )}
+        {cmd.isOpen && !cmd.isMinimized && (
+          <CMD
+            onClick={() => {
+              // console.log("im setting order");
+              setOrder("CMD");
+            }}
+          />
+        )}
+        {todo.isOpen && (
+          <div onClick={setOrder("TODO")}>
+            <Todo />
+          </div>
+        )}
+        {shutdown.isOpen && (
+          <ModalLayout>
+            <ShutDown />
+          </ModalLayout>
+        )}
+        {setting.isOpen && (
+          <Setting
+            onClick={() => setOrder("SETTING")}
+            zIndex={Indexs[2].zIndex}
+          />
+        )}
+        {portfolio.isOpen && (
+          <Layout type={"PORTFOLIO"}>
+            <Portfolio />
+          </Layout>
+        )}
+        {contactme.isOpen && (
+          <ModalLayout zIndex={null}>
+            <Contactme />
+          </ModalLayout>
+        )}
+        {fileManager.isOpen && !fileManager.isMinimized && (
+          <FileManager
+            onClick={() => {
+              setOrder("FILE_MANAGER");
+            }}
+            zIndex={Indexs[1].zIndex}
+          />
+        )}
 
-      <BottomNav
-        IncreaseLowerOrders={IncreaseLowerOrders}
-        ChangingCurrentOrder={ChangingCurrentOrder}
-      />
-    </div>
+        <BottomNav
+          IncreaseLowerOrders={IncreaseLowerOrders}
+          ChangingCurrentOrder={ChangingCurrentOrder}
+        />
+      </div>
+    </Router>
   );
 }
 export default Desktop;

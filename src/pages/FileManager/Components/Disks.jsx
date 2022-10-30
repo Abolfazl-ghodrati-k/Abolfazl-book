@@ -15,20 +15,20 @@ function Disks({ Disk, title, Setting }) {
   });
 
   return (
-    <div
-      className={`${Setting ? "w-[800%]" : "w-[50%]"} text-left ${
-        true ? "font-semibold" : ""
-      } flex item-center cursor-pointer`}
-    >
-      <Link to={Setting ? `/setting/${Disk}` : `/filemanager/${Disk}`}>
+    <Link to={Setting ? `/setting/${Disk}` : `/filemanager/${Disk}`}>
+      <div
+        className={`${Setting ? "w-full" : "w-[50%]"} text-left ${
+          true ? "font-semibold" : ""
+        } flex item-center cursor-pointer`}
+      >
         <span
           className={`${Bold ? "font-bold underline underline-offset-8" : ""}`}
         >
           {title}
         </span>
         <span className="ml-1">{Bold ? "→" : ""}</span>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }
 

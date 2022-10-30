@@ -13,6 +13,7 @@ const initialState = {
   isMaximized: false,
   isMinimized: false,
   order: null,
+  color: "",
 };
 
 export default function SettingReducer(state = initialState, action) {
@@ -28,6 +29,11 @@ export default function SettingReducer(state = initialState, action) {
         isMaximized: action.payload.maximized,
         isMinimized: action.payload.minimized,
       });
+    case PICK_COLOR:
+      return Object.assign({}, state, {
+        color: action.payload,
+      });
+
     default:
       return state;
   }

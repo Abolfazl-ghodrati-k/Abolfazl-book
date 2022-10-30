@@ -52,24 +52,23 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
 
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
-  
-
   const { Order, Orders } = useOrder();
 
   const setOrder = (type) => {
+    console.log(type);
     Orders.map((app) => {
       // 1. Checks if clicked component has latest order
       if (app.name == type && Order == app.order) {
         return;
         // 2. Checks which components have been clicked
       } else if (app.name == type) {
-        // console.log(
-        //   "well clicked application is: ",
-        //   app.name,
-        //   " and its order is: ",
-        //   app.order,
-        //   "|| im Increasing lower orders"
-        // );
+        console.log(
+          "well clicked application is: ",
+          app.name,
+          " and its order is: ",
+          app.order,
+          "|| im Increasing lower orders"
+        );
         // 3. Finds clicked component order and changes previous orders
         IncreaseLowerOrders(app);
       }
@@ -127,6 +126,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
   const SETTINGClicked = () => {
     if (NavState.SETTING.isOpen) {
       // dispatch({ type: CLOSE_FILE_MANAGER });
+      console.log("in here");
       if (NavState.SETTING.isMinimized) {
         if (NavState.SETTING.isMaximized) {
           dispatch({
@@ -139,8 +139,8 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
             payload: { minimized: false, maximized: false },
           });
         }
-        setOrder("SETTING");
       }
+      setOrder("SETTING");
     } else {
       dispatch({ type: OPEN_SETTING });
       dispatch({ type: "ORDER_SETTING", payload: Order });
