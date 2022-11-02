@@ -39,11 +39,11 @@ function FileManager({ zIndex, onClick }) {
         }}
       >
         <div
-          className="p-1 w-full h-full"
+          className="p-1 w-full h-full rounded"
           onClick={onClick}
           style={{ position: "absolute", zIndex: zIndex }}
         >
-          <div className="bg-[#D9D9D9] h-full w-full handleFileManager ">
+          <div className="bg-[#D9D9D9] h-full w-full handleFileManager rounded">
             {/* NAVBAR */}
             <div className="flex justify-between items-center w-full p-1 bg-[#676464] h-[9%]">
               <div>Filemanager</div>
