@@ -13,8 +13,8 @@ export default function CMD({ onClick }) {
   const Element = useRef();
   const commands = useRef();
 
-  const [Width, setWidth] = useState(400);
-  const [Height, setHeight] = useState(400);
+  const [Width, setWidth] = useState(600);
+  const [Height, setHeight] = useState(550);
   const [ErrCount, setErrCount] = useState([]);
 
   const { errCount } = useSelector((state) => state.cmd);
@@ -28,6 +28,7 @@ export default function CMD({ onClick }) {
       cancel=".cancelcmd"
       handle=".handlecmd"
       defaultClassName="react-draggable cmd"
+      position={{x:50 ,y:70}}
     >
       <Resizable
         defaultSize={{ width: Width, height: Height }}
