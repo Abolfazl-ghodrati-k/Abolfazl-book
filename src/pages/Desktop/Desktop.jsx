@@ -63,12 +63,12 @@ function Desktop() {
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
   const { Order, Orders } = useOrder();
+
   const Indexs = useIndex();
 
   const desktop = useRef();
 
   useEffect(() => {
-    // console.log(Indexs);
     desktop.current.style.setProperty("--fileIndex", Indexs[1].zIndex);
     desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
     desktop.current.style.setProperty("--todoIndex", Indexs[1].zIndex);
@@ -148,7 +148,7 @@ function Desktop() {
   return (
     <Router>
       <div
-        className={`h-full w-full -z-10 relative desktop`}
+        className={`h-full w-full -z-10 relative desktop ${setting.color ? '':'bg-fill'}`}
         style={{ backgroundColor: setting.color }}
         ref={desktop}
       >

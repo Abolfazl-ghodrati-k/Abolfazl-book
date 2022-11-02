@@ -15,6 +15,10 @@ function CMDcontainer() {
   const PreCommand = useRef();
 
   useEffect(() => {
+    console.log(ErrCount)
+  },[ErrCount])
+
+  useEffect(() => {
     PreCommand.current.addEventListener("keydown", (e) => {
       // console.log(e)
       if (e.code === "Enter") {
@@ -116,13 +120,44 @@ function CMDcontainer() {
           });
         }
         break;
-      case "clear":
+      case "yola":
         {
+          window.open("https://yola-tailwind.vercel.app/", "_blank");
+          let resObj = {
+            Res: true,
+            Text: "Forwarded to yola",
+            Cmd: "cyrus-coin",
+          };
+          let instanceofRes = ErrCount;
+          instanceofRes.push(resObj);
           dispatch({
             type: "INCREASE_ERR",
-            payload: [
-              { preCmd: "", Cmd: "", err: false, Res: false, Text: "" },
-            ],
+            payload: instanceofRes,
+          });
+        }
+        break;
+      case "Ravix":
+        {
+          window.open("https://yola-tailwind.vercel.app/", "_blank");
+          let resObj = {
+            Res: true,
+            Text: "Forwarded to yola",
+            Cmd: "cyrus-coin",
+          };
+          let instanceofRes = ErrCount;
+          instanceofRes.push(resObj);
+          dispatch({
+            type: "INCREASE_ERR",
+            payload: instanceofRes,
+          });
+        }
+        break;
+      case "clear":
+        {
+          
+          dispatch({
+            type: "INCREASE_ERR",
+            payload: [],
           });
         }
         break;
@@ -163,7 +198,6 @@ function CMDcontainer() {
               ref={PreCommand}
               onChange={(e) => handleChange(e)}
             />
-
             <input
               type="text"
               className="bg-CMD color-white border-none focus:outline-none"

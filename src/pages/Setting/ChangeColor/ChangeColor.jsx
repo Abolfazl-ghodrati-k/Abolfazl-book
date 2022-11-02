@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { HexColorPicker } from "react-colorful";
 import { useSelector, useDispatch } from "react-redux";
 import { PICK_COLOR } from "../../../redux/actionTypes";
@@ -7,20 +8,29 @@ function ChangeColor() {
   const [Pickedcolor, setPickedcolor] = useState();
   const [Confirmed, setConfirmed] = useState(false);
   const [Applied, setApplied] = useState(false);
-  const { Color } = useSelector((state) => state.setting);
+  const Color = useSelector((state) => state.setting.color);
   const dispatch = useDispatch();
   const applyColor = () => {
-    setApplied((a) => (a = true));
-    document
-      .getElementsByClassName("desktop")[0]
-      .style.setProperty("background-color", Pickedcolor);
+    if (Applied) {
+      console.log(Color)
+     document.getElementsByClassName("desktop")[0].style.setProperty("background-color", Color)
+    } else {
+      console.log(Pickedcolor)
+      setApplied((a) => (a = true));
+      console.log(Pickedcolor);
+      document
+        .getElementsByClassName("desktop")[0]
+        .style.setProperty("background-color", Pickedcolor);
+    }
   };
 
   const confirmColor = () => {
+    console.log(Pickedcolor);
     setApplied((a) => (a = false));
     setConfirmed((Confirmed) => (Confirmed = true));
     dispatch({ type: PICK_COLOR, payload: Pickedcolor });
   };
+
   return (
     <div className="flex my-5 mx-5 h-full flex-col">
       <div className="flex justify-between mb-2">
@@ -31,7 +41,7 @@ function ChangeColor() {
             onChange={(color) => {
               setApplied((a) => (a = false));
               setConfirmed(false);
-              setPickedcolor(color);
+              setPickedcolor(coloR => coloR = color);
             }}
           />
         </span>

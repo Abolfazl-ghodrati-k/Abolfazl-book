@@ -69,9 +69,6 @@ export default function CMD({ onClick }) {
             <hr className="-mx-2 mt-1" />
             <div className="h-[92%] overflow-y-scroll pb-2" ref={commands}>
               {errCount.map((err, index) => {
-                if (index == 0) {
-                  return null;
-                }
                 return (
                   <div className="flex flex-col items-start justify-start">
                     <CMDcommands err={err} />

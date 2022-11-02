@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
 function Disks({ Disk, title, Setting }) {
   const [Bold, setBold] = useState(false);
@@ -7,7 +7,6 @@ function Disks({ Disk, title, Setting }) {
 
   useEffect(() => {
     if (location.pathname.includes(Disk)) {
-      // console.log(Disk);
       setBold(true);
     } else {
       setBold(false);
@@ -15,11 +14,16 @@ function Disks({ Disk, title, Setting }) {
   });
 
   return (
-    <Link to={Setting ? `/setting/${Disk}` : `/filemanager/${Disk}`}>
-      <div
-        className={`${Setting ? "w-full" : "w-[50%]"} text-left ${
-          true ? "font-semibold" : ""
-        } flex item-center cursor-pointer`}
+    <div
+      className={`${Setting ? "w-full" : "w-[50%]"} text-left ${
+        true ? "font-semibold" : ""
+      } flex item-center cursor-pointer visited:text-[red]`}
+    >
+      <NavLink
+        to={Setting ? `/setting/${Disk}` : `/filemanager/${Disk}`}
+        className={({ isActive }) =>
+          isActive ? "outline-hidden border-none" : ""
+        }
       >
         <span
           className={`${Bold ? "font-bold underline underline-offset-8" : ""}`}
@@ -27,8 +31,8 @@ function Disks({ Disk, title, Setting }) {
           {title}
         </span>
         <span className="ml-1">{Bold ? "→" : ""}</span>
-      </div>
-    </Link>
+      </NavLink>
+    </div>
   );
 }
 

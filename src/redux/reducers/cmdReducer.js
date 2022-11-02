@@ -16,7 +16,7 @@ const initialState = {
   order: null,
   top: null,
   left: null,
-  errCount: [{ preCmd: "", Cmd: "", err: false, Res: false, Text: '' }],
+  errCount: [],
 };
 
 export default function CMDReducer(state = initialState, action) {
