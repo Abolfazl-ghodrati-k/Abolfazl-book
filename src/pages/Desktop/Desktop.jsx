@@ -68,7 +68,7 @@ function Desktop() {
   const desktop = useRef();
 
   useEffect(() => {
-    console.log(Indexs);
+    // console.log(Indexs);
     desktop.current.style.setProperty("--fileIndex", Indexs[1].zIndex);
     desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
     desktop.current.style.setProperty("--todoIndex", Indexs[1].zIndex);

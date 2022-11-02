@@ -16,6 +16,7 @@ const initialState = {
   order: null,
   top: null,
   left: null,
+  errCount: [{ preCmd: "", Cmd: "", err: false, Res: false, Text: '' }],
 };
 
 export default function CMDReducer(state = initialState, action) {
@@ -46,6 +47,11 @@ export default function CMDReducer(state = initialState, action) {
       });
     case ORDER_CMD:
       return Object.assign({}, state, { order: action.payload });
+    case "INCREASE_ERR":
+      return Object.assign({}, state, {
+        errCount: action.payload,
+      });
+    
     default:
       return state;
   }
