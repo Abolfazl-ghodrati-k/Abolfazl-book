@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+}
+.active-section {
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: #01161e;
+  text-align: center;
+  animation-name: Activating;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  z-index: 10;
+}
+.nav {
+  transition: all;
+  transition-duration: 0.5s;
+}
+@keyframes Activating {
+  0% {
+    margin-bottom: 0;
+  }
+  20% {
+    margin-bottom: -0.3rem;
+  }
+  40% {
+    margin-bottom: -0.7rem;
+  }
+  60% {
+    margin-bottom: -1.1rem;
+  }
+  80% {
+    margin-bottom: -1.5rem;
+  }
+  100% {
+    margin-bottom: -1rem;
+    background-color: #eff6e0;
+    padding: 0 3px;
+  }
+}
+
+.dev span {
+  animation-name: Dev;
+  animation-duration: 5s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+@keyframes Dev {
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#D {
+  animation-delay: 0.5s;
+}
+#E {
+  animation-delay: 0.6s;
+}
+#V {
+  animation-delay: 0.7s;
+}
+#E1 {
+  animation-delay: 0.8s;
+}
+#L {
+  animation-delay: 0.9s;
+}
+#O {
+  animation-delay: 1s;
+}
+#P {
+  animation-delay: 1.1s;
+}
+#E2 {
+  animation-delay: 1.2s;
+}
+#R {
+  animation-delay: 1.3s;
+}
+.group {
+  transition: all;
+  transition-duration: 0.5s;
+}
+.icon-cont {
+  transition: all;
+  transition-duration: 0.5s;
+}
+.skills {
+  display: grid;
+  grid-template-columns: repeat(1fr, 12);
+  justify-items: center;
+}
+.stuff {
+  grid-column: 1/13;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.react-family {
+  grid-column: 1/13;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.styling {
+  grid-column: 1/13;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.vue-family {
+  grid-column: 1/13;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+@media (max-width: 608px) {
+  .stuff,
+  .react-family,
+  .styling,
+  .vue-family {
+    max-width: 400px !important;
+    margin: 0 auto;
+  }
+  .front , .dev{
+    font-size: 2.5rem;
+  }
+
+}
+@media (max-width: 534px){
+  .front{
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -8,7 +8,6 @@ import MobilePortfolio from "./pages/MobilePortfolio";
 import useOs from "./Hooks/useOs";
 
 function App() {
-  // const [Os, setOs] = useState();
   const Os = useOs();
 
   return (
@@ -16,7 +15,7 @@ function App() {
       <PersistGate persistor={persistor}>
         <div className="w-full h-screen  absolute -z-20">
           {Os ? (
-            (Os == "Android" || Os.includes('iPhone') || Os.includes('iPad')) ? (
+            Os == "Android" || Os.includes("iPhone") || Os.includes("iPad") ? (
               <MobilePortfolio />
             ) : (
               <Desktop />

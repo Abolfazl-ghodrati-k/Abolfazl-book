@@ -18,7 +18,7 @@ import IconContainer from "../../Components/Icon/IconContainer";
 import "./style.css";
 
 //icons
-import { FcTodoList } from "react-icons/fc";
+// import { FcTodoList } from "react-icons/fc";
 import { VscTerminalCmd } from "react-icons/vsc";
 import { OPEN_CMD, OPEN_TODO } from "../../redux/actionTypes";
 
@@ -38,10 +38,6 @@ import { useRef } from "react";
 
 import {
   BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Outlet,
 } from "react-router-dom";
 
 // hooks
@@ -94,15 +90,15 @@ function Desktop() {
     }
   };
 
-  const TodoClicked = () => {
-    dispatch({ type: OPEN_TODO });
-    dispatch({ type: "ORDER_TODO", payload: Order });
-    if (todo.isOpen) {
-      return;
-    } else {
-      ChangingCurrentOrder();
-    }
-  };
+  // const TodoClicked = () => {
+  //   dispatch({ type: OPEN_TODO });
+  //   dispatch({ type: "ORDER_TODO", payload: Order });
+  //   if (todo.isOpen) {
+  //     return;
+  //   } else {
+  //     ChangingCurrentOrder();
+  //   }
+  // };
 
   // const Types = ["CMD", "TODO", "SETTING", "FILE_MANAGER"];
 
@@ -115,7 +111,7 @@ function Desktop() {
       Orders.map((app) => {
         if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
-          return;
+          return 'what?';
         }
       });
       // and if all aps arnt clicked ill set clicked component to top and increase the orders by checking a condition
@@ -126,7 +122,7 @@ function Desktop() {
       Orders.map((app) => {
         if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
-          return;
+          return 'what?';
         }
       });
     }
@@ -148,7 +144,7 @@ function Desktop() {
   return (
     <Router>
       <div
-        className={`h-full w-full -z-10 relative desktop ${setting.color ? '':'bg-fill'}`}
+        className={`h-full w-full -z-10 relative desktop ${setting.color ? '':'bg-fill'} min-w-[700px]`}
         style={{ backgroundColor: setting.color }}
         ref={desktop}
       >

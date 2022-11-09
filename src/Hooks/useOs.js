@@ -1,7 +1,7 @@
 import React from "react";
 
 function useOs() {
-    var Os
+  var Os = "";
   var nAgt = window.navigator.userAgent;
   var clientStrings = [
     { s: "Windows 3.11", r: /Win16/ },
@@ -34,24 +34,18 @@ function useOs() {
       r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/,
     },
   ];
-
   for (var id in clientStrings) {
     var cs = clientStrings[id];
     if (cs.r.test(nAgt)) {
       var os = cs.r;
       console.log(os.source);
 
-      if (
-        os.source == "Android" ||
-        os.source.includes("iPhone") ||
-        os.source.includes("iPad") ||
-        os.source.includes("iPod")
-      ) {
-        Os = os.source
-      }
+      Os = os.source;
+
       break;
     }
   }
+
   return Os;
 }
 
