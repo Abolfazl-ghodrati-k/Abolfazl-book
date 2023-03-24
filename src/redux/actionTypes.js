@@ -1,5 +1,5 @@
-export const END_LOADING   = "END_LOADING";
-export const START_LOADING = "START_LOADING";
+export const FINISH_LOADING   = "FINISH_LOADING";
+export const START_LOADING    = "START_LOADING";
 
 //desktop
 export const OPEN_MODAL    = "OPEN_MODAL";
@@ -73,3 +73,12 @@ export const ORDER_TODO       = "ORDER_TODO"
 export const ADD_TODO    = "ADD_TODO"
 export const DELETE_TODO = "DELETE_TODO"
 export const EDIT_TODO   = "EDIT_TODO"
+
+//CALCULATOR
+export const OPEN_CALCULATOR  = "OPEN_CLACULATOR"
+export const CLOSE_CALCULATOR = "CLOSE_CALCULATOR"
+
+//Weather
+export const SET_CITY          = "SET_CITY"
+export const SET_WEATHER_DATA  = "SET_WEATHER_DATA"
+export const SET_WEATHER_ERROR = "SET_WEATHER_ERROR"

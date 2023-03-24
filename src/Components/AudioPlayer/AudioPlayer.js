@@ -20,6 +20,8 @@ const AudioPlayer = () => {
 
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [Loading, setLoading] = useState(true);
+  const [MusicReady, setMusicReady] = useState(false);
 
   // references
   const audioPlayer = useRef(); // reference our audio component
@@ -28,6 +30,15 @@ const AudioPlayer = () => {
   const music = useRef(); // reference the playing animation
 
   useEffect(() => {
+    if (isPlaying && MusicReady) {
+      console.log("you asshole");
+      audioPlayer.current.play();
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    }
+  });
+
+  useEffect(() => {
+    // console.log(isPlaying);
     // checks if user try to pause music via keyboard
     window.addEventListener("keydown", (e) => {
       if (e.key == "MediaPlayPause") {
@@ -41,34 +52,32 @@ const AudioPlayer = () => {
       }
     });
     // makes sure if we want to play music by store html will play audio to
-    if (isPlaying) {
-      audioPlayer.current.play();
-    }
+
     // makes a delay for user when is refreshing page to make sure
     // we can stop music and pause it in store either
-    const onBeforeUnload = (e) => {
-      e.preventDefault();
-      dispatch({ type: CONTROLL_MUSIC, payload: false });
-      audioPlayer.current.pause();
-      setTimeout(()=>{console.log('reloading')},[500])
-    };
+    // const onBeforeUnload = (e) => {
+    //   if (isPlaying) {
+    //     e.preventDefault();
+    //     dispatch({ type: CONTROLL_MUSIC, payload: false });
+    //     audioPlayer.current.pause();
+    //     setTimeout(() => {
+    //       console.log("reloading");
+    //     }, [500]);
+    //   }
+    // };
     // music duration calculation
     const seconds = Math.floor(audioPlayer.current.duration);
-    setDuration(seconds);
+    setDuration((sec) => (sec = seconds));
     progressBar.current.max = seconds;
-    window.addEventListener("beforeunload", onBeforeUnload);
-    return () => {
-      window.addEventListener("beforeunload", onBeforeUnload);
-    };
+    // window.addEventListener("beforeunload", onBeforeUnload);
+    // return () => {
+    //   window.addEventListener("beforeunload", onBeforeUnload);
+    // };
   }, [
-    audioPlayer?.current?.loadedmetadata,
-    audioPlayer?.current?.readyState,
-    audioPlayer?.current?.paused,
+    audioPlayer?.current?.pause,
+    audioPlayer?.current?.ReadyState,
+    audioPlayer?.current?.duration,
   ]);
-
-  useEffect(() => {
-
-  })
 
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
@@ -147,12 +156,17 @@ const AudioPlayer = () => {
   const ClosePlayer = () => {
     dispatch({ type: CLOSE_MUSIC });
     dispatch({ type: CONTROLL_MUSIC, payload: false });
-    audioPlayer.current.pause();
+    audioPlayer?.current?.pause();
   };
 
   return (
     <div className={styles.audioPlayer}>
       <audio
+        onCanPlayThrough={() => {
+          setMusicReady(true);
+          setLoading(false);
+          console.log("kirrrr");
+        }}
         ref={audioPlayer}
         src={playingSrc}
         className="dropbox-embed"
@@ -172,25 +186,31 @@ const AudioPlayer = () => {
         <p className="text-[12px] max-w-[170px] bg-fill relative">
           {playingTitle}
         </p>
-        {isPlaying && (
-          <div className="now playing" ref={music}>
-            <span className="bar n1">A</span>
-            <span className="bar n2">B</span>
-            <span className="bar n3">c</span>
-            <span className="bar n4">D</span>
-            <span className="bar n5">E</span>
-            <span className="bar n6">F</span>
-            <span className="bar n7">G</span>
-            <span className="bar n8">H</span>
-          </div>
-        )}
+        {Loading
+          ? "Loading ..."
+          : (isPlaying) && (
+              <div className="now playing" ref={music}>
+                <span className="bar n1">A</span>
+                <span className="bar n2">B</span>
+                <span className="bar n3">c</span>
+                <span className="bar n4">D</span>
+                <span className="bar n5">E</span>
+                <span className="bar n6">F</span>
+                <span className="bar n7">G</span>
+                <span className="bar n8">H</span>
+              </div>
+            )}
       </div>
       <div className={styles.controll}>
         <button className={styles.forwardBackward} onClick={backThirty}>
           <BsArrowLeftShort /> 30
         </button>
         <button onClick={togglePlayPause} className={styles.playPause}>
-          {isPlaying ? <FaPause /> : <FaPlay className={styles.play} />}
+          {isPlaying && MusicReady ? (
+            <FaPause />
+          ) : (
+            <FaPlay className={styles.play} />
+          )}
         </button>
         <button className={styles.forwardBackward} onClick={forwardThirty}>
           30 <BsArrowRightShort />

@@ -7,7 +7,7 @@ import CMDcontainer from "./CMDcontainer";
 import CMDResponse from "./CMDResponse";
 import CMDcommands from "./CMDcommands";
 
-export default function CMD({ onClick }) {
+export default function CMDApp({ onClick }) {
   const dispatch = useDispatch();
 
   const Element = useRef();

@@ -4,7 +4,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { createLogger } from "redux-logger";
 import SetTransform from "./transforms";
-import rootSaga from "./saga/rootSaga";
+import rootSaga from "./sagas/rootSaga";
 //reducers
 import BrowserReducer from "./reducers/browserReducer";
 import FileManagerReducer from "./reducers/FileManagerReducer";
@@ -16,6 +16,9 @@ import CMDReducer from "./reducers/cmdReducer";
 import TodoReducer from "./reducers/TodoReducer";
 import OrderReducer from "./reducers/order";
 import DesktopReducer from "./reducers/desktop";
+import CalculatorReducer from "./reducers/calculatorReducer";
+import WeatherReducer from "./reducers/weather";
+import loadingReducer from "./reducers/loading";
 
 const rootReducer = combineReducers({
   browser: BrowserReducer,
@@ -27,7 +30,10 @@ const rootReducer = combineReducers({
   cmd: CMDReducer,
   todo: TodoReducer,
   order: OrderReducer,
-  desktop: DesktopReducer
+  desktop: DesktopReducer,
+  calculator: CalculatorReducer,
+  weather: WeatherReducer,
+  loading: loadingReducer
 });
 
 const persistConfig = {
@@ -42,7 +48,7 @@ const persistreducer = persistReducer(persistConfig, rootReducer);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   persistreducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
+  composeEnhancers(applyMiddleware(sagaMiddleware,createLogger()))
 );
 sagaMiddleware.run(rootSaga);
 let persistor = persistStore(store);

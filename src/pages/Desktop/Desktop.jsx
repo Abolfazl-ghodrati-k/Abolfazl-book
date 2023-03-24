@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //pages
-import FileManager from "../FileManager";
-import Contactme from "../Contact";
-import Portfolio from "../Portfolio";
-import Setting from "../Setting";
-import ShutDown from "../ShutDown";
-import CMD from "../Apps/CMD/CMD";
-import Todo from "../Apps/Todo";
+import FileManagerApp from "../FileManager";
+import ContactmeApp from "../Contact";
+import PortfolioApp from "../Portfolio/Portfolio";
+import SettingApp from "../Setting";
+import ShutDownApp from "../ShutDown";
+import CMDApp from "../Apps/CMD/CMDApp";
+import TodoApp from "../Apps/Todo";
+import CalculatorApp from "../Apps/Calculator";
+
+//widgets
+import Weather from "../Widgets/Weather";
 
 //Components
 import BottomNav from "../../BottomNav";
 import IconContainer from "../../Components/Icon/IconContainer";
+import AudioPlayer from "../../Components/AudioPlayer";
 
 //css
 import "./style.css";
@@ -20,33 +25,22 @@ import "./style.css";
 //icons
 // import { FcTodoList } from "react-icons/fc";
 import { VscTerminalCmd } from "react-icons/vsc";
-import { OPEN_CMD, OPEN_TODO } from "../../redux/actionTypes";
+
+// action types
+import { OPEN_CMD } from "../../redux/actionTypes";
 
 //HOOKS
 import useOrder from "../../Hooks/useOrder";
 import useIndex from "../../Hooks/useIndex";
 
-// import Draggable from "react-draggable";
-// import { Resizable } from "re-resizable";
 import Layout from "../../Components/Layout/Layout";
-import { useEffect } from "react";
 import ModalLayout from "../../Components/Layout/ModalLayout";
 
 import Draggable from "react-draggable";
-import AudioPlayer from "../../Components/AudioPlayer";
-import { useRef } from "react";
 
-import {
-  BrowserRouter as Router,
-} from "react-router-dom";
-
-// hooks
-// import useOpenedApps from "../../Hooks/useOpenedApps";
-// import useOrder from "../../Hooks/useOrder";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function Desktop() {
-  // const [Order, setorder] = useState(Number);
-
   const dispatch = useDispatch();
 
   const cmd = useSelector((state) => state.cmd);
@@ -57,6 +51,7 @@ function Desktop() {
   const setting = useSelector((state) => state.setting);
   const shutdown = useSelector((state) => state.shutdown);
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
+  const loading = useSelector((store) => store.loading.loading);
 
   const { Order, Orders } = useOrder();
 
@@ -69,6 +64,7 @@ function Desktop() {
     desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
     desktop.current.style.setProperty("--todoIndex", Indexs[1].zIndex);
     desktop.current.style.setProperty("--settingIndex", Indexs[2].zIndex);
+    desktop.current.style.setProperty("--calcIndex", Indexs[3].zIndex);
   });
 
   const ChangingCurrentOrder = () => {
@@ -90,6 +86,11 @@ function Desktop() {
     }
   };
 
+  const AppClicked = (appName) => {
+    dispatch({ type: `OPEN_${appName}` });
+    dispatch({ type: `ORDER_${appName}`, payload: Order });
+  };
+
   // const TodoClicked = () => {
   //   dispatch({ type: OPEN_TODO });
   //   dispatch({ type: "ORDER_TODO", payload: Order });
@@ -106,12 +107,12 @@ function Desktop() {
     //checks if all apps are on screen or not if yes then when an app is clicked thats order will be 1
     // and were sure that all aps are on screen so ican simply increase all orders
     if (Order == 0) {
-      console.log("all aps are opened?")
+      console.log("all aps are opened?");
       dispatch({ type: `ORDER_${ClickedComponent.name}`, payload: 1 });
       Orders.map((app) => {
         if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
-          return 'what?';
+          return "what?";
         }
       });
       // and if all aps arnt clicked ill set clicked component to top and increase the orders by checking a condition
@@ -122,7 +123,7 @@ function Desktop() {
       Orders.map((app) => {
         if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
-          return 'what?';
+          return "what?";
         }
       });
     }
@@ -144,10 +145,20 @@ function Desktop() {
   return (
     <Router>
       <div
-        className={`h-full w-full -z-10 relative desktop ${setting.color ? '':'bg-fill'} min-w-[700px]`}
+        className={`h-full w-full -z-10 relative desktop ${
+          setting.color ? "" : "bg-fill"
+        } min-w-[700px]`}
         style={{ backgroundColor: setting.color }}
         ref={desktop}
       >
+        {loading && <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#e30505] text-[white] w-full h-full flex justify-center items-center">loading</div>}
+
+        {/* Widgets */}
+        <div className="absolute z-10">
+          <Weather />
+        </div>
+        {/* End of Widgets */}
+
         {fileManager.Music_isOpen && (
           <div className="absolute z-[100000]">
             <Draggable>
@@ -158,6 +169,7 @@ function Desktop() {
           </div>
         )}
         {/* //Apps icons */}
+        {/* <CalculatorApp /> */}
 
         {maximizedApp === 0 && (
           <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
@@ -180,7 +192,7 @@ function Desktop() {
           </div>
         )}
         {cmd.isOpen && !cmd.isMinimized && (
-          <CMD
+          <CMDApp
             onClick={() => {
               // console.log("im setting order");
               setOrder("CMD");
@@ -189,32 +201,32 @@ function Desktop() {
         )}
         {todo.isOpen && (
           <div onClick={setOrder("TODO")}>
-            <Todo />
+            <TodoApp />
           </div>
         )}
         {shutdown.isOpen && (
           <ModalLayout>
-            <ShutDown />
+            <ShutDownApp />
           </ModalLayout>
         )}
         {setting.isOpen && (
-          <Setting
+          <SettingApp
             onClick={() => setOrder("SETTING")}
             zIndex={Indexs[2].zIndex}
           />
         )}
         {portfolio.isOpen && (
           <Layout type={"PORTFOLIO"}>
-            <Portfolio />
+            <PortfolioApp />
           </Layout>
         )}
         {contactme.isOpen && (
           <ModalLayout zIndex={null}>
-            <Contactme />
+            <ContactmeApp />
           </ModalLayout>
         )}
         {fileManager.isOpen && !fileManager.isMinimized && (
-          <FileManager
+          <FileManagerApp
             onClick={() => {
               setOrder("FILE_MANAGER");
             }}

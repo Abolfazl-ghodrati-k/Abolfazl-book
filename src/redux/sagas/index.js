@@ -1,0 +1,1 @@
+export const WEATHER_ACTION = "WEATHER_ACTION"
