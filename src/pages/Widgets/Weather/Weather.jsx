@@ -12,7 +12,7 @@ export const WeatherInfoIcons = {
   pressure: "./icons/pressure.svg",
 };
 
-const WeatherIcons = {
+export const WeatherIcons = {
   "01d": "./icons/sunny.svg",
   "01n": "./icons/night.svg",
   "02d": "./icons/day.svg",
@@ -65,12 +65,14 @@ function Weather() {
   console.log(data);
 
   return (
-    <div className="flex flex-col items-center w-[380px] py-[20px] px-[10px] m-auto rounded-[4px] bg-[white]">
+    <div className="flex flex-col items-center mt-[2%] ml-1 w-[380px] py-[20px] px-[10px] m-auto rounded-[4px] bg-[white]">
       <span className="text-black my-[20px] mx-auto text-[18px] font-bold">
-        Waether Widget
+        Weather App
       </span>
       {/* <TiWeatherCloudy size={150} color="purple" /> */}
-      <p className="border border-r-heading w-full pl-4 text-[16px] font-bold mb-3">where are you? ↓</p>
+      <p className=" w-full pl-4 text-[16px] font-bold mb-3">
+        where are you? ↓
+      </p>
       <input
         type="text"
         className="bg-[black] text-[white] text-[16px] w-full p-4 rounded-md"
@@ -81,18 +83,30 @@ function Weather() {
           dispatch({ type: SET_WEATHER_ERROR, payload: null });
         }}
       />
-      <button className="p-4 w-full bg-pink-200 mt-2" onClick={handleLocation}>see The weather</button>
+      <button className="p-4 w-full bg-pink-200 mt-2" onClick={handleLocation}>
+        see The weather
+      </button>
+      <span className="text-left mt-1 text-[orange] w-full">
+        {error ? "Error! = "+error.message : null}
+      </span>
       <div className="flex w-full mt-[30px] mb-[20px] mx-auto justify-between items-center">
         <div className="my-[20px] mx-auto capitalize text-[14px]">
-          <span className="text-[28px]">{`${Math.floor(data?.main?.temp - 273)}°C`}</span>
+          <span className="text-[28px]">{`${Math.floor(
+            data?.main?.temp - 273
+          )}°C`}</span>
           {`  |  ${data?.weather[0].description}`}
         </div>
-        <img className="w-[100px] h-[100px] my-[5px] mx-auto" src={WeatherIcons[data?.weather[0].icon]} />
+        <img
+          className="w-[100px] h-[100px] my-[5px] mx-auto"
+          src={WeatherIcons[data?.weather[0].icon]}
+        />
       </div>
       <p className="my-[15px] mx-auto capitalize text-[28px] font-bold">{`${data?.name}, ${data?.sys?.country}`}</p>
 
-      <p className="mt-[20px] mb-[10px] mx-[25px] capitalize text-[14px] font-bold text-start w-[90%] ">Weather Info</p>
-      <div className="flex w-[90%] justify-evenly items-center flex-wrap" >
+      <p className="mt-[20px] mb-[10px] mx-[25px] capitalize text-[14px] font-bold text-start w-[90%] ">
+        Weather Info
+      </p>
+      <div className="flex w-[90%] justify-evenly items-center flex-wrap">
         <WeatherInfoComponent
           name={isDay ? "sunset" : "sunrise"}
           value={`${getTime(data?.sys[isDay ? "sunrise" : "sunset"])}`}

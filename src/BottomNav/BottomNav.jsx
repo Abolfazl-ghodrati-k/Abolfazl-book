@@ -198,7 +198,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
   return (
     <>
       <div className={`w-full absolute bottom-2 z-0`}>
-        <div className={`bg-CMD mx-auto max-w-[600px]  rounded-lg`}>
+        <div className={`bg-CMD ml-auto lg:mx-auto max-w-[600px]  rounded-lg`}>
           <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
             {/* Browser */}
             <div>

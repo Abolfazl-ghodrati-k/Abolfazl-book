@@ -15,6 +15,7 @@ import CalculatorApp from "../Apps/Calculator";
 import Weather from "../Widgets/Weather";
 
 //Components
+import Shorthands from "../../Shorthands";
 import BottomNav from "../../BottomNav";
 import IconContainer from "../../Components/Icon/IconContainer";
 import AudioPlayer from "../../Components/AudioPlayer";
@@ -43,15 +44,16 @@ import { BrowserRouter as Router } from "react-router-dom";
 function Desktop() {
   const dispatch = useDispatch();
 
-  const cmd = useSelector((state) => state.cmd);
-  const todo = useSelector((state) => state.todo);
-  const fileManager = useSelector((state) => state.fileManager);
-  const contactme = useSelector((state) => state.contactme);
-  const portfolio = useSelector((state) => state.portfolio);
-  const setting = useSelector((state) => state.setting);
-  const shutdown = useSelector((state) => state.shutdown);
+  const cmd          = useSelector((state) => state.cmd);
+  const todo         = useSelector((state) => state.todo);
+  const fileManager  = useSelector((state) => state.fileManager);
+  const contactme    = useSelector((state) => state.contactme);
+  const portfolio    = useSelector((state) => state.portfolio);
+  const setting      = useSelector((state) => state.setting);
+  const shutdown     = useSelector((state) => state.shutdown);
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
-  const loading = useSelector((store) => store.loading.loading);
+  const loading      = useSelector((store) => store.loading.loading);
+  const weather      = useSelector((store) => store.weather);
 
   const { Order, Orders } = useOrder();
 
@@ -151,12 +153,18 @@ function Desktop() {
         style={{ backgroundColor: setting.color }}
         ref={desktop}
       >
-        {loading && <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#e30505] text-[white] w-full h-full flex justify-center items-center">loading</div>}
+        {loading && (
+          <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#e30505] text-[white] w-full h-full flex justify-center items-center">
+            loading
+          </div>
+        )}
 
         {/* Widgets */}
-        <div className="absolute z-10">
-          <Weather />
-        </div>
+        {weather.show && (
+          <div className="absolute z-10">
+            <Weather />
+          </div>
+        )}
         {/* End of Widgets */}
 
         {fileManager.Music_isOpen && (
@@ -233,6 +241,8 @@ function Desktop() {
             zIndex={Indexs[1].zIndex}
           />
         )}
+
+        <Shorthands />
 
         <BottomNav
           IncreaseLowerOrders={IncreaseLowerOrders}

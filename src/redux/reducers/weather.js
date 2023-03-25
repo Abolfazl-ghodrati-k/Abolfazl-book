@@ -1,13 +1,15 @@
-import { SET_CITY, SET_WEATHER_DATA, SET_WEATHER_ERROR } from "../actionTypes";
+import { SET_CITY, SET_WEATHER_DATA, SET_WEATHER_ERROR, HANDLE_SHOW_WEATHER } from "../actionTypes";
 
 const initialState = {
   city: "",
   data: null,
-  error: null
+  error: null,
 };
 
 export default function WeatherReducer(state = initialState, action) {
   switch (action.type) {
+    case HANDLE_SHOW_WEATHER:
+      return Object.assign({}, state, { show: action.payload });
     case SET_CITY:
       return Object.assign({}, state, { city: action.payload });
     case SET_WEATHER_DATA:
