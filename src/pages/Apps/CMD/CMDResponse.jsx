@@ -6,16 +6,17 @@ function CMDResponse({ err }) {
   return (
     <div className="flex items-start justify-start my-1">
       {err.err == true && (
-        <div className="flex flex-col justify-start items-start text-[0.7rem]">
+        <div className="flex flex-col justify-start items-start text-[0.7rem] text-[gray] ">
           {err.preCmd && (
             <span>
               who are you talking to i dont know
-              <span className="ml-1 text-[red]">{err.preCmd}</span>
+              <span className="ml-1 text-[#d38a8a89]">{err.preCmd}</span>
             </span>
           )}
           {err.Cmd && (
             <span>
-              the <span className="ml-1 text-[red]">Abolfazl {err.Cmd}</span>{" "}
+              the{" "}
+              <span className="ml-1 text-[#d38a8a89]">Abolfazl {err.Cmd}</span>{" "}
               does'nt exist
             </span>
           )}
@@ -29,7 +30,7 @@ function CMDResponse({ err }) {
               <CMDhelp />
             </div>
           ) : (
-            <div>{err.Text}</div>
+            <div className="text-[gray] text-[.9rem]">{err.Text}</div>
           )}
         </div>
       )}

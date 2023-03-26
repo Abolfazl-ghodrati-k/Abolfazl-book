@@ -6,8 +6,9 @@ function CMDhelp() {
         <span className='ml-1'>currently available commands are :</span> <br />
         → Abolfazl cyrus-coin <br />
         → Abolfazl yola <br />
-        → Abolfazl Ravix <br />
-        → Abolfazl Ravix-pwa <br />
+        → Abolfazl abolfazl-note <br />
+        → Abolfazl dandanino <br />
+        → Abolfazl clear <br />
         → Abolfazl help <br />
         → Abolfazl shutdown <br /> 
     </div>

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function CMDcontainer() {
+  const [isAbolfazl, setIsAbolfazl] = useState(false);
   const [Err, setErr] = useState(false);
   const [Command, setCommand] = useState("");
   const [preErr, setpreErr] = useState(false);
@@ -15,8 +16,8 @@ function CMDcontainer() {
   const PreCommand = useRef();
 
   useEffect(() => {
-    console.log(ErrCount)
-  },[ErrCount])
+    console.log(ErrCount);
+  }, [ErrCount]);
 
   useEffect(() => {
     PreCommand.current.addEventListener("keydown", (e) => {
@@ -55,8 +56,9 @@ function CMDcontainer() {
     // console.log(e);
     setPreCmdErr((msg) => (msg = e.target.value));
     if (e.target.value.includes("Abolfazl")) {
+      setIsAbolfazl(true);
       e.target.style.color = "green";
-      e.target.style.width = "58px";
+      e.target.style.width = "50px";
       CommandInput.current.style.display = "flex";
       CommandInput.current.focus();
       if (CommandInput.current.disabled) {
@@ -65,6 +67,7 @@ function CMDcontainer() {
         CommandInput.current.focus();
       }
     } else {
+      setIsAbolfazl(false);
       e.target.style.color = "white";
       e.target.style.width = "auto";
     }
@@ -136,25 +139,44 @@ function CMDcontainer() {
           });
         }
         break;
-      case "Ravix":
+      case "abolfazl-note":
         {
-          window.open("https://yola-tailwind.vercel.app/", "_blank");
           let resObj = {
             Res: true,
-            Text: "Forwarded to yola",
-            Cmd: "cyrus-coin",
+            Text: "Forwarded to abolfazl note ...  come back here habibi😘",
+            Cmd: "abolfazl-note",
           };
-          let instanceofRes = ErrCount;
-          instanceofRes.push(resObj);
+          let instanceofErr = ErrCount;
+          instanceofErr.push(resObj);
           dispatch({
             type: "INCREASE_ERR",
-            payload: instanceofRes,
+            payload: instanceofErr,
           });
+          setTimeout(() => {
+            window.open("https://abolfazl-note.vercel.app/", "_self");
+          }, 1000);
+        }
+        break;
+      case "dandanino":
+        {
+          let resObj = {
+            Res: true,
+            Text: "Forwarded to dandanino ... come back here habibi😘",
+            Cmd: "abolfazl-note",
+          };
+          let instanceofErr = ErrCount;
+          instanceofErr.push(resObj);
+          dispatch({
+            type: "INCREASE_ERR",
+            payload: instanceofErr,
+          });
+          setTimeout(() => {
+            window.open("https://dandanino.vercel.app/", "_self");
+          }, 1000);
         }
         break;
       case "clear":
         {
-          
           dispatch({
             type: "INCREASE_ERR",
             payload: [],
@@ -180,8 +202,8 @@ function CMDcontainer() {
 
   return (
     <div className="flex flex-col items-start justify-start">
-      <div className="flex justify-start items-center">
-        <p className="w-[108px]" style={{ color: "white", fontSize: ".7rem" }}>
+      <div className="flex justify-start items-center mt-1">
+        <p className="w-[100px]" style={{ color: "white", fontSize: ".7rem" }}>
           AbolfazlBook/IP {"→"}
         </p>
         <div className="flex justify-start cancelcmd">
@@ -192,7 +214,6 @@ function CMDcontainer() {
               style={{
                 fontSize: ".7rem",
                 color: "white",
-                paddingLeft: "5px",
                 width: "auto",
               }}
               ref={PreCommand}

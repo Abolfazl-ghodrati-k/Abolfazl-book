@@ -64,12 +64,16 @@ function IconContainer({
     <div
       ref={Ref}
       onClick={(e) => ClickHandler(e)}
-      className={`flex content-center rounded ${
+      className={`flex content-center rounded cursor-pointer transition-all duration-700 relative ${
         BgColor ? "bg-gray-300" : ""
-      } px-1 hover:bg-gray-100`}
+      } px-1 ${
+        isDesktop
+          ? "hover:bg-gray-200"
+          : "hover:scale-150 icon hover:mx-[20px] hover:mb-2"
+      }`}
     >
       {img ? (
-        <div className="flex justify-center content-center">
+        <div className="flex justify-center content-center ">
           <img
             src={SRC}
             style={{ background: "transparent", width: size, height: size }}

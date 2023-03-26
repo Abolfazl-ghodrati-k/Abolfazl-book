@@ -30,7 +30,7 @@ function Weather() {
         {` ${data?.weather[0]?.description}`}
       </div>
       <img
-        className="w-[30px] h-[30px] my-[5px] mx-auto"
+        className="w-[30px] h-[30px] my-[5px] mx-auto hidden lg:block"
         src={WeatherIcons[data?.weather[0].icon]}
       />
     </div>

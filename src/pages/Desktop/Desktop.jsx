@@ -147,7 +147,7 @@ function Desktop() {
   return (
     <Router>
       <div
-        className={`h-full w-full -z-10 relative desktop ${
+        className={`h-full w-full -z-10 relative desktop max-w-[100vw] ${
           setting.color ? "" : "bg-fill"
         } min-w-[700px]`}
         style={{ backgroundColor: setting.color }}

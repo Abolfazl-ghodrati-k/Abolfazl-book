@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useOrder from "../../Hooks/useOrder";
 import { APP_MAXIMIZED } from "../../redux/actionTypes";
 
-const MacNav = ({ type, Page, name }) => {
+const MacNav = ({ type, Page, name, isMaximized }) => {
   const dispatch = useDispatch();
   const CurrentOrder = useSelector((state) => state.order.order);
   const [BackGround, setBackGround] = useState("");
@@ -28,7 +28,19 @@ const MacNav = ({ type, Page, name }) => {
         dispatch({ type: `MINIMIZE_${name}` });
         break;
       case "MAXIMIZE":
-        dispatch({ type: `MAXIMIZED_${name}` });
+        if (isMaximized) {
+          dispatch({
+            type: `RESIZE_${name}`,
+            payload: {
+              maximized: false,
+              minimized: false,
+            },
+          });
+          dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
+        } else {
+          dispatch({ type: `MAXIMIZE_${name}`});
+          dispatch({ type: APP_MAXIMIZED, payload: maximizedApp + 1 });
+        }
         break;
       case "CLOSE":
         dispatch({ type: `CLOSE_${name}` });
@@ -40,7 +52,7 @@ const MacNav = ({ type, Page, name }) => {
         if (maximizedApp > 0) {
           dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
         }
-        
+
         break;
       default:
         break;
