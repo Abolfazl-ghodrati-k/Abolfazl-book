@@ -18,19 +18,19 @@ function useIndex() {
     Indexs.forEach((page, index) => {
       switch (page.zIndex) {
         case 1:
-          Indexs[index].zIndex = 10000;
+          Indexs[index].zIndex = 100000;
           return Indexs;
         case 2:
-          Indexs[index].zIndex = 1000;
+          Indexs[index].zIndex = 10000;
           return Indexs;
         case 3:
-          Indexs[index].zIndex = 100;
+          Indexs[index].zIndex = 1000;
           return Indexs;
         case 4:
-          Indexs[index].zIndex = 10;
+          Indexs[index].zIndex = 100;
           return Indexs;
         case 5:
-          Indexs[index].zIndex = 1;
+          Indexs[index].zIndex = 10;
           return Indexs;
       }
     });

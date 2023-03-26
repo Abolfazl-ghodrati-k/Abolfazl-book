@@ -173,7 +173,7 @@ function Desktop() {
 
         {/* Widgets */}
         {weather.show && (
-          <div className="absolute z-10">
+          <div className="absolute z-[10000000]">
             <Weather />
           </div>
         )}
@@ -192,7 +192,7 @@ function Desktop() {
         {/* <CalculatorApp /> */}
 
         {maximizedApp === 0 && (
-          <div className="absolute right-1 top-1 flex flex-col justify-center content-center">
+          <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-2">
             <div>
               <IconContainer
                 onClick={CmdClicked}

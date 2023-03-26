@@ -15,6 +15,8 @@ class Calculator extends React.Component {
     operation: null,
     Width: 400,
     Height: 400,
+    X: 40,
+    Y: 40,
   };
 
   handleClick = (buttonName) => {
@@ -28,10 +30,10 @@ class Calculator extends React.Component {
         cancel=".cancelcmd"
         handle=".handlecalc"
         defaultClassName="react-draggable calculator"
-        defaultPosition={{ x: 40, y: 40 }}
-        position={{x: this.state.Width, y: this.state.Height}}
+        defaultPosition={{ x: this.state.X, y: this.state.Y }}
+        position={{ x: this.state.X, y: this.state.Y }}
         onStop={(e, data) => {
-          this.setState({ Width: data.x, Height: data.y });
+          this.setState({ X: data?.x, Y: data?.y });
         }}
       >
         <Resizable
@@ -52,19 +54,25 @@ class Calculator extends React.Component {
           >
             <div className="component-app handlecalc">
               <div className="text-[gray] pb-4 flex items-center w-full justify-between">
-                Abolfazl Calc
+                <p>
+                  Abolfazl Calc <sub>v.1.0.0</sub>
+                </p>
                 <div className="flex justify-end items-center ">
                   <MacNav type={"MINIMIZE"} name={"CALCULATOR"} />
                   <div
                     onClick={() => {
                       if (this.props.store.isMaximized) {
-                        this.setState({ Height: 40, Width: 40 });
+                        this.setState({ X: 40, Y: 40 });
                       } else {
-                        this.setState({ Height: 0, Width: 0 });
+                        this.setState({ Y: 0, X: 0 });
                       }
                     }}
                   >
-                    <MacNav type={"MAXIMIZE"} name={"CALCULATOR"} isMaximized={this.props.store.isMaximized} />
+                    <MacNav
+                      type={"MAXIMIZE"}
+                      name={"CALCULATOR"}
+                      isMaximized={this.props.store.isMaximized}
+                    />
                   </div>
 
                   <MacNav type={"CLOSE"} name={"CALCULATOR"} />

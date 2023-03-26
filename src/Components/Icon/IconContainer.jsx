@@ -71,6 +71,14 @@ function IconContainer({
           ? "hover:bg-gray-200"
           : "hover:scale-150 icon hover:mx-[20px] hover:mb-2"
       }`}
+      onMouseEnter={() => {
+        setColor("white")
+      }}
+      onMouseLeave={() => {
+        if(state){
+          setColor("black")
+        }
+      }}
     >
       {img ? (
         <div className="flex justify-center content-center ">
