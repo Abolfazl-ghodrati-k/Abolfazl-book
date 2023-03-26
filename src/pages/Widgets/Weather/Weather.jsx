@@ -65,7 +65,7 @@ function Weather() {
   console.log(data);
 
   return (
-    <div className="flex flex-col items-center mt-[2%] ml-1 w-[380px] py-[20px] px-[10px] m-auto rounded-[4px] bg-[white]">
+    <div className="flex flex-col items-center mt-[2%] ml-1 w-[380px] py-[20px] px-[10px] m-auto rounded-[4px] bg-[white] z-[10000]">
       <span className="text-black my-[20px] mx-auto text-[18px] font-bold">
         Weather App
       </span>

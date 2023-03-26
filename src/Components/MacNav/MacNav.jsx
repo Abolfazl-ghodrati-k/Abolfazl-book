@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useOrder from "../../Hooks/useOrder";
 import { APP_MAXIMIZED } from "../../redux/actionTypes";
 
-const MacNav = ({ type, Page, name, isMaximized }) => {
+const MacNav = ({ type, name, isMaximized }) => {
   const dispatch = useDispatch();
   const CurrentOrder = useSelector((state) => state.order.order);
   const [BackGround, setBackGround] = useState("");
@@ -21,7 +21,7 @@ const MacNav = ({ type, Page, name, isMaximized }) => {
 
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
-  const ClickHandler = (type, Page, name) => {
+  const ClickHandler = (type, name) => {
     // console.log(maximizedApp);
     switch (type) {
       case "MINIMIZE":
@@ -38,17 +38,19 @@ const MacNav = ({ type, Page, name, isMaximized }) => {
           });
           dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
         } else {
-          dispatch({ type: `MAXIMIZE_${name}`});
+          dispatch({ type: `MAXIMIZE_${name}` });
           dispatch({ type: APP_MAXIMIZED, payload: maximizedApp + 1 });
         }
         break;
       case "CLOSE":
+        if (name == "CONTACTME") {
+          dispatch({ type: `CLOSE_${name}` });
+          return;
+        }
         dispatch({ type: `CLOSE_${name}` });
         dispatch({ type: "CHANGE_ORDER", payload: CurrentOrder + 1 });
         dispatch({ type: `ORDER_${name}`, payload: null });
-        if (Page.isMaximized) {
           dispatch({ type: `MAXIMIZE_${name}`, payload: false });
-        }
         if (maximizedApp > 0) {
           dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
         }
@@ -69,7 +71,7 @@ const MacNav = ({ type, Page, name, isMaximized }) => {
       }}
       className="hover:opacity-50 cursor-pointer"
       onClick={() => {
-        ClickHandler(type, Page, name);
+        ClickHandler(type, name);
       }}
     ></div>
   );

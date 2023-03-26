@@ -7,6 +7,7 @@ import { IoIosContact } from "react-icons/io";
 import Resume from "../Assets/Icons/resume.png";
 import { FiSettings } from "react-icons/fi";
 import { GrPowerShutdown } from "react-icons/gr";
+import { BsCalculator } from "react-icons/bs";
 //
 import { FcTodoList } from "react-icons/fc";
 import { VscTerminalCmd } from "react-icons/vsc";
@@ -32,6 +33,7 @@ import {
   RESIZE_FILE_MANAGER,
   APP_MAXIMIZED,
   OPEN_MODAL,
+  RESIZE_CALCULATOR,
 } from "../redux/actionTypes";
 import useOrder from "../Hooks/useOrder";
 
@@ -47,6 +49,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     ShutDown: useSelector((state) => state.shutdown),
     CMD: useSelector((state) => state.cmd),
     TODO: useSelector((state) => state.todo),
+    CALCULATOR: useSelector((state) => state.calculator),
   };
   const Modalcount = useSelector((state) => state.desktop.Modals);
 
@@ -176,6 +179,24 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       setOrder("CMD");
     }
   };
+  const CALCULATORClicked = () => {
+    if (NavState.CALCULATOR.isMinimized) {
+      if (NavState.CALCULATOR.isMaximized) {
+        dispatch({
+          type: RESIZE_CALCULATOR,
+          payload: { maximized: true, minimized: false },
+        });
+      } else if (!NavState.CALCULATOR.isMaximized) {
+        dispatch({
+          type: RESIZE_CALCULATOR,
+          payload: { maximized: false, minimmized: false },
+        });
+      }
+      setOrder("CALCULATOR");
+    } else {
+      setOrder("CALCULATOR");
+    }
+  };
   const TODOClicked = () => {
     if (NavState.TODO.isMinimized) {
       if (NavState.TODO.isMaximized) {
@@ -273,6 +294,16 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
                   onClick={TODOClicked}
                   icon={FcTodoList}
                   state={NavState.TODO.isOpen}
+                  size={"50px"}
+                />
+              </div>
+            )}
+            {NavState.CALCULATOR.isOpen && (
+              <div>
+                <IconContainer
+                  onClick={CALCULATORClicked}
+                  icon={BsCalculator}
+                  state={NavState.CALCULATOR.isOpen}
                   size={"50px"}
                 />
               </div>

@@ -21,7 +21,7 @@ function Weather() {
   return (
     <div
       onClick={handleShowWidget}
-      className="flex transition-all z-[100] cursor-pointer hover:bg-[#4d4c4c] hover:p-1 rounded-md mr-auto justify-start items-center"
+      className="flex transition-all z-[1] cursor-pointer hover:bg-[#4d4c4c] hover:p-1 rounded-md mr-auto justify-start items-center"
     >
       <div className="flex flex-col capitalize text-[10px] mr-5 text-white">
         <span className="text-[15px]">

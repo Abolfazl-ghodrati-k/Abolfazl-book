@@ -11,22 +11,25 @@ function useIndex() {
     { name: "CMD", zIndex: CMDIndex },
     { name: "FILE_MANAGER", zIndex: FILE_MANAGERIndex },
     { name: "SETTING", zIndex: SETTINGIndex },
-    { name: "CALCULATOR", ZIndex: CALCULATORIndex }
+    { name: "CALCULATOR", zIndex: CALCULATORIndex }
   ];
 
   const ChangeNumb = () => {
     Indexs.forEach((page, index) => {
       switch (page.zIndex) {
         case 1:
-          Indexs[index].zIndex = 1000;
+          Indexs[index].zIndex = 10000;
           return Indexs;
         case 2:
-          Indexs[index].zIndex = 100;
+          Indexs[index].zIndex = 1000;
           return Indexs;
         case 3:
-          Indexs[index].zIndex = 10;
+          Indexs[index].zIndex = 100;
           return Indexs;
         case 4:
+          Indexs[index].zIndex = 10;
+          return Indexs;
+        case 5:
           Indexs[index].zIndex = 1;
           return Indexs;
       }

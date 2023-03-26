@@ -3,6 +3,7 @@
   --settingIndex: 0;
   --cmdIndex: 0;
   --todoIndex: 0;
+  --calcIndex: 0
 }
 
 .react-draggable-dragged,
@@ -21,4 +22,7 @@
 }
 .setting {
   z-index: var(--settingIndex) !important;
+}
+.calculator{
+  z-index: var(--calcIndex) !important
 }

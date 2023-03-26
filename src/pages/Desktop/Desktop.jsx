@@ -26,9 +26,10 @@ import "./style.css";
 //icons
 // import { FcTodoList } from "react-icons/fc";
 import { VscTerminalCmd } from "react-icons/vsc";
+import { BsCalculator } from "react-icons/bs";
 
 // action types
-import { OPEN_CMD } from "../../redux/actionTypes";
+import { OPEN_CALCULATOR, OPEN_CMD } from "../../redux/actionTypes";
 
 //HOOKS
 import useOrder from "../../Hooks/useOrder";
@@ -44,16 +45,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 function Desktop() {
   const dispatch = useDispatch();
 
-  const cmd          = useSelector((state) => state.cmd);
-  const todo         = useSelector((state) => state.todo);
-  const fileManager  = useSelector((state) => state.fileManager);
-  const contactme    = useSelector((state) => state.contactme);
-  const portfolio    = useSelector((state) => state.portfolio);
-  const setting      = useSelector((state) => state.setting);
-  const shutdown     = useSelector((state) => state.shutdown);
+  const cmd = useSelector((state) => state.cmd);
+  const todo = useSelector((state) => state.todo);
+  const fileManager = useSelector((state) => state.fileManager);
+  const contactme = useSelector((state) => state.contactme);
+  const portfolio = useSelector((state) => state.portfolio);
+  const setting = useSelector((state) => state.setting);
+  const shutdown = useSelector((state) => state.shutdown);
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
-  const loading      = useSelector((store) => store.loading.loading);
-  const weather      = useSelector((store) => store.weather);
+  const loading = useSelector((store) => store.loading.loading);
+  const weather = useSelector((store) => store.weather);
+  const calculator = useSelector((store) => store.calculator);
 
   const { Order, Orders } = useOrder();
 
@@ -62,9 +64,9 @@ function Desktop() {
   const desktop = useRef();
 
   useEffect(() => {
+    console.log(Indexs)
     desktop.current.style.setProperty("--fileIndex", Indexs[1].zIndex);
     desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
-    desktop.current.style.setProperty("--todoIndex", Indexs[1].zIndex);
     desktop.current.style.setProperty("--settingIndex", Indexs[2].zIndex);
     desktop.current.style.setProperty("--calcIndex", Indexs[3].zIndex);
   });
@@ -81,12 +83,22 @@ function Desktop() {
   const CmdClicked = () => {
     dispatch({ type: OPEN_CMD });
     dispatch({ type: "ORDER_CMD", payload: Order });
-    if (cmd.isOpen) {
+    if (cmd?.isOpen) {
       return;
     } else {
       ChangingCurrentOrder();
     }
   };
+
+  const CalculatorClicked = () => {
+    dispatch({ type: OPEN_CALCULATOR });
+    dispatch({ type: "ORDER_CALCULATOR", payload: Order });
+    if (calculator?.isOpen) {
+      return;
+    } else {
+      ChangingCurrentOrder();
+    }
+  }
 
   const AppClicked = (appName) => {
     dispatch({ type: `OPEN_${appName}` });
@@ -134,10 +146,10 @@ function Desktop() {
   const setOrder = (type) => {
     Orders.map((app) => {
       // 1. Checks if clicked component has latest order
-      if (app.name == type && Order == app.order) {
+      if (app.name === type && Order === app.order) {
         return;
         // 2. Checks which components have been clicked
-      } else if (app.name == type) {
+      } else if (app.name === type) {
         // 3. Finds clicked component order and changes previous orders
         IncreaseLowerOrders(app);
       }
@@ -147,7 +159,7 @@ function Desktop() {
   return (
     <Router>
       <div
-        className={`h-full w-full -z-10 relative desktop max-w-[100vw] ${
+        className={`h-full w-full -z-10 relative desktop max-w-[100vw] max-h-[100vh] overflow-hiddem ${
           setting.color ? "" : "bg-fill"
         } min-w-[700px]`}
         style={{ backgroundColor: setting.color }}
@@ -189,6 +201,14 @@ function Desktop() {
                 isDesktop
               />
             </div>
+            <div>
+              <IconContainer
+                onClick={CalculatorClicked}
+                icon={BsCalculator}
+                size={"50px"}
+                isDesktop
+              />
+            </div>
             {/* <div>
           <IconContainer
             onClick={TodoClicked}
@@ -206,6 +226,9 @@ function Desktop() {
               setOrder("CMD");
             }}
           />
+        )}
+        {calculator.isOpen && !calculator.isMinimized && (
+          <CalculatorApp onClick={() => setOrder("CALCULATOR")}/>
         )}
         {todo.isOpen && (
           <div onClick={setOrder("TODO")}>
@@ -238,7 +261,6 @@ function Desktop() {
             onClick={() => {
               setOrder("FILE_MANAGER");
             }}
-            zIndex={Indexs[1].zIndex}
           />
         )}
 

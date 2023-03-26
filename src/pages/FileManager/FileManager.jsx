@@ -41,7 +41,6 @@ function FileManager({ zIndex, onClick }) {
         <div
           className="p-1 w-full h-full rounded"
           onClick={onClick}
-          style={{ position: "absolute", zIndex: zIndex }}
         >
           <div className="bg-[#D9D9D9] h-full w-full handleFileManager rounded8">
             {/* NAVBAR */}

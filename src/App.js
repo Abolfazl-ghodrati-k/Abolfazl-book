@@ -30,7 +30,7 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <div className="w-full h-screen absolute -z-20">
+        <div className="w-full h-screen overflow-hidden absolute -z-20">
           {Os ? (
             (!isvalidSize && Os == "Android") ||
             Os.includes("iPhone") ||
