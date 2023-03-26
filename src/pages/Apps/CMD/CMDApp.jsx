@@ -91,7 +91,7 @@ export default function CMDApp({ onClick }) {
                     });
                   }}
                 >
-                  <MacNav type={"CLOSE"} Page={"CMD"} name={"CMD"} />
+                  <MacNav type={"CLOSE"} Page={"CMD"} name={"CMD"} isMaximized={isMaximized} />
                 </div>
               </div>
             </div>

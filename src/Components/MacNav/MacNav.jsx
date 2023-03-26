@@ -25,7 +25,16 @@ const MacNav = ({ type, name, isMaximized }) => {
     // console.log(maximizedApp);
     switch (type) {
       case "MINIMIZE":
-        dispatch({ type: `MINIMIZE_${name}` });
+        dispatch({
+          type: `RESIZE_${name}`,
+          payload: {
+            maximized: false,
+            minimized: true,
+          },
+        });
+        if (isMaximized) {
+          dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
+        }
         break;
       case "MAXIMIZE":
         if (isMaximized) {
@@ -50,10 +59,16 @@ const MacNav = ({ type, name, isMaximized }) => {
         dispatch({ type: `CLOSE_${name}` });
         dispatch({ type: "CHANGE_ORDER", payload: CurrentOrder + 1 });
         dispatch({ type: `ORDER_${name}`, payload: null });
-          dispatch({ type: `MAXIMIZE_${name}`, payload: false });
-        if (maximizedApp > 0) {
+        if (isMaximized) {
           dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
         }
+        dispatch({
+          type: `RESIZE_${name}`,
+          payload: {
+            maximized: false,
+            minimized: false,
+          },
+        });
 
         break;
       default:

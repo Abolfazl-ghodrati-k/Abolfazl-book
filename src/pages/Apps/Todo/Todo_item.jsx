@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Todo_desc from "./Todo_desc";
 import Todo_EditForm from "./Todo_EditForm";
+import { AiOutlineDelete } from "react-icons/ai";
+import { FiEdit3 } from "react-icons/fi";
 
 function Todo_item({ Todo }) {
   const [ShowDesc, setShowDesc] = useState(false);
@@ -11,12 +13,12 @@ function Todo_item({ Todo }) {
 
   useEffect(() => {
     setName((Name) => (Name = Todo.name));
-    // console.log(Name);
   }, [useState]);
 
   const descriptionHandler = () => {
     setShowDesc(!ShowDesc);
   };
+
   return (
     <div className="flex flex-col w-full">
       <div
@@ -37,15 +39,17 @@ function Todo_item({ Todo }) {
               onClick={() => {
                 setShowEditForm(!ShowEditForm);
                 setShowDesc(false);
-              }}
+              }} className="hover:bg-[gray] p-1 rounded"
             >
-              edit
+              <FiEdit3 size={25} color="white"/>
             </span>
-            <span>delete</span>
+            <span className="hover:bg-[gray] p-1 rounded">
+              <AiOutlineDelete size={25} color="white"/>
+            </span>
           </span>
         )}
       </div>
-      {ShowDesc && (
+      {ShowDesc&& !ShowEditForm && (
         <div className="w-full">
           <Todo_desc desc={Todo.desc} />
         </div>

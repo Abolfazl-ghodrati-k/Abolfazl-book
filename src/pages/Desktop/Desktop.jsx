@@ -24,12 +24,12 @@ import AudioPlayer from "../../Components/AudioPlayer";
 import "./style.css";
 
 //icons
-// import { FcTodoList } from "react-icons/fc";
+import { GoTasklist } from "react-icons/go";
 import { VscTerminalCmd } from "react-icons/vsc";
 import { BsCalculator } from "react-icons/bs";
 
 // action types
-import { OPEN_CALCULATOR, OPEN_CMD } from "../../redux/actionTypes";
+import { OPEN_CALCULATOR, OPEN_CMD, OPEN_TODO } from "../../redux/actionTypes";
 
 //HOOKS
 import useOrder from "../../Hooks/useOrder";
@@ -64,11 +64,12 @@ function Desktop() {
   const desktop = useRef();
 
   useEffect(() => {
-    console.log(Indexs)
+    console.log(Indexs);
     desktop.current.style.setProperty("--fileIndex", Indexs[1].zIndex);
     desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
     desktop.current.style.setProperty("--settingIndex", Indexs[2].zIndex);
     desktop.current.style.setProperty("--calcIndex", Indexs[3].zIndex);
+    desktop.current.style.setProperty("--todoIndex", Indexs[4].zIndex);
   });
 
   const ChangingCurrentOrder = () => {
@@ -98,22 +99,22 @@ function Desktop() {
     } else {
       ChangingCurrentOrder();
     }
-  }
+  };
 
   const AppClicked = (appName) => {
     dispatch({ type: `OPEN_${appName}` });
     dispatch({ type: `ORDER_${appName}`, payload: Order });
   };
 
-  // const TodoClicked = () => {
-  //   dispatch({ type: OPEN_TODO });
-  //   dispatch({ type: "ORDER_TODO", payload: Order });
-  //   if (todo.isOpen) {
-  //     return;
-  //   } else {
-  //     ChangingCurrentOrder();
-  //   }
-  // };
+  const TodoClicked = () => {
+    dispatch({ type: OPEN_TODO });
+    dispatch({ type: "ORDER_TODO", payload: Order });
+    if (todo?.isOpen) {
+      return;
+    } else {
+      ChangingCurrentOrder();
+    }
+  };
 
   // const Types = ["CMD", "TODO", "SETTING", "FILE_MANAGER"];
 
@@ -192,31 +193,34 @@ function Desktop() {
         {/* <CalculatorApp /> */}
 
         {maximizedApp === 0 && (
-          <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-2">
-            <div>
+          <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-4">
+            <div className="flex flex-col items-center justify-center text-white">
               <IconContainer
                 onClick={CmdClicked}
                 icon={VscTerminalCmd}
                 size={"50px"}
                 isDesktop
               />
+              <p className="text-[.9rem]">CMD</p>
             </div>
-            <div>
+            <div className="flex flex-col items-center justify-center text-white">
               <IconContainer
                 onClick={CalculatorClicked}
                 icon={BsCalculator}
                 size={"50px"}
                 isDesktop
               />
+              <p className="text-[.9rem]">Calculator</p>
             </div>
-            {/* <div>
-          <IconContainer
-            onClick={TodoClicked}
-            icon={FcTodoList}
-            size={"50px"}
-            isDesktop
-          />
-        </div> */}
+            <div className="flex flex-col items-center justify-center text-white">
+              <IconContainer
+                onClick={TodoClicked}
+                icon={GoTasklist}
+                size={"50px"}
+                isDesktop
+              />
+              <p className="text-[.9rem]">Todo app</p>
+            </div>
           </div>
         )}
         {cmd.isOpen && !cmd.isMinimized && (
@@ -228,12 +232,10 @@ function Desktop() {
           />
         )}
         {calculator.isOpen && !calculator.isMinimized && (
-          <CalculatorApp onClick={() => setOrder("CALCULATOR")}/>
+          <CalculatorApp onClick={() => setOrder("CALCULATOR")} />
         )}
-        {todo.isOpen && (
-          <div onClick={setOrder("TODO")}>
-            <TodoApp />
-          </div>
+        {todo.isOpen&& !todo.isMinimized && (
+            <TodoApp onClick={() => setOrder("TODO")} />
         )}
         {shutdown.isOpen && (
           <ModalLayout>

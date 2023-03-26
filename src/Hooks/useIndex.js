@@ -6,12 +6,14 @@ function useIndex() {
   const FILE_MANAGERIndex = useSelector((state) => state.fileManager.order);
   const SETTINGIndex = useSelector((state) => state.setting.order);
   const CALCULATORIndex = useSelector((state) => state.calculator.order)
+  const TODOIndex = useSelector((state) => state.todo.order)
 
   const Indexs = [
     { name: "CMD", zIndex: CMDIndex },
     { name: "FILE_MANAGER", zIndex: FILE_MANAGERIndex },
     { name: "SETTING", zIndex: SETTINGIndex },
-    { name: "CALCULATOR", zIndex: CALCULATORIndex }
+    { name: "CALCULATOR", zIndex: CALCULATORIndex },
+    { name: "TODO", zIndex: TODOIndex }
   ];
 
   const ChangeNumb = () => {

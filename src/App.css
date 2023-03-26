@@ -3,7 +3,7 @@
   --settingIndex: 0;
   --cmdIndex: 0;
   --todoIndex: 0;
-  --calcIndex: 0
+  --calcIndex: 0;
 }
 
 .react-draggable-dragged,
@@ -23,6 +23,14 @@
 .setting {
   z-index: var(--settingIndex) !important;
 }
-.calculator{
-  z-index: var(--calcIndex) !important
+.calculator {
+  z-index: var(--calcIndex) !important;
+}
+
+.react-datepicker__input-container input {
+  color: black;
+  max-width: 100%;
+  padding: 0.2rem 0;
+  text-align: center;
+  border-radius: 10px;
 }

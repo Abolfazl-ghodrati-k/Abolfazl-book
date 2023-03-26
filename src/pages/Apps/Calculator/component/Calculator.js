@@ -75,7 +75,11 @@ class Calculator extends React.Component {
                     />
                   </div>
 
-                  <MacNav type={"CLOSE"} name={"CALCULATOR"} />
+                  <MacNav
+                    type={"CLOSE"}
+                    name={"CALCULATOR"}
+                    isMaximized={this.props.store.isMaximized}
+                  />
                 </div>
               </div>
               <Display value={this.state.next || this.state.total || "0"} />

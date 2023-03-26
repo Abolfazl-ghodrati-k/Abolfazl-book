@@ -9,7 +9,7 @@ import { FiSettings } from "react-icons/fi";
 import { GrPowerShutdown } from "react-icons/gr";
 import { BsCalculator } from "react-icons/bs";
 //
-import { FcTodoList } from "react-icons/fc";
+import { GoTasklist } from "react-icons/go";
 import { VscTerminalCmd } from "react-icons/vsc";
 import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,6 +34,8 @@ import {
   APP_MAXIMIZED,
   OPEN_MODAL,
   RESIZE_CALCULATOR,
+  RESIZE_TODO,
+  RESIZE_SETTING,
 } from "../redux/actionTypes";
 import useOrder from "../Hooks/useOrder";
 
@@ -128,17 +130,15 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
   };
   const SETTINGClicked = () => {
     if (NavState.SETTING.isOpen) {
-      // dispatch({ type: CLOSE_FILE_MANAGER });
-      console.log("in here");
       if (NavState.SETTING.isMinimized) {
         if (NavState.SETTING.isMaximized) {
           dispatch({
-            type: MINIMIZE_SETTING,
+            type: RESIZE_SETTING,
             payload: { minimized: false, maximized: true },
           });
         } else {
           dispatch({
-            type: MINIMIZE_SETTING,
+            type: RESIZE_SETTING,
             payload: { minimized: false, maximized: false },
           });
         }
@@ -201,12 +201,12 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     if (NavState.TODO.isMinimized) {
       if (NavState.TODO.isMaximized) {
         dispatch({
-          type: MINIMIZE_TODO,
+          type: RESIZE_TODO,
           payload: { maximized: true, minimized: false },
         });
       } else if (!NavState.TODO.isMaximized) {
         dispatch({
-          type: MINIMIZE_TODO,
+          type: RESIZE_TODO,
           payload: { maximized: false, minimmized: false },
         });
       }
@@ -292,7 +292,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               <div>
                 <IconContainer
                   onClick={TODOClicked}
-                  icon={FcTodoList}
+                  icon={GoTasklist}
                   state={NavState.TODO.isOpen}
                   size={"50px"}
                 />
