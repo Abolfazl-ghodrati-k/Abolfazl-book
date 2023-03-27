@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import Today_Todo from "./Today_Todo";
+import withTodos from "../../../HOC/withTodos";
+import Todo_wrapper from "./Todo_wrapper";
+import Year_wrapper from "./Year_wrapper";
 
-function Todo_container() {
-  const [ShowTodayTasks, setShowTodayTasks] = useState(false);
+function Todo_container({ todos, foundYears }) {
   return (
-    <div className="overflow-y-auto border absolute right-0 bottom-[3rem] left-0 top-[6rem] mx-2 mr-2 text-[black]  ">
-      <div
-        className="cursor-pointer text-smoke bg-gray p-1"
-        onClick={() => {
-          setShowTodayTasks(!ShowTodayTasks);
-        }}
-      >
-        {ShowTodayTasks ? "Close " : "Today tasks"}
+    <div className="scrollbar overflow-y-scroll border absolute right-0 bottom-[3rem] left-0 top-[6rem] mx-2 mr-2 text-[black]  ">
+      <div className="w-full mt-2">
+      {foundYears?.map((year) => {
+        var months = Object.keys(todos[year])
+         return <Year_wrapper data={todos[year]} year={year} months={months} />;
+      })}
       </div>
-      {ShowTodayTasks && <Today_Todo />}
     </div>
   );
 }
 
-export default Todo_container;
+export default withTodos(Todo_container, new Date());

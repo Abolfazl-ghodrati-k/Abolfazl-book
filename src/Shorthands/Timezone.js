@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { formatDate } from "../services/date";
 
 function Timezone() {
 
@@ -6,15 +7,7 @@ function Timezone() {
   const [Clock, setClock] = useState("")
 
   function getDate() {
-    const newDate = new Date();
-    const year = newDate.getFullYear().toString();
-    const day = newDate.getDate().toString();
-    const month = new Intl.DateTimeFormat("en-US", { month: "numeric" }).format(
-      newDate
-    );
-    const clock =
-      newDate.getHours().toString() + ":" + newDate.getMinutes().toString();
-    const date = year + " " + month + " " + day;
+    const {date,clock} = formatDate()
     setmyDate(date)
     setClock(clock)
   }
@@ -41,5 +34,6 @@ function Timezone() {
     </div>
   );
 }
+
 
 export default Timezone;

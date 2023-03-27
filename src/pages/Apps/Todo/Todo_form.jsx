@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
+import useFunctions from "../../../Hooks/useFunctions";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Todo_form() {
   const [startDate, setStartDate] = useState(new Date());
   const [Text, setText] = useState("");
+  const {add_todo} = useFunctions()
 
   const TodoInput = useRef();
 
@@ -14,19 +16,16 @@ function Todo_form() {
 
   function handleEnter(e) {
     if (e.code === "Enter") {
-      const value = TodoInput.current.value;
-      AddtoTodos(value, startDate);
+      const value = TodoInput?.current.value;
+      setText("");
+      add_todo(value, startDate);
     }
-  }
-
-  function AddtoTodos(todo, date) {
-    setText("")
-    console.log(todo, date)
   }
 
   useEffect(() => {
     TodoInput.current.addEventListener("keydown", handleEnter);
-    return () => TodoInput?.current?.removeEventListener("keydown", handleEnter)
+    return () =>
+      TodoInput?.current?.removeEventListener("keydown", handleEnter);
   });
 
   return (
