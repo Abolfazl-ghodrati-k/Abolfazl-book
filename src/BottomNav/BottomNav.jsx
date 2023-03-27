@@ -38,6 +38,7 @@ import {
   RESIZE_SETTING,
 } from "../redux/actionTypes";
 import useOrder from "../Hooks/useOrder";
+import { useNavigate } from "react-router";
 
 function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
   const dispatch = useDispatch();
@@ -54,6 +55,8 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     CALCULATOR: useSelector((state) => state.calculator),
   };
   const Modalcount = useSelector((state) => state.desktop.Modals);
+
+  const navigate = useNavigate()
 
   const maximizedApp = useSelector((state) => state.desktop.Maximized);
 
@@ -122,11 +125,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     }
   };
   const ResumeClicked = () => {
-    dispatch({ type: APP_MAXIMIZED, payload: maximizedApp + 1 });
-    dispatch({ type: OPEN_PORTFOLIO });
-    if (NavState.Portfolio.isOpen) {
-      dispatch({ type: CLOSE_PORTFOLIO });
-    }
+    navigate("/portfolio")
   };
   const SETTINGClicked = () => {
     if (NavState.SETTING.isOpen) {

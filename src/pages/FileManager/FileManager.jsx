@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Draggable from "react-draggable";
 import { Resizable } from "re-resizable";
 import { useNavigate } from "react-router";
@@ -6,18 +6,7 @@ import { useNavigate } from "react-router";
 import "./style.css";
 import MacNav from "../../Components/MacNav";
 import Disks from "./Components/Disks";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Outlet,
-} from "react-router-dom";
-import Musics from "./Musics";
-import Documents from "./Documents/Documents";
-import Videos from "./Videos";
-import Desktop from "../Desktop";
-import Content from "./Components/Content";
+import { Outlet } from "react-router-dom";
 
 function FileManager({ zIndex, onClick }) {
   // ***************************************** STATE ***********************
@@ -27,10 +16,14 @@ function FileManager({ zIndex, onClick }) {
 
   return (
     <Draggable
+      bounds={"parent"}
       handle=".handleFileManager"
-      defaultClassName="react-draggable filemanager"
+      defaultClassName="react-draggable filemanager rounded-md"
     >
       <Resizable
+        bounds={"parent"}
+        minHeight={500}
+        minWidth={780}
         defaultSize={{ width: Width, height: Height }}
         size={{ width: Width, height: Height }}
         onResizeStop={(e, direction, ref, d) => {
@@ -38,13 +31,10 @@ function FileManager({ zIndex, onClick }) {
           setHeight((Height) => Height + d.height);
         }}
       >
-        <div
-          className="p-1 w-full h-full rounded"
-          onClick={onClick}
-        >
-          <div className="bg-[#D9D9D9] h-full w-full handleFileManager rounded8">
+        <div className="p-1 w-full h-full rounded" onClick={onClick}>
+          <div className="bg-[#D9D9D9] h-full w-full handleFileManager rounded-md">
             {/* NAVBAR */}
-            <div className="flex justify-between items-center w-full p-1 bg-[#676464] h-[9%]">
+            <div className="flex justify-between items-center w-full p-1 px-2 bg-[#676464] h-[9%]">
               <div>Filemanager</div>
               <div className="flex justify-between items-center">
                 <MacNav
@@ -84,31 +74,7 @@ function FileManager({ zIndex, onClick }) {
               {/* DISKS ENDs */}
               {/* DIVIDERS */}
               <div className="w-[76%] h-full">
-                <Routes>
-                  <Route path="/filemanager/musics" element={<Musics />}>
-                    <Route
-                      path="rock"
-                      element={<Content type={"music"} field={"rock"} />}
-                    />
-                    <Route
-                      path="rap"
-                      element={<Content type={"music"} field={"rap"} />}
-                    />
-                    <Route
-                      path="r&b"
-                      element={<Content type={"music"} field={"r&b"} />}
-                    />
-                    <Route
-                      path="pop"
-                      element={<Content type={"music"} field={"pop"} />}
-                    />
-                  </Route>
-                  <Route
-                    path="/filemanager/documents"
-                    element={<Documents />}
-                  />
-                  <Route path="/filemanager/videos" element={<Videos />} />
-                </Routes>
+                <Outlet />
               </div>
               {/* END OF DEVIDERS */}
             </div>

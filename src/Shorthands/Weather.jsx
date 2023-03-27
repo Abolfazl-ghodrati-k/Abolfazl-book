@@ -15,6 +15,7 @@ function Weather() {
   }
 
   React.useEffect(() => {
+    console.log(process.env, "process")
     if (!data) {
       dispatch({ type: WEATHER_ACTION, payload: "tehran" });
     }
@@ -43,7 +44,7 @@ function Weather() {
           </div>
           <img
             className="w-[30px] h-[30px] my-[5px] mx-auto hidden lg:block"
-            src={WeatherIcons[data?.weather[0].icon]}
+            src={process.env.REACT_APP_DOMAINNAME+WeatherIcons[data?.weather[0].icon]}
           />
         </>
       ) : (

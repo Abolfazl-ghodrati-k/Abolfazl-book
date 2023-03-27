@@ -40,8 +40,6 @@ import ModalLayout from "../../Components/Layout/ModalLayout";
 
 import Draggable from "react-draggable";
 
-import { BrowserRouter as Router } from "react-router-dom";
-
 function Desktop() {
   const dispatch = useDispatch();
 
@@ -158,7 +156,6 @@ function Desktop() {
   };
 
   return (
-    <Router>
       <div
         className={`h-full w-full -z-10 relative desktop max-w-[100vw] max-h-[100vh] overflow-hiddem ${
           setting.color ? "" : "bg-fill"
@@ -273,7 +270,6 @@ function Desktop() {
           ChangingCurrentOrder={ChangingCurrentOrder}
         />
       </div>
-    </Router>
   );
 }
 export default Desktop;

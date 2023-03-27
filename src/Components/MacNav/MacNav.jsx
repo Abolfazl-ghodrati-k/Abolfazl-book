@@ -52,23 +52,27 @@ const MacNav = ({ type, name, isMaximized }) => {
         }
         break;
       case "CLOSE":
-        if (name == "CONTACTME") {
+        if (name) {
+          if (name == "CONTACTME") {
+            dispatch({ type: `CLOSE_${name}` });
+            return;
+          }
           dispatch({ type: `CLOSE_${name}` });
+          dispatch({ type: "CHANGE_ORDER", payload: CurrentOrder + 1 });
+          dispatch({ type: `ORDER_${name}`, payload: null });
+          if (isMaximized) {
+            dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
+          }
+          dispatch({
+            type: `RESIZE_${name}`,
+            payload: {
+              maximized: false,
+              minimized: false,
+            },
+          });
+        } else {
           return;
         }
-        dispatch({ type: `CLOSE_${name}` });
-        dispatch({ type: "CHANGE_ORDER", payload: CurrentOrder + 1 });
-        dispatch({ type: `ORDER_${name}`, payload: null });
-        if (isMaximized) {
-          dispatch({ type: APP_MAXIMIZED, payload: maximizedApp - 1 });
-        }
-        dispatch({
-          type: `RESIZE_${name}`,
-          payload: {
-            maximized: false,
-            minimized: false,
-          },
-        });
 
         break;
       default:

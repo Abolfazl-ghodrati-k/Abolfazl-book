@@ -5,38 +5,38 @@ import { TiWeatherCloudy } from "react-icons/ti";
 import { SET_CITY, SET_WEATHER_ERROR } from "../../../redux/actionTypes";
 
 export const WeatherInfoIcons = {
-  sunset: "./icons/temp.svg",
-  sunrise: "./icons/temp.svg",
-  humidity: "./icons/humidity.svg",
-  wind: "./icons/wind.svg",
-  pressure: "./icons/pressure.svg",
+  sunset: "/icons/temp.svg",
+  sunrise: "/icons/temp.svg",
+  humidity: "/icons/humidity.svg",
+  wind: "/icons/wind.svg",
+  pressure: "/icons/pressure.svg",
 };
 
 export const WeatherIcons = {
-  "01d": "./icons/sunny.svg",
-  "01n": "./icons/night.svg",
-  "02d": "./icons/day.svg",
-  "02n": "./icons/cloudy-night.svg",
-  "03d": "./icons/cloudy.svg",
-  "03n": "./icons/cloudy.svg",
-  "04d": "./icons/perfect-day.svg",
-  "04n": "./icons/cloudy-night.svg",
-  "09d": "./icons/rain.svg",
-  "09n": "./icons/rain-night.svg",
-  "10d": "./icons/rain.svg",
-  "10n": "./icons/rain-night.svg",
-  "11d": "./icons/storm.svg",
-  "11n": "./icons/storm.svg",
-  "50d": "./icons/50d.svg",
-  "50n": "./icons/50d.svg",
+  "01d": "/icons/sunny.svg",
+  "01n": "/icons/night.svg",
+  "02d": "/icons/day.svg",
+  "02n": "/icons/cloudy-night.svg",
+  "03d": "/icons/cloudy.svg",
+  "03n": "/icons/cloudy.svg",
+  "04d": "/icons/perfect-day.svg",
+  "04n": "/icons/cloudy-night.svg",
+  "09d": "/icons/rain.svg",
+  "09n": "/icons/rain-night.svg",
+  "10d": "/icons/rain.svg",
+  "10n": "/icons/rain-night.svg",
+  "11d": "/icons/storm.svg",
+  "11n": "/icons/storm.svg",
+  "50d": "/icons/50d.svg",
+  "50n": "/icons/50d.svg",
 };
 
 const WeatherInfoComponent = (props) => {
   const { name, value } = props;
   return (
     <div className="flex my-[5px] mx-[10px] justify-center items-center">
-      <img className="w-[36px] h-[36px]" src={WeatherInfoIcons[name]} />
-      <div className="flex flex-col text-[14px] m-[15px]">
+      <img className="w-[36px] h-[36px]" src={process.env.REACT_APP_DOMAINNAME+WeatherInfoIcons[name]} />
+      <div className="flex flex-col text-[14px] m-[15px] text-black-200">
         {value}
         <span className="text-[12px] capitalize">{name}</span>
       </div>
@@ -65,7 +65,7 @@ function Weather() {
   console.log(data);
 
   return (
-    <div className="flex flex-col items-center mt-[2%] ml-1 w-[380px] py-[20px] px-[10px] m-auto rounded-[4px] bg-[white] z-[1000000]">
+    <div className="flex text-black-200 flex-col items-center mt-[2%] ml-1 w-[380px] py-[20px] px-[10px] m-auto rounded-[4px] bg-[white] z-[1000000]">
       <span className="text-black my-[20px] mx-auto text-[18px] font-bold">
         Weather App
       </span>

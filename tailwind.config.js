@@ -5,8 +5,8 @@ module.exports = {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
     },
-  ], 
-  theme: {  
+  ],
+  theme: {
     fontFamily: {
       primary: "Inter",
     },
@@ -17,6 +17,7 @@ module.exports = {
       },
     },
     screens: {
+      xs: "450px",
       sm: "640px",
       md: "814px",
       lg: "1024px",
@@ -53,16 +54,24 @@ module.exports = {
       shape: "#E8EEF0",
       white: "#FFFFFF",
       transparent: "transparent",
+      primary: "#050816",
+      secondary: "#aaa6c3",
+      tertiary: "#151030",
+      "black-100": "#100d25",
+      "black-200": "#090325",
+      "white-100": "#f3f3f3",
     },
     extend: {
       backgroundImage: {
         circle: "url('/src/assets/img/hero/bg.png')",
         cardsBg: "url('/src/assets/img/cards/bg.png')",
         video: "url('/src/assets/img/video/video.png')",
-        contact: "url('/src/assets/img/contact/bg.png')",
+        contact: "url('/src/pages/Portfolio/assets/img/contact/bg.png')",
+        "hero-pattern": "url('/src/pages/Portfolio/assets/herobg.png')"
       },
       boxShadow: {
         primary: "0px 18px 36px rgba(0, 0, 0, 0.05)",
+        card: "0px 35px 120px -15px #211e35",
       },
     },
   },

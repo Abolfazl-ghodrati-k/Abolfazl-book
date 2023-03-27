@@ -7,6 +7,7 @@ import Desktop from "./pages/Desktop";
 import MobilePortfolio from "./pages/MobilePortfolio";
 import useOs from "./Hooks/useOs";
 import { useState } from "react";
+import Portfolio from "./pages/Portfolio/Portfolio";
 
 function App() {
   const [isvalidSize, IsValidSize] = useState(true);
@@ -39,7 +40,7 @@ function App() {
             ) : isvalidSize ? (
               <Desktop />
             ) : (
-              <MobilePortfolio />
+              <Portfolio />
             )
           ) : (
             "refresh the page or if it doesnt work contact me on +989020257735 phone number"

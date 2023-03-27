@@ -9,7 +9,6 @@ function Todo_welcome() {
       <p className="text-[purple] text-[1.05rem]">Abolfazl Todo 😁✌️</p>
       <div className="flex items-center">
         <MacNav type="MINIMIZE" name={"TODO"} isMaximized={isMaximized} />
-        <MacNav type="MAXIMIZE" name={"TODO"} isMaximized={isMaximized} />
         <MacNav type="CLOSE" name={"TODO"} isMaximized={isMaximized} />
       </div>
     </div>
