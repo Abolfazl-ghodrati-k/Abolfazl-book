@@ -8,6 +8,8 @@ import MobilePortfolio from "./pages/MobilePortfolio";
 import useOs from "./Hooks/useOs";
 import { useState } from "react";
 import Portfolio from "./pages/Portfolio/Portfolio";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isvalidSize, IsValidSize] = useState(true);

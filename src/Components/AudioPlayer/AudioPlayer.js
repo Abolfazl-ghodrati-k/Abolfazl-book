@@ -6,8 +6,13 @@ import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import "./styles.css";
 import { useSelector, useDispatch } from "react-redux";
-import { CLOSE_MUSIC, CONTROLL_MUSIC, SET_PLAYING_MUSIC } from "../../redux/actionTypes";
+import {
+  CLOSE_MUSIC,
+  CONTROLL_MUSIC,
+  SET_PLAYING_MUSIC,
+} from "../../redux/actionTypes";
 import Draggable from "react-draggable";
+import { ClipLoader, PulseLoader } from "react-spinners";
 
 const AudioPlayer = () => {
   // state
@@ -203,11 +208,11 @@ const AudioPlayer = () => {
           </div>
           <div className={styles.cover}></div>
           <div className={styles.title}>
-            <p className="text-[12px] max-w-[170px] bg-fill relative">
+            <p className="text-[12px] max-w-[170px] text-black-200 font-bold relative">
               {playingTitle}
             </p>
             {Loading ? (
-              <p className="text-[.9rem] text-black">loading...</p>
+              <PulseLoader color="black" />
             ) : (
               isPlaying && (
                 <div className="now playing" ref={music}>
@@ -229,7 +234,7 @@ const AudioPlayer = () => {
             </button>
             <button onClick={togglePlayPause} className={styles.playPause}>
               {Loading ? (
-                <p className="text-[.8rem]">loading...</p>
+                <ClipLoader loading={Loading} size={50} color="white" />
               ) : isPlaying && MusicReady ? (
                 <FaPause />
               ) : (

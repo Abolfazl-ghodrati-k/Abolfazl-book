@@ -58,7 +58,7 @@ function Music({ src, title }) {
   };
   return (
     <div
-      className={`relative flex justify-between items-center rounded ${src==="Ashke Mahtab"? 'bg-[#FFD700]' : 'bg-gray-200'} bg-gray-200 p-2 cursor-pointer mb-1`}
+      className={`relative flex justify-between items-center rounded ${title==="Ashke Mahtab"? 'bg-[#ebc90b]' : 'bg-gray-200'} p-2 cursor-pointer mb-1`}
       onMouseEnter={() => {
         if (fileManager?.playingSrc == src) {
           return;

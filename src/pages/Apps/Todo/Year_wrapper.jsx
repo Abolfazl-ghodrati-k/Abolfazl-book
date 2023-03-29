@@ -6,7 +6,7 @@ function Year_wrapper({ year, months, data }) {
   const [showMonths, setShowMonths] = useState(false);
   const id = uuidV4()
   return (
-    <div className="w-full">
+    <div className="w-full mt-2">
       <h1
         onClick={() => setShowMonths(!showMonths)}
         className="p-2 text-[white] text-[1.1rem] bg-fill cursor-pointer"

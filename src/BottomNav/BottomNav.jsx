@@ -17,21 +17,11 @@ import {
   OPEN_BROWSER,
   OPEN_FILE_MANAGER,
   OPEN_CONTACTME,
-  OPEN_PORTFOLIO,
   OPEN_SETTING,
   OPEN_SHUT_DOWN,
-  CLOSE_CONTACTME,
   CLOSE_BROWSER,
-  CLOSE_FILE_MANAGER,
-  CLOSE_PORTFOLIO,
-  CLOSE_SETTING,
-  CLOSE_SHUT_DOWN,
   RESIZE_CMD,
-  MINIMIZE_TODO,
-  MINIMIZE_FILE_MANAGER,
-  MINIMIZE_SETTING,
   RESIZE_FILE_MANAGER,
-  APP_MAXIMIZED,
   OPEN_MODAL,
   RESIZE_CALCULATOR,
   RESIZE_TODO,
@@ -220,15 +210,6 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       <div className={`w-full absolute bottom-2 z-0`}>
         <div className={`bg-CMD ml-auto lg:mx-auto max-w-[600px]  rounded-lg`}>
           <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
-            {/* Browser */}
-            <div>
-              <IconContainer
-                onClick={BrowserClicked}
-                icon={MdOutlineOpenInBrowser}
-                state={NavState.Browser.isOpen}
-                size={"50px"}
-              />
-            </div>
             {/* File manager */}
             <div>
               <IconContainer

@@ -10,12 +10,7 @@ import { Resizable } from "re-resizable";
 function Todo({ onClick }) {
   const [Width, setWidth] = useState(450);
   const [Height, setHeight] = useState(520);
-  // const [ShowMessage, setShowMessage] = useState(true)
-  // useEffect(() => {
-  //   setTimeout(()=>{
-  //     console.log(Date);
-  //   },[1000])
-  // });
+
   return (
     <Draggable
       defaultPosition={{ x: 50, y: 10 }}
@@ -24,7 +19,7 @@ function Todo({ onClick }) {
       bounds="parent"
     >
       <Resizable
-        minHeight={600}
+        minHeight={500}
         minWidth={480}
         defaultSize={{ width: Width, height: Height }}
         onResizeStop={(e, direction, ref, d) => {
@@ -34,7 +29,7 @@ function Todo({ onClick }) {
       >
         <div className="p-2">
           <div
-            className="bg-CMD rounded handletodo text-white p-3 flex flex-col items-start justify-start min-h-[600px] relative"
+            className="bg-CMD rounded handletodo min-h-[500px] text-white p-3 flex flex-col items-start justify-start  relative"
             onClick={onClick}
           >
             <Todo_welcome />

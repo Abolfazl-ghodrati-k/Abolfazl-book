@@ -44,8 +44,8 @@ export default function FileManagerReducer(state = initialSatate, action) {
       });
     case RESIZE_FILE_MANAGER:
       return Object.assign({}, state, {
-        isMinimized: action.payload.minimzed,
-        isMaximized: action.payload.maximized,
+        isMinimized: action.payload.minimized,
+        isMaximized: action.payload.maximized
       });
     case ORDER_FILE_MANAGER:
       return Object.assign({}, state, { order: action.payload });

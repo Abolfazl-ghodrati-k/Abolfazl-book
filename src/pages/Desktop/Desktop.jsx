@@ -39,6 +39,7 @@ import Layout from "../../Components/Layout/Layout";
 import ModalLayout from "../../Components/Layout/ModalLayout";
 
 import Draggable from "react-draggable";
+import { ToastContainer } from "react-toastify";
 
 function Desktop() {
   const dispatch = useDispatch();
@@ -160,9 +161,13 @@ function Desktop() {
       className={`bg-no-repeat bg-cover bg-center h-full w-full -z-10 relative desktop max-w-[100vw] max-h-[100vh] overflow-hiddem ${
         setting.color ? "" : "bg-fill"
       } min-w-[700px]`}
-      style={{ backgroundColor: setting?.color, backgroundImage: `url(${setting?.image})` }}
+      style={{
+        backgroundColor: setting?.color,
+        backgroundImage: `url(${setting?.image})`,
+      }}
       ref={desktop}
     >
+      <ToastContainer position="bottom-right" />
       {loading && (
         <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#e30505] text-[white] w-full h-full flex justify-center items-center">
           loading
@@ -177,9 +182,7 @@ function Desktop() {
       )}
       {/* End of Widgets */}
 
-      {fileManager.Music_isOpen && (
-          <AudioPlayer />
-      )}
+      {fileManager.Music_isOpen && <AudioPlayer />}
       {/* //Apps icons */}
       {/* <CalculatorApp /> */}
 

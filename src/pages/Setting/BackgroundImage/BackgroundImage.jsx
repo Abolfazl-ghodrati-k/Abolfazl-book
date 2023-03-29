@@ -22,12 +22,12 @@ const BackgroundImage = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold text-center my-8">
+      <h1 className="text-3xl font-bold text-center my-8 flex items-center gap-2">
         Gallery{" "}
         {loading ? (
           <ClipLoader
             loading={loading}
-            size={150}
+            size={50}
           />
         ) : (
           ""
