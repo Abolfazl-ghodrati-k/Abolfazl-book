@@ -48,7 +48,7 @@ function withTodos(Component, date) {
       const ordered_by_year = {};
       found_years?.forEach((year) => {
         database?.forEach((todo) => {
-          if (todo?.year == year) {
+          if (todo?.year === year) {
             if (ordered_by_year[year]?.length) {
               const copy = ordered_by_year[year];
               ordered_by_year[year] = [...copy, { ...todo }];
@@ -74,7 +74,7 @@ function withTodos(Component, date) {
           ordered_by_year[year]?.forEach((todo) => {
             // console.log(todo)
 
-            if (todo?.month == month) {
+            if (todo?.month === month) {
               set(ordered_by_year_month, `${year}.${month}`, { ...todo });
             }
           });

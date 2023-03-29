@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import { persistor, store } from "./redux/Store";
 import { PersistGate } from "redux-persist/integration/react";
 import Desktop from "./pages/Desktop";
@@ -8,8 +8,6 @@ import MobilePortfolio from "./pages/MobilePortfolio";
 import useOs from "./Hooks/useOs";
 import { useState } from "react";
 import Portfolio from "./pages/Portfolio/Portfolio";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isvalidSize, IsValidSize] = useState(true);

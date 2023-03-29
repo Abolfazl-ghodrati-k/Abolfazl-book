@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { useOutletContext } from "react-router";
+import React from "react";
 import EachImage from "./Image";
 
-const Gallery = ({ images }) => {
-  const [Width, Height] = useOutletContext();
-  
+const Gallery = ({ images, Width, Height }) => {
   return (
     <div
       className={`grid ${

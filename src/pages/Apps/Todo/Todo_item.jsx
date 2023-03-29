@@ -4,6 +4,7 @@ import Todo_EditForm from "./Todo_EditForm";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit3 } from "react-icons/fi";
 import useFunctions from "../../../Hooks/useFunctions";
+import { toast } from "react-toastify";
 
 function Todo_item({ Todo }) {
   const [ShowDesc, setShowDesc] = useState(false);
@@ -21,6 +22,7 @@ function Todo_item({ Todo }) {
 
   function deleteHandler() {
     delete_todo(Todo?.id)
+    toast("Todo deleted successfully")
   }
 
   return (
@@ -58,7 +60,7 @@ function Todo_item({ Todo }) {
       </div>
       {ShowDesc && !ShowEditForm && (
         <div className="w-full">
-          <Todo_desc desc={Todo.desc} />
+          <Todo_desc desc={Todo.desc} setShowEditForm={setShowEditForm} />
         </div>
       )}
       {ShowEditForm && (
@@ -70,6 +72,7 @@ function Todo_item({ Todo }) {
           setdate={setdate}
           settodo={settodo}
           setdesc={setdesc}
+          setShowEditForm={setShowEditForm}
         />
       )}
     </div>

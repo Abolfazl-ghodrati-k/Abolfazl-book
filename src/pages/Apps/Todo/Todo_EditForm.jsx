@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import useFunctions from "../../../Hooks/useFunctions";
+import { toast } from "react-toastify";
 
-function Todo_EditForm({ todo, desc, date,id , settodo, setdesc, setdate }) {
+function Todo_EditForm({ todo, desc, date,id , settodo, setdesc, setdate, setShowEditForm }) {
   const {update_todo} = useFunctions()
 
   function submitHandler(e) {
     e.preventDefault();
     update_todo(todo, desc, date, id);
+    toast('todo edited successfully')
+    setShowEditForm(false)
   }
 
   return (
-    <form className="flex flex-col mx-2 [&>*]:mb-1 " onSubmit={submitHandler}>
+    <form className="flex flex-col mx-2 [&>*]:mb-1 canceltodo" onSubmit={submitHandler}>
       <input
         value={todo}
         onChange={(e) => settodo(e.target?.value)}

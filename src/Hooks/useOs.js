@@ -1,5 +1,3 @@
-import React from "react";
-
 function useOs() {
   var Os = "";
   var nAgt = window.navigator.userAgent;

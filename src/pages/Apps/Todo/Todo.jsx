@@ -15,6 +15,7 @@ function Todo({ onClick }) {
     <Draggable
       defaultPosition={{ x: 50, y: 10 }}
       handle=".handletodo"
+      cancel=".canceltodo"
       defaultClassName="react-draggable todo"
       bounds="parent"
     >

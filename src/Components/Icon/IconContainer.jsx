@@ -19,7 +19,7 @@ function IconContainer({
       setColor("black");
       setBgColor(true);
       setSRC(ResumeBlack);
-      if (Component.name == "GrPowerShutdown") {
+      if (Component.name === "GrPowerShutdown") {
         Ref.current.removeAttribute("id");
       }
     } else {
@@ -27,7 +27,7 @@ function IconContainer({
       setBgColor(false);
       if (Component) {
         setSRC(icon);
-        if (Component.name == "GrPowerShutdown") {
+        if (Component.name === "GrPowerShutdown") {
           Ref.current.setAttribute("id", "shutDown-inactive");
         }
       }

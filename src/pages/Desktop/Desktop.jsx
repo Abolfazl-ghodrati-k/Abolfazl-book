@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {BounceLoader} from "react-spinners"
 
 //pages
 import FileManagerApp from "../FileManager";
@@ -38,8 +39,8 @@ import useIndex from "../../Hooks/useIndex";
 import Layout from "../../Components/Layout/Layout";
 import ModalLayout from "../../Components/Layout/ModalLayout";
 
-import Draggable from "react-draggable";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Desktop() {
   const dispatch = useDispatch();
@@ -169,8 +170,8 @@ function Desktop() {
     >
       <ToastContainer position="bottom-right" />
       {loading && (
-        <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#e30505] text-[white] w-full h-full flex justify-center items-center">
-          loading
+        <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#4b6632] text-[white] w-full h-full flex justify-center items-center">
+          <BounceLoader size={200}/>
         </div>
       )}
 
@@ -187,7 +188,7 @@ function Desktop() {
       {/* <CalculatorApp /> */}
 
       {maximizedApp === 0 && (
-        <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-4">
+        <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-4 [&>*]:bg-CMD-100 [&>*]:p-1 [&>*]:rounded-md">
           <div className="flex flex-col items-center justify-center text-white">
             <IconContainer
               onClick={CmdClicked}

@@ -7,7 +7,7 @@ import { WEATHER_ACTION } from "../redux/sagas";
 import { GiChargedArrow } from "react-icons/gi";
 
 function Weather() {
-  const { data, show, city } = useSelector((store) => store.weather);
+  const { data, show } = useSelector((store) => store.weather);
   const dispatch = useDispatch();
 
   function handleShowWidget() {

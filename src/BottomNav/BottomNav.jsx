@@ -1,7 +1,6 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import IconContainer from "../Components/Icon";
 // importing icons
-import { MdOutlineOpenInBrowser } from "react-icons/md";
 import { BsFolder } from "react-icons/bs";
 import { IoIosContact } from "react-icons/io";
 import Resume from "../Assets/Icons/resume.png";
@@ -14,12 +13,10 @@ import { VscTerminalCmd } from "react-icons/vsc";
 import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  OPEN_BROWSER,
   OPEN_FILE_MANAGER,
   OPEN_CONTACTME,
   OPEN_SETTING,
   OPEN_SHUT_DOWN,
-  CLOSE_BROWSER,
   RESIZE_CMD,
   RESIZE_FILE_MANAGER,
   OPEN_MODAL,
@@ -48,18 +45,16 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
 
   const navigate = useNavigate()
 
-  const maximizedApp = useSelector((state) => state.desktop.Maximized);
-
   const { Order, Orders } = useOrder();
 
   const setOrder = (type) => {
     console.log(type);
-    Orders.map((app) => {
+    Orders?.forEach((app) => {
       // 1. Checks if clicked component has latest order
-      if (app.name == type && Order == app.order) {
+      if (app.name === type && Order === app.order) {
         return;
         // 2. Checks which components have been clicked
-      } else if (app.name == type) {
+      } else if (app.name === type) {
         console.log(
           "well clicked application is: ",
           app.name,
@@ -73,12 +68,13 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     });
   };
 
-  const BrowserClicked = () => {
-    dispatch({ type: OPEN_BROWSER });
-    if (NavState.Browser.isOpen) {
-      dispatch({ type: CLOSE_BROWSER });
-    }
-  };
+  // const BrowserClicked = () => {
+  //   dispatch({ type: OPEN_BROWSER });
+  //   if (NavState.Browser.isOpen) {
+  //     dispatch({ type: CLOSE_BROWSER });
+  //   }
+  // };
+  
   const FileManagerClicked = () => {
     // checks if component is opened or not if no: open it, set current order to component, decrease current order
     if (NavState.FILE_MANAGER.isOpen) {
@@ -211,7 +207,8 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
         <div className={`bg-CMD ml-auto lg:mx-auto max-w-[600px]  rounded-lg`}>
           <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
             {/* File manager */}
-            <div>
+            <div className="relative group">
+              <p className="hidden group-hover:block absolute -top-9 -right-4">FileManager</p>
               <IconContainer
                 icon={BsFolder}
                 state={NavState.FILE_MANAGER.isOpen}
@@ -220,7 +217,8 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               />
             </div>
             {/* Contact me */}
-            <div>
+            <div className="relative group">
+              <p className="hidden group-hover:block absolute -top-9 -right-4">ContactME</p>
               <IconContainer
                 icon={IoIosContact}
                 state={NavState.Contact.isOpen}
@@ -229,7 +227,8 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               />
             </div>
             {/* Portfolio */}
-            <div className="flex content-center">
+            <div className="flex content-center relative group">
+            <p className="hidden group-hover:block absolute -top-9 -left-1">Portfolio</p>
               <IconContainer
                 onClick={ResumeClicked}
                 img={true}

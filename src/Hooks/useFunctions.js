@@ -1,4 +1,3 @@
-import React from "react";
 import { v4 as uuidV4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_TODO } from "../redux/actionTypes";
@@ -42,7 +41,7 @@ const useFunctions = () => {
   }
 
   function delete_todo(id) {
-    var todosCopy = todos.filter((Todo) => Todo?.id != id);
+    var todosCopy = todos.filter((Todo) => Todo?.id !== id);
     dispatch({ type: UPDATE_TODO, payload: todosCopy });
   }
   

@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useOrder from "../../Hooks/useOrder";
 import { APP_MAXIMIZED } from "../../redux/actionTypes";
 
 const MacNav = ({ type, name, isMaximized }) => {

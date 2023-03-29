@@ -44,10 +44,6 @@ root.render(
         <Route path="/filemanager/documents" element={<Documents />} />
         <Route path="/filemanager/videos" element={<Videos />} />
       </Route>
-      <Route path="/setting" element={<App />}>
-        <Route path="color" element={<ChangeColor />} />
-        <Route path="image" element={<BackgroundImage />} />
-      </Route>
       <Route path="/portfolio" element={<Portfolio />} />
     </Routes>
   </Router>

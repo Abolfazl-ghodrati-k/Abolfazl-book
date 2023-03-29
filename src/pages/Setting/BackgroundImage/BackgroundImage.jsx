@@ -3,7 +3,7 @@ import axios from "axios";
 import Gallery from "./Gallery";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const BackgroundImage = () => {
+const BackgroundImage = ({Width, Height}) => {
   const [images, setImages] = useState([]);
   const [loading, setloading] = useState(true);
 
@@ -22,7 +22,7 @@ const BackgroundImage = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold text-center my-8 flex items-center gap-2">
+      <h1 className="text-3xl font-bold text-center my-8 flex items-center justify-center gap-2">
         Gallery{" "}
         {loading ? (
           <ClipLoader
@@ -34,7 +34,7 @@ const BackgroundImage = () => {
         )}
       </h1>
       <div className="scrollbar max-h-full">
-        <Gallery images={images} />
+        <Gallery images={images} Width={Width} Height={Height} />
       </div>
     </div>
   );

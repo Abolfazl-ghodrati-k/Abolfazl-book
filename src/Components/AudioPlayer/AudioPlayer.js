@@ -66,7 +66,7 @@ const AudioPlayer = () => {
     // console.log(isPlaying);
     // checks if user try to pause music via keyboard
     window.addEventListener("keydown", (e) => {
-      if (e.key == "MediaPlayPause") {
+      if (e.key === "MediaPlayPause") {
         if (isPlaying) {
           audioPlayer.current.pause();
           dispatch({ type: CONTROLL_MUSIC, payload: false });
@@ -114,7 +114,7 @@ const AudioPlayer = () => {
 
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying);
-    if (audioPlayer.current.currentTime == audioPlayer?.current.duration) {
+    if (audioPlayer.current.currentTime === audioPlayer?.current.duration) {
       progressBar.current.value = 0;
       // setIsPlaying(false);
       dispatch({ type: CONTROLL_MUSIC, payload: false });
