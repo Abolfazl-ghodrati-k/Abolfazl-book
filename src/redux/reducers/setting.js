@@ -8,6 +8,7 @@ import {
   CHANGE_BACKGROUND,
   PICK_COLOR,
   SUBMIT_CHANGES,
+  CHANGE_IMAGE
 } from "../actionTypes";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   isMinimized: false,
   order: null,
   color: "",
+  image: null
 };
 
 export default function SettingReducer(state = initialState, action) {
@@ -43,7 +45,10 @@ export default function SettingReducer(state = initialState, action) {
       return Object.assign({}, state, {
         color: action.payload,
       });
-
+    case CHANGE_IMAGE:
+      return Object.assign({}, state, {
+        image: action.payload
+      })
     default:
       return state;
   }

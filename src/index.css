@@ -249,3 +249,17 @@ code {
     rgb(0, 0, 0)
   );
 }
+
+.skeleton {
+  border-radius: 15px;
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(202, 14%, 66%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}

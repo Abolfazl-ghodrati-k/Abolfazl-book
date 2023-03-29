@@ -14,8 +14,8 @@ function Musics() {
       setActive((Active) => (Active = "r&b"));
     } else if (location.pathname.includes("rap")) {
       setActive((Active) => (Active = "rap"));
-    } else if (location.pathname.includes("pop")) {
-      setActive((Active) => (Active = "pop"));
+    } else if (location.pathname.includes("iranian")) {
+      setActive((Active) => (Active = "iranian"));
     }
   });
 
@@ -27,21 +27,21 @@ function Musics() {
             <div>
               <span
                 className={`${
-                  Active == "rock"
+                  Active === "rock"
                     ? "font-bold underline underline-offset-8"
                     : ""
                 } mr-1`}
               >
                 Rock
               </span>
-              <span>{Active == "rock" ? "→" : ""}</span>
+              <span>{Active === "rock" ? "→" : ""}</span>
             </div>
           </Link>
           <Link to="/filemanager/musics/r&b">
             <div>
               <span
                 className={`${
-                  Active == "r&b"
+                  Active === "r&b"
                     ? "font-bold underline underline-offset-8"
                     : ""
                 } mr-1`}
@@ -55,28 +55,28 @@ function Musics() {
             <div>
               <span
                 className={`${
-                  Active == "rap"
+                  Active === "rap"
                     ? "font-bold underline underline-offset-8"
                     : ""
                 } mr-1`}
               >
                 Rap
               </span>
-              <span>{Active == "rap" ? "→" : ""}</span>
+              <span>{Active === "rap" ? "→" : ""}</span>
             </div>
           </Link>
-          <Link to="/filemanager/musics/pop">
+          <Link to="/filemanager/musics/iranian">
             <div>
               <span
                 className={`${
-                  Active == "pop"
+                  Active === "iranian"
                     ? "font-bold underline underline-offset-8"
                     : ""
                 } mr-1`}
               >
-                Pop
+                Iranian
               </span>
-              <span>{Active == "pop" ? "→" : ""}</span>
+              <span>{Active === "iranian" ? "→" : ""}</span>
             </div>
           </Link>
         </div>

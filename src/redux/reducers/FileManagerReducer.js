@@ -8,7 +8,7 @@ import {
   ORDER_FILE_MANAGER,
   CLOSE_MUSIC,
   CONTROLL_MUSIC,
-  SET_PLAYING_MUSIC
+  SET_PLAYING_MUSIC,
 } from "../actionTypes";
 
 const initialSatate = {
@@ -26,6 +26,7 @@ const initialSatate = {
   isPlaying: false,
   playingSrc: "",
   playingTitle: "",
+  playingSongs: null,
   order: null,
 };
 
@@ -33,49 +34,38 @@ export default function FileManagerReducer(state = initialSatate, action) {
   switch (action.type) {
     case OPEN_FILE_MANAGER:
       return Object.assign({}, state, { isOpen: true });
-      break;
     case CLOSE_FILE_MANAGER:
-      // console.log("Closing");
       return Object.assign({}, state, { isOpen: false });
-
     case MAXIMIZE_FILE_MANAGER:
       return Object.assign({}, state, { isMaximized: true });
-
     case MINIMIZE_FILE_MANAGER:
       return Object.assign({}, state, {
         isMinimized: true,
       });
-
     case RESIZE_FILE_MANAGER:
       return Object.assign({}, state, {
         isMinimized: action.payload.minimzed,
         isMaximized: action.payload.maximized,
       });
-
     case ORDER_FILE_MANAGER:
       return Object.assign({}, state, { order: action.payload });
-
     case OPEN_MUSIC:
       return Object.assign({}, state, {
         Music_isOpen: true,
       });
-
     case CLOSE_MUSIC:
       return Object.assign({}, state, {
         Music_isOpen: false,
       });
-
     case CONTROLL_MUSIC:
       return Object.assign({}, state, {
         isPlaying: action.payload,
       });
-
     case SET_PLAYING_MUSIC:
       return Object.assign({}, state, {
         playingSrc: action.payload.Src,
         playingTitle: action.payload.Title,
       });
-
     default:
       return state;
   }

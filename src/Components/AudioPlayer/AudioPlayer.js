@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import styles from "./AudioPlayer.module.css";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { BsArrowRightShort } from "react-icons/bs";
@@ -6,7 +6,8 @@ import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import "./styles.css";
 import { useSelector, useDispatch } from "react-redux";
-import { CLOSE_MUSIC, CONTROLL_MUSIC } from "../../redux/actionTypes";
+import { CLOSE_MUSIC, CONTROLL_MUSIC, SET_PLAYING_MUSIC } from "../../redux/actionTypes";
+import Draggable from "react-draggable";
 
 const AudioPlayer = () => {
   // state
@@ -38,6 +39,25 @@ const AudioPlayer = () => {
   });
 
   useEffect(() => {
+    if (isPlaying) {
+      audioPlayer?.current.play();
+    } else {
+      audioPlayer?.current.pause();
+    }
+  }, [isPlaying]);
+
+  useLayoutEffect(() => {
+    audioPlayer?.current.pause();
+    setLoading(true);
+  }, [playingSrc]);
+
+  useEffect(() => {
+    if (audioPlayer?.current?.ReadyState) {
+      setLoading(false);
+    }
+  }, [audioPlayer?.current?.ReadyState]);
+
+  useEffect(() => {
     // console.log(isPlaying);
     // checks if user try to pause music via keyboard
     window.addEventListener("keydown", (e) => {
@@ -51,28 +71,10 @@ const AudioPlayer = () => {
         }
       }
     });
-    // makes sure if we want to play music by store html will play audio to
-
-    // makes a delay for user when is refreshing page to make sure
-    // we can stop music and pause it in store either
-    // const onBeforeUnload = (e) => {
-    //   if (isPlaying) {
-    //     e.preventDefault();
-    //     dispatch({ type: CONTROLL_MUSIC, payload: false });
-    //     audioPlayer.current.pause();
-    //     setTimeout(() => {
-    //       console.log("reloading");
-    //     }, [500]);
-    //   }
-    // };
     // music duration calculation
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration((sec) => (sec = seconds));
     progressBar.current.max = seconds;
-    // window.addEventListener("beforeunload", onBeforeUnload);
-    // return () => {
-    //   window.addEventListener("beforeunload", onBeforeUnload);
-    // };
   }, [
     audioPlayer?.current?.pause,
     audioPlayer?.current?.ReadyState,
@@ -102,16 +104,16 @@ const AudioPlayer = () => {
 
   const whilePlaying = () => {
     // console.log(progressBar.current.value);
-    progressBar.current.value = audioPlayer.current.currentTime;
+    progressBar.current.value = audioPlayer?.current.currentTime;
     // console.log(audioPlayer.current.currentTime);
 
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying);
-    if (audioPlayer.current.currentTime == audioPlayer.current.duration) {
+    if (audioPlayer.current.currentTime == audioPlayer?.current.duration) {
       progressBar.current.value = 0;
       // setIsPlaying(false);
       dispatch({ type: CONTROLL_MUSIC, payload: false });
-      progressBar.current.style.setProperty("--seek-before-width", `${0}px`);
+      progressBar.current.style.setProperty("--seek-before-width", `${0}%`);
       audioPlayer.current.currentTime = 0;
       setCurrentTime((t) => (t = 0));
       audioPlayer.current.pause();
@@ -120,6 +122,7 @@ const AudioPlayer = () => {
   };
 
   const changeRange = () => {
+    setLoading(true);
     audioPlayer.current.currentTime = progressBar.current.value;
     changePlayerCurrentTime();
   };
@@ -127,7 +130,11 @@ const AudioPlayer = () => {
   const changePlayerCurrentTime = () => {
     progressBar.current.style.setProperty(
       "--seek-before-width",
-      `${(progressBar.current.value / duration) * 100 + 15}%`
+      `${
+        (progressBar.current.value / duration) * 100 > 70
+          ? (progressBar.current.value / duration) * 100
+          : (progressBar.current.value / duration) * 100 + 2
+      }%`
     );
     setCurrentTime(progressBar.current.value);
   };
@@ -138,12 +145,14 @@ const AudioPlayer = () => {
   };
 
   const forwardThirty = () => {
+    setLoading(true);
     progressBar.current.value = Number(+progressBar.current.value + 30);
     if (+audioPlayer.current.duration - +audioPlayer.current.currentTime < 30) {
+      setLoading(false);
       progressBar.current.value = 0;
       // setIsPlaying(false);
       dispatch({ type: CONTROLL_MUSIC, payload: false });
-      progressBar.current.style.setProperty("--seek-before-width", `${0}px`);
+      progressBar.current.style.setProperty("--seek-before-width", `${0}%`);
       audioPlayer.current.currentTime = 0;
       setCurrentTime((t) => (t = 0));
       audioPlayer.current.pause();
@@ -156,87 +165,106 @@ const AudioPlayer = () => {
   const ClosePlayer = () => {
     dispatch({ type: CLOSE_MUSIC });
     dispatch({ type: CONTROLL_MUSIC, payload: false });
+    dispatch({
+      type: SET_PLAYING_MUSIC,
+      payload: { Src: "", Title: "" },
+    });
     audioPlayer?.current?.pause();
   };
 
   return (
-    <div className={styles.audioPlayer}>
-      <audio
-        onCanPlayThrough={() => {
-          setMusicReady(true);
-          setLoading(false);
-          console.log("kirrrr");
-        }}
-        ref={audioPlayer}
-        src={playingSrc}
-        className="dropbox-embed"
-        preload="metadata"
-      ></audio>
-      <div className="flex mb-1 justify-between p-1 w-full items-center">
-        <span className="text-[14px] text-[#333] tracking-wider">
-          AG player
-        </span>
-        <div
-          onClick={() => ClosePlayer()}
-          className="bg-[#840000] hover:opacity-50 cursor-pointer w-[11px] h-[11px] rounded-[50%]"
-        ></div>
-      </div>
-      <div className={styles.cover}></div>
-      <div className={styles.title}>
-        <p className="text-[12px] max-w-[170px] bg-fill relative">
-          {playingTitle}
-        </p>
-        {Loading
-          ? "Loading ..."
-          : (isPlaying) && (
-              <div className="now playing" ref={music}>
-                <span className="bar n1">A</span>
-                <span className="bar n2">B</span>
-                <span className="bar n3">c</span>
-                <span className="bar n4">D</span>
-                <span className="bar n5">E</span>
-                <span className="bar n6">F</span>
-                <span className="bar n7">G</span>
-                <span className="bar n8">H</span>
-              </div>
+    <Draggable cancel=".cancel-player">
+      <div className="p-1 absolute z-[100000000]">
+        <div className={styles.audioPlayer}>
+          <audio
+            onCanPlayThrough={() => {
+              setMusicReady(true);
+              setLoading(false);
+            }}
+            onLoadStart={() => {
+              setLoading(true);
+            }}
+            onLoadedMetadata={() => {
+              setLoading(false);
+            }}
+            ref={audioPlayer}
+            src={playingSrc}
+            className="dropbox-embed"
+            preload="metadata"
+          ></audio>
+          <div className="flex mb-1 justify-between p-1 w-full items-center">
+            <span className="text-[14px] text-[#333] tracking-wider">
+              AG player
+            </span>
+            <div
+              onClick={() => ClosePlayer()}
+              className="bg-[#840000] hover:opacity-50 cursor-pointer w-[11px] h-[11px] rounded-[50%]"
+            ></div>
+          </div>
+          <div className={styles.cover}></div>
+          <div className={styles.title}>
+            <p className="text-[12px] max-w-[170px] bg-fill relative">
+              {playingTitle}
+            </p>
+            {Loading ? (
+              <p className="text-[.9rem] text-black">loading...</p>
+            ) : (
+              isPlaying && (
+                <div className="now playing" ref={music}>
+                  <span className="bar n1">A</span>
+                  <span className="bar n2">B</span>
+                  <span className="bar n3">c</span>
+                  <span className="bar n4">D</span>
+                  <span className="bar n5">E</span>
+                  <span className="bar n6">F</span>
+                  <span className="bar n7">G</span>
+                  <span className="bar n8">H</span>
+                </div>
+              )
             )}
-      </div>
-      <div className={styles.controll}>
-        <button className={styles.forwardBackward} onClick={backThirty}>
-          <BsArrowLeftShort /> 30
-        </button>
-        <button onClick={togglePlayPause} className={styles.playPause}>
-          {isPlaying && MusicReady ? (
-            <FaPause />
-          ) : (
-            <FaPlay className={styles.play} />
-          )}
-        </button>
-        <button className={styles.forwardBackward} onClick={forwardThirty}>
-          30 <BsArrowRightShort />
-        </button>
-      </div>
-      <div className={styles.playBar}>
-        {/* current time */}
-        <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
+          </div>
+          <div className={styles.controll}>
+            <button className={styles.forwardBackward} onClick={backThirty}>
+              <BsArrowLeftShort /> 30
+            </button>
+            <button onClick={togglePlayPause} className={styles.playPause}>
+              {Loading ? (
+                <p className="text-[.8rem]">loading...</p>
+              ) : isPlaying && MusicReady ? (
+                <FaPause />
+              ) : (
+                <FaPlay className={styles.play} />
+              )}
+            </button>
+            <button className={styles.forwardBackward} onClick={forwardThirty}>
+              30 <BsArrowRightShort />
+            </button>
+          </div>
+          <div className={styles.playBar}>
+            {/* current time */}
+            <div className={styles.currentTime}>
+              {calculateTime(currentTime)}
+            </div>
 
-        {/* progress bar */}
-        <div>
-          <input
-            type="range"
-            className={styles.progressBar}
-            defaultValue="0"
-            ref={progressBar}
-            onChange={changeRange}
-          />
-        </div>
+            {/* progress bar */}
+            <div className="cancel-player cursor-pointer">
+              <input
+                type="range"
+                className={styles.progressBar}
+                defaultValue="0"
+                ref={progressBar}
+                onChange={changeRange}
+              />
+            </div>
 
-        {/* duration */}
-        <div className={styles.duration}>
-          {duration ? calculateTime(duration) : "00:00"}
+            {/* duration */}
+            <div className={styles.duration}>
+              {duration ? calculateTime(duration) : "00:00"}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </Draggable>
   );
 };
 

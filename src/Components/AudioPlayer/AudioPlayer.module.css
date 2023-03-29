@@ -50,6 +50,7 @@
 
 .forwardBackward {
   background: none;
+  color: var(--secondary);
   border: none;
   display: flex;
   align-items: center;
@@ -64,6 +65,7 @@
 }
 
 .forwardBackward:hover {
+  color: white;
   background-color: yellowgreen;
 }
 
@@ -87,6 +89,7 @@
 
 .currentTime,
 .duration {
+  color: #000000;
   font-family: monospace;
   font-size: 16px;
 }
@@ -106,6 +109,7 @@
   --knobby: #1c4b12;
   --selectedKnobby: #0f2726;
 
+  cursor: pointer;
   appearance: none;
   background: var(--bar-bg);
   border-radius: 10px;

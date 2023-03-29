@@ -156,120 +156,114 @@ function Desktop() {
   };
 
   return (
-      <div
-        className={`h-full w-full -z-10 relative desktop max-w-[100vw] max-h-[100vh] overflow-hiddem ${
-          setting.color ? "" : "bg-fill"
-        } min-w-[700px]`}
-        style={{ backgroundColor: setting.color }}
-        ref={desktop}
-      >
-        {loading && (
-          <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#e30505] text-[white] w-full h-full flex justify-center items-center">
-            loading
+    <div
+      className={`bg-no-repeat bg-cover bg-center h-full w-full -z-10 relative desktop max-w-[100vw] max-h-[100vh] overflow-hiddem ${
+        setting.color ? "" : "bg-fill"
+      } min-w-[700px]`}
+      style={{ backgroundColor: setting?.color, backgroundImage: `url(${setting?.image})` }}
+      ref={desktop}
+    >
+      {loading && (
+        <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#e30505] text-[white] w-full h-full flex justify-center items-center">
+          loading
+        </div>
+      )}
+
+      {/* Widgets */}
+      {weather.show && (
+        <div className="absolute z-[10000000]">
+          <Weather />
+        </div>
+      )}
+      {/* End of Widgets */}
+
+      {fileManager.Music_isOpen && (
+          <AudioPlayer />
+      )}
+      {/* //Apps icons */}
+      {/* <CalculatorApp /> */}
+
+      {maximizedApp === 0 && (
+        <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-4">
+          <div className="flex flex-col items-center justify-center text-white">
+            <IconContainer
+              onClick={CmdClicked}
+              icon={VscTerminalCmd}
+              size={"50px"}
+              isDesktop
+            />
+            <p className="text-[.9rem]">CMD</p>
           </div>
-        )}
-
-        {/* Widgets */}
-        {weather.show && (
-          <div className="absolute z-[10000000]">
-            <Weather />
+          <div className="flex flex-col items-center justify-center text-white">
+            <IconContainer
+              onClick={CalculatorClicked}
+              icon={BsCalculator}
+              size={"50px"}
+              isDesktop
+            />
+            <p className="text-[.9rem]">Calculator</p>
           </div>
-        )}
-        {/* End of Widgets */}
-
-        {fileManager.Music_isOpen && (
-          <div className="absolute z-[100000]">
-            <Draggable>
-              <div className="p-1">
-                <AudioPlayer />
-              </div>
-            </Draggable>
+          <div className="flex flex-col items-center justify-center text-white">
+            <IconContainer
+              onClick={TodoClicked}
+              icon={GoTasklist}
+              size={"50px"}
+              isDesktop
+            />
+            <p className="text-[.9rem]">Todo app</p>
           </div>
-        )}
-        {/* //Apps icons */}
-        {/* <CalculatorApp /> */}
-
-        {maximizedApp === 0 && (
-          <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-4">
-            <div className="flex flex-col items-center justify-center text-white">
-              <IconContainer
-                onClick={CmdClicked}
-                icon={VscTerminalCmd}
-                size={"50px"}
-                isDesktop
-              />
-              <p className="text-[.9rem]">CMD</p>
-            </div>
-            <div className="flex flex-col items-center justify-center text-white">
-              <IconContainer
-                onClick={CalculatorClicked}
-                icon={BsCalculator}
-                size={"50px"}
-                isDesktop
-              />
-              <p className="text-[.9rem]">Calculator</p>
-            </div>
-            <div className="flex flex-col items-center justify-center text-white">
-              <IconContainer
-                onClick={TodoClicked}
-                icon={GoTasklist}
-                size={"50px"}
-                isDesktop
-              />
-              <p className="text-[.9rem]">Todo app</p>
-            </div>
-          </div>
-        )}
-        {cmd.isOpen && !cmd.isMinimized && (
-          <CMDApp
-            onClick={() => {
-              // console.log("im setting order");
-              setOrder("CMD");
-            }}
-          />
-        )}
-        {calculator.isOpen && !calculator.isMinimized && (
-          <CalculatorApp onClick={() => setOrder("CALCULATOR")} />
-        )}
-        {todo.isOpen&& !todo.isMinimized && (
-            <TodoApp onClick={() => setOrder("TODO")} />
-        )}
-        {shutdown.isOpen && (
-          <ModalLayout>
-            <ShutDownApp />
-          </ModalLayout>
-        )}
-        {setting.isOpen && (
-          <SettingApp
-            onClick={() => setOrder("SETTING")}
-            zIndex={Indexs[2].zIndex}
-          />
-        )}
-        {portfolio.isOpen && (
-          <Layout type={"PORTFOLIO"}>
-            <PortfolioApp />
-          </Layout>
-        )}
-        {contactme.isOpen && (
-          <ModalLayout zIndex={null}>
-            <ContactmeApp />
-          </ModalLayout>
-        )}
-        {fileManager.isOpen && !fileManager.isMinimized && (
-          <FileManagerApp
-            onClick={() => {
-              setOrder("FILE_MANAGER");
-            }}
-          />
-        )}
-
-        <Shorthands />
-
-        <BottomNav
-          IncreaseLowerOrders={IncreaseLowerOrders}
-          ChangingCurrentOrder={ChangingCurrentOrder}
+        </div>
+      )}
+      {cmd.isOpen && !cmd.isMinimized && (
+        <CMDApp
+          onClick={() => {
+            // console.log("im setting order");
+            setOrder("CMD");
+          }}
         />
-      </div>
+      )}
+      {calculator.isOpen && !calculator.isMinimized && (
+        <CalculatorApp onClick={() => setOrder("CALCULATOR")} />
+      )}
+      {todo.isOpen && !todo.isMinimized && (
+        <TodoApp onClick={() => setOrder("TODO")} />
+      )}
+      {shutdown.isOpen && (
+        <ModalLayout>
+          <ShutDownApp />
+        </ModalLayout>
+      )}
+      {setting.isOpen && !setting.isMinimized && (
+        <SettingApp
+          onClick={() => setOrder("SETTING")}
+          zIndex={Indexs[2].zIndex}
+        />
+      )}
+      {portfolio.isOpen && (
+        <Layout type={"PORTFOLIO"}>
+          <PortfolioApp />
+        </Layout>
+      )}
+      {contactme.isOpen && (
+        <ModalLayout zIndex={null}>
+          <ContactmeApp />
+        </ModalLayout>
+      )}
+      {fileManager.isOpen && !fileManager.isMinimized && (
+        <FileManagerApp
+          onClick={() => {
+            setOrder("FILE_MANAGER");
+          }}
+        />
+      )}
+
+      <Shorthands />
+
+      <BottomNav
+        IncreaseLowerOrders={IncreaseLowerOrders}
+        ChangingCurrentOrder={ChangingCurrentOrder}
+      />
+    </div>
   );
 }
 export default Desktop;

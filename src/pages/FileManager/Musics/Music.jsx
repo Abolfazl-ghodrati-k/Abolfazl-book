@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdPlayArrow, MdPlayForWork } from "react-icons/md";
 import { BsPauseFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,9 +18,17 @@ function Music({ src, title }) {
   const dispatch = useDispatch();
   const fileManager = useSelector((state) => state.fileManager);
 
-  const OpenMusic = (src, title) => {
+  useEffect(() => {
+    if (fileManager?.playingSrc == src) {
+      setShowIcon(true);
+    } else {
+      setShowIcon(false);
+    }
+  }, [fileManager]);
+
+  const OpenMusic = (src, title, id) => {
     // console.log(fileManager.isPlaying);
-    if (!fileManager.isPlaying) {
+    if (!fileManager?.isPlaying) {
       //   setIsPlaying((ispalying) => (ispalying = true));
       dispatch({
         type: SET_PLAYING_MUSIC,
@@ -29,26 +37,38 @@ function Music({ src, title }) {
       dispatch({ type: OPEN_MUSIC });
       dispatch({ type: CONTROLL_MUSIC, payload: true });
     }
-    if (fileManager.isPlaying) {
+    if (fileManager?.isPlaying && fileManager?.playingSrc == src) {
       dispatch({ type: CONTROLL_MUSIC, payload: false });
+    }
+    if (fileManager?.isPlaying && fileManager?.playingSrc !== src) {
+      dispatch({
+        type: SET_PLAYING_MUSIC,
+        payload: { Src: src, Title: title },
+      });
     }
   };
 
   const DownloadMusic = (src, title) => {
     const ankerTag = document.createElement("a");
     ankerTag.href = src;
-    ankerTag.setAttribute("download", title+'.mp3');
+    ankerTag.setAttribute("download", title + ".mp3");
     document.body.appendChild(ankerTag);
     ankerTag.click();
     ankerTag.parentNode.removeChild(ankerTag);
   };
   return (
     <div
-      className="relative flex justify-between items-center rounded bg-gray-200 p-2 "
+      className={`relative flex justify-between items-center rounded ${src==="Ashke Mahtab"? 'bg-[#FFD700]' : 'bg-gray-200'} bg-gray-200 p-2 cursor-pointer mb-1`}
       onMouseEnter={() => {
+        if (fileManager?.playingSrc == src) {
+          return;
+        }
         setShowIcon((ShowIcon) => (ShowIcon = true));
       }}
       onMouseLeave={() => {
+        if (fileManager?.playingSrc == src) {
+          return;
+        }
         setShowIcon((ShowIcon) => (ShowIcon = false));
       }}
     >
@@ -63,10 +83,10 @@ function Music({ src, title }) {
             transitionTimingFunction: "ease-in",
           }}
         >
-          {fileManager.isPlaying ? (
+          {fileManager?.isPlaying && fileManager?.playingSrc == src ? (
             <BsPauseFill size={25} />
           ) : (
-            <MdPlayArrow size={25} />
+            <MdPlayArrow size={25} color="black" />
           )}
         </span>
         <span

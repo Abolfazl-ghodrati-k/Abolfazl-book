@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import MacNav from "../../Components/MacNav";
 import ChangeColor from "./ChangeColor";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useNavigate } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import BackgroundImage from "./BackgroundImage";
 import Disks from "../FileManager/Components/Disks";
 
@@ -22,6 +22,8 @@ function Setting({ onClick, zIndex }) {
       defaultClassName="react-draggable setting"
     >
       <Resizable
+        minHeight={500}
+        minWidth={764}
         defaultSize={{ width: Width, height: Height }}
         onResizeStop={(e, direction, ref, d) => {
           setWidth((Width) => Width + d.width);
@@ -29,10 +31,10 @@ function Setting({ onClick, zIndex }) {
         }}
       >
         <div
-          onClick={() => onClick()}
-          className="w-full h-full bg-gray-200 rounded min-h-[308.95px] min-w-[758.617px]"
+          onClick={onClick}
+          className="w-full h-full bg-gray-200 rounded p-1"
         >
-          <div className="wrap handlesetting w-full h-full ">
+          <div className="wrap handlesetting w-full h-full">
             <div className="top flex justify-between items-center px-2 py-1 h-[7%]">
               <div className="nav flex justify-between items-center">
                 Setting
@@ -47,15 +49,12 @@ function Setting({ onClick, zIndex }) {
             </div>
             <div className="w-full h-[1px] bg-white"></div>
             <div className="flex w-full h-[92.5%]">
-              <div className=" bg-gray-300 text-[0.9rem] w-[30%] h-full flex flex-col [&>*]:mt-2 [&>*]:ml-1">
+              <div className=" bg-gray-300 text-[0.9rem] w-full max-w-[200px] h-full flex flex-col [&>*]:mt-2 [&>*]:ml-1">
                 <Disks Setting Disk={"color"} title={"Color"} />
                 <Disks Setting Disk={"image"} title={"Background image"} />
               </div>
-              <div className="w-full h-full">
-                <Routes>
-                  <Route path="setting/color" element={<ChangeColor />} />
-                  <Route path="setting/image" element={<BackgroundImage />} />
-                </Routes>
+              <div className="w-full h-full max-h-full overflow-y-scroll scrollbar">
+                <Outlet context={[Width, Height]}/>
               </div>
             </div>
           </div>

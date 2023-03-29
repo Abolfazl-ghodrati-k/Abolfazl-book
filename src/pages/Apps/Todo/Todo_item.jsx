@@ -32,7 +32,7 @@ function Todo_item({ Todo }) {
       >
         <div
           onClick={() => descriptionHandler(Todo?.desc)}
-          className="w-full bg-gray-300 text-[white] rounded p-1 flex items-center justify-between m-1 text-[.85rem]"
+          className="w-full bg-gradient-to-br bg-[#FFB4B4] from-[#B2A4FF] to-[#FFDEB4] text-[black] rounded p-1 flex items-center justify-between m-1 text-[.85rem]"
         >
           <span>{Todo?.todo}</span>
           <span>
@@ -46,11 +46,11 @@ function Todo_item({ Todo }) {
                 setShowEditForm(!ShowEditForm);
                 setShowDesc(false);
               }}
-              className="hover:bg-[gray] p-1 rounded"
+              className="hover:bg-gray-200 p-1 rounded"
             >
               <FiEdit3 size={25} color="white" />
             </span>
-            <span className="hover:bg-[gray] p-1 rounded" onClick={deleteHandler}>
+            <span className="hover:bg-gray-200 p-1 rounded" onClick={deleteHandler}>
               <AiOutlineDelete size={25} color="white" />
             </span>
           </span>

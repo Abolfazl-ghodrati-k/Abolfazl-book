@@ -14,6 +14,8 @@ import Musics from "./pages/FileManager/Musics/Musics";
 import Content from "./pages/FileManager/Components/Content";
 import Documents from "./pages/FileManager/Documents/Documents";
 import Videos from "./pages/FileManager/Videos/Videos";
+import ChangeColor from "./pages/Setting/ChangeColor/ChangeColor";
+import BackgroundImage from "./pages/Setting/BackgroundImage/BackgroundImage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -35,12 +37,16 @@ root.render(
             element={<Content type={"music"} field={"r&b"} />}
           />
           <Route
-            path="pop"
-            element={<Content type={"music"} field={"pop"} />}
+            path="iranian"
+            element={<Content type={"music"} field={"iranian"} />}
           />
         </Route>
         <Route path="/filemanager/documents" element={<Documents />} />
         <Route path="/filemanager/videos" element={<Videos />} />
+      </Route>
+      <Route path="/setting" element={<App />}>
+        <Route path="color" element={<ChangeColor />} />
+        <Route path="image" element={<BackgroundImage />} />
       </Route>
       <Route path="/portfolio" element={<Portfolio />} />
     </Routes>

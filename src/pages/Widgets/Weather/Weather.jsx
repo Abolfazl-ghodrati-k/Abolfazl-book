@@ -34,17 +34,15 @@ export const WeatherIcons = {
 const WeatherInfoComponent = (props) => {
   const { name, value } = props;
   return (
-    <div className="flex my-[5px] mx-[10px] justify-center items-center">
+    <div className="flex my-[2px] mx-[10px] justify-center items-center">
       <img className="w-[36px] h-[36px]" src={process.env.REACT_APP_DOMAINNAME+WeatherInfoIcons[name]} />
-      <div className="flex flex-col text-[14px] m-[15px] text-black-200">
+      <div className="flex flex-col text-[14px] m-[8px] text-black-200">
         {value}
         <span className="text-[12px] capitalize">{name}</span>
       </div>
     </div>
   );
 };
-
-console.log(WeatherInfoIcons["humidity"]);
 
 function Weather() {
   const dispatch = useDispatch();
@@ -65,7 +63,7 @@ function Weather() {
   console.log(data);
 
   return (
-    <div className="flex text-black-200 flex-col items-center mt-[2%] ml-1 w-[380px] py-[20px] px-[10px] m-auto rounded-[4px] bg-[white] z-[1000000]">
+    <div className="flex text-black-200 flex-col items-center ml-1 w-[380px] px-[10px] m-auto rounded-[4px] bg-[white] z-[1000000]">
       <span className="text-black my-[20px] mx-auto text-[18px] font-bold">
         Weather App
       </span>
@@ -89,21 +87,21 @@ function Weather() {
       <span className="text-left mt-1 text-[orange] w-full">
         {error ? "Error! = "+error.message : null}
       </span>
-      <div className="flex w-full mt-[30px] mb-[20px] mx-auto justify-between items-center">
+      <div className="flex w-full mt-[10px] mb-[20px] mx-auto justify-between items-center">
         <div className="my-[20px] mx-auto capitalize text-[14px]">
-          <span className="text-[28px]">{`${Math.floor(
+          <span className="text-[20px]">{`${Math.floor(
             data?.main?.temp - 273
           )}°C`}</span>
           {`  |  ${data?.weather[0].description}`}
         </div>
         <img
-          className="w-[100px] h-[100px] my-[5px] mx-auto"
+          className="w-[80px] h-[80px] my-[5px] mx-auto"
           src={WeatherIcons[data?.weather[0].icon]}
         />
       </div>
-      <p className="my-[15px] mx-auto capitalize text-[28px] font-bold">{`${data?.name}, ${data?.sys?.country}`}</p>
+      <p className="mt-[10px] mx-auto capitalize text-[22px] font-bold">{`${data?.name}, ${data?.sys?.country}`}</p>
 
-      <p className="mt-[20px] mb-[10px] mx-[25px] capitalize text-[14px] font-bold text-start w-[90%] ">
+      <p className="mt-[10px] mb-[10px] mx-[25px] capitalize text-[14px] font-bold text-start w-[90%] ">
         Weather Info
       </p>
       <div className="flex w-[90%] justify-evenly items-center flex-wrap">

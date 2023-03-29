@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { rock } from "./Data";
 import { RandB } from "./Data";
 import { rap } from "./Data";
-import { pop } from "./Data";
+import { iranian } from "./Data";
 import Music from "./Music";
 
 function MusicContainer({ Type }) {
@@ -18,8 +18,8 @@ function MusicContainer({ Type }) {
       case "r&b":
         setData(RandB);
         break;
-      case "pop":
-        setData(pop);
+      case "iranian":
+        setData(iranian);
         break;
       default:
         break;

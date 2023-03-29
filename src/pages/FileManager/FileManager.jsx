@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { Resizable } from "re-resizable";
 import { useNavigate } from "react-router";
@@ -7,18 +7,35 @@ import "./style.css";
 import MacNav from "../../Components/MacNav";
 import Disks from "./Components/Disks";
 import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function FileManager({ zIndex, onClick }) {
   // ***************************************** STATE ***********************
   const [Width, setWidth] = useState(900);
   const [Height, setHeight] = useState(500);
+  const [PositionX, setPositionX] = useState(40);
+  const [PositionY, setPositionY] = useState(40);
   const navigate = useNavigate();
+  const { isMaximized } = useSelector((store) => store.fileManager);
+
+  useEffect(() => {
+    if (isMaximized) {
+      setPositionX(0);
+      setPositionY(0);
+    }
+  }, [isMaximized]);
 
   return (
     <Draggable
       bounds={"parent"}
       handle=".handleFileManager"
       defaultClassName="react-draggable filemanager rounded-md"
+      defaultPosition={{ x: PositionX, y: PositionY }}
+      position={{ x: PositionX, y: PositionY }}
+      onStop={(e, data) => {
+        setPositionX(data?.x);
+        setPositionY(data?.y);
+      }}
     >
       <Resizable
         bounds={"parent"}
@@ -31,7 +48,14 @@ function FileManager({ zIndex, onClick }) {
           setHeight((Height) => Height + d.height);
         }}
       >
-        <div className="p-1 w-full h-full rounded" onClick={onClick}>
+        <div
+          className={`p-1 w-full h-full rounded ${
+            isMaximized
+              ? "min-w-[100vw] min-h-[89vh] "
+              : `max-w-[${Width}] max-h-[${Height}]`
+          }`}
+          onClick={onClick}
+        >
           <div className="bg-[#D9D9D9] h-full w-full handleFileManager rounded-md">
             {/* NAVBAR */}
             <div className="flex justify-between items-center w-full p-1 px-2 bg-[#676464] h-[9%]">
@@ -46,6 +70,7 @@ function FileManager({ zIndex, onClick }) {
                   type={"MAXIMIZE"}
                   Page={"FILE_MANAGER"}
                   name={"FILE_MANAGER"}
+                  isMaximized={isMaximized}
                 />
                 <div
                   onClick={() => {

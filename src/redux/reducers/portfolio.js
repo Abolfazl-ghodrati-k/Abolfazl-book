@@ -16,7 +16,6 @@ export default function PortfolioReducer(state = initialState, action) {
   switch (action.type) {
     case OPEN_PORTFOLIO:
       return Object.assign({}, state, { isOpen: true });
-      break;
     case CLOSE_PORTFOLIO:
       return Object.assign({}, state, { isOpen: false });
     case MAXIMIZE_PORTFOLIO:
@@ -30,6 +29,5 @@ export default function PortfolioReducer(state = initialState, action) {
       });
     default:
       return state;
-      break;
   }
 }
