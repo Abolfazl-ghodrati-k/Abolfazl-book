@@ -7,7 +7,7 @@ Abolfazl-Book is a React app that showcases my skills in front-end development. 
 - Dragging windows and resizing them
 - Minimizing and maximizing windows
 - Closing window
-- File manager, music player, calculator, awesome to-do app
+- File manager, music player, calculator, awesome to-do app, weather widget
 - Built-in command prompt for interacting with the app
 - Changing the background image or color and saving or applying them
 
