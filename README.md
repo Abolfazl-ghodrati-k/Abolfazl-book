@@ -28,6 +28,8 @@ To get started with Abolfazl-Book, follow these steps:
 In Abolfazl-Book, you can see how I handle the following front-end development skills:
 
 - Positioning
+- HOC
+- operating with os
 - Conditional rendering
 - Code splitting
 - Grid system in settings
