@@ -8,20 +8,21 @@ import MobilePortfolio from "./pages/MobilePortfolio";
 import useOs from "./Hooks/useOs";
 import { useState } from "react";
 import Portfolio from "./pages/Portfolio/Portfolio";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function App() {
-  const [isvalidSize, IsValidSize] = useState(true);
-  const Os = useOs();
+  const navigate = useNavigate();
+  const { state, pathname } = useLocation();
 
   useEffect(() => {
     if (window.innerWidth < 850) {
-      IsValidSize(false);
+      navigate("/portfolio", { state: { redirect: pathname } });
     }
     function handleResize() {
       if (window.innerWidth < 850) {
-        IsValidSize(false);
+        navigate("/portfolio", { state: { redirect: pathname } });
       } else {
-        IsValidSize(true);
+        navigate(state?.redirect ?? "/");
       }
     }
     window.addEventListener("resize", handleResize);
@@ -32,19 +33,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <div className="w-full h-screen overflow-hidden absolute -z-20">
-          {Os ? (
-            (!isvalidSize && Os == "Android") ||
-            Os.includes("iPhone") ||
-            Os.includes("iPad") ? (
-              <MobilePortfolio />
-            ) : isvalidSize ? (
-              <Desktop />
-            ) : (
-              <Portfolio />
-            )
-          ) : (
-            "refresh the page or if it doesnt work contact me on +989020257735 phone number"
-          )}
+          <Desktop />
         </div>
       </PersistGate>
     </Provider>
