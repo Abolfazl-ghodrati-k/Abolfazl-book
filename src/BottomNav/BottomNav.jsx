@@ -99,6 +99,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       ChangingCurrentOrder();
     }
   };
+  
   const ContactmeClicked = () => {
     dispatch({ type: OPEN_CONTACTME });
     if (NavState.Contact.isOpen) {
@@ -110,9 +111,11 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       dispatch({ type: OPEN_MODAL, payload: 1 });
     }
   };
+
   const ResumeClicked = () => {
     navigate("/portfolio")
   };
+
   const SETTINGClicked = () => {
     if (NavState.SETTING.isOpen) {
       if (NavState.SETTING.isMinimized) {
@@ -135,6 +138,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       ChangingCurrentOrder();
     }
   };
+
   const ShutDownClicked = () => {
     dispatch({ type: OPEN_SHUT_DOWN });
     if (NavState.ShutDown.isOpen) {
@@ -146,6 +150,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       dispatch({ type: OPEN_MODAL, payload: 1 });
     }
   };
+
   const CMDClicked = () => {
     if (NavState.CMD.isMinimized) {
       if (NavState.CMD.isMaximized) {
@@ -164,6 +169,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       setOrder("CMD");
     }
   };
+
   const CALCULATORClicked = () => {
     if (NavState.CALCULATOR.isMinimized) {
       if (NavState.CALCULATOR.isMaximized) {
@@ -182,6 +188,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
       setOrder("CALCULATOR");
     }
   };
+
   const TODOClicked = () => {
     if (NavState.TODO.isMinimized) {
       if (NavState.TODO.isMaximized) {

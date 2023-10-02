@@ -4,10 +4,6 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./redux/Store";
 import { PersistGate } from "redux-persist/integration/react";
 import Desktop from "./pages/Desktop";
-import MobilePortfolio from "./pages/MobilePortfolio";
-import useOs from "./Hooks/useOs";
-import { useState } from "react";
-import Portfolio from "./pages/Portfolio/Portfolio";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function App() {
@@ -18,6 +14,7 @@ function App() {
     if (window.innerWidth < 850) {
       navigate("/portfolio", { state: { redirect: pathname } });
     }
+
     function handleResize() {
       if (window.innerWidth < 850) {
         navigate("/portfolio", { state: { redirect: pathname } });
@@ -25,9 +22,10 @@ function App() {
         navigate(state?.redirect ?? "/");
       }
     }
+    
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [navigate, pathname, state?.redirect]);
 
   return (
     <Provider store={store}>

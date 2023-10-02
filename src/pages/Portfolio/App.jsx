@@ -1,10 +1,3 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Outlet,
-} from "react-router-dom";
 import CustomCursor from "./utils/CustomCursor";
 import CustomCursorManager from "./utils/CustomCursor/context/manager";
 

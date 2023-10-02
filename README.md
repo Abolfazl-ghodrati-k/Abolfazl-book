@@ -15,6 +15,10 @@ Abolfazl-Book is a React app that showcases my skills in front-end development. 
 ![App Screenshot](https://user-images.githubusercontent.com/104020673/229520929-9c4cd8bb-2b09-4d55-bad6-951992338e56.png)
 ![App Screenshot](https://user-images.githubusercontent.com/104020673/229523370-7481b410-eee6-41d0-a41b-38e445af5cac.png)
 
+## ISSUES
+- auto downloading issue in idm
+   So if this is happening you could go to your idm options and in default downloads disable BIN file download option
+
 
 ## Getting Started
 

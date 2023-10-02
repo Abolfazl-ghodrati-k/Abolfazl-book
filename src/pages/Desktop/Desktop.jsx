@@ -73,7 +73,7 @@ function Desktop() {
   });
 
   const ChangingCurrentOrder = () => {
-    if (Order == 0) {
+    if (Order === 0) {
       dispatch({ type: "CHANGE_ORDER", payload: 0 });
     } else {
       dispatch({ type: "CHANGE_ORDER", payload: Order - 1 });
@@ -101,10 +101,10 @@ function Desktop() {
     }
   };
 
-  const AppClicked = (appName) => {
-    dispatch({ type: `OPEN_${appName}` });
-    dispatch({ type: `ORDER_${appName}`, payload: Order });
-  };
+  // const AppClicked = (appName) => {
+  //   dispatch({ type: `OPEN_${appName}` });
+  //   dispatch({ type: `ORDER_${appName}`, payload: Order });
+  // };
 
   const TodoClicked = () => {
     dispatch({ type: OPEN_TODO });
@@ -120,11 +120,10 @@ function Desktop() {
 
   const IncreaseLowerOrders = (ClickedComponent) => {
     //checks if all apps are on screen or not if yes then when an app is clicked thats order will be 1
-    // and were sure that all aps are on screen so ican simply increase all orders
-    if (Order == 0) {
-      console.log("all aps are opened?");
+    // and were sure that all aps are on screen so i can simply increase all orders
+    if (Order === 0) {
       dispatch({ type: `ORDER_${ClickedComponent.name}`, payload: 1 });
-      Orders.map((app) => {
+      Orders.forEach((app) => {
         if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
           return "what?";
@@ -133,9 +132,8 @@ function Desktop() {
       // and if all aps arnt clicked ill set clicked component to top and increase the orders by checking a condition
       //that is there any closed app or not .
     } else {
-      console.log("you are increasing lower orders");
       dispatch({ type: `ORDER_${ClickedComponent.name}`, payload: Order + 1 });
-      Orders.map((app) => {
+      Orders.forEach((app) => {
         if (app.order < ClickedComponent.order && app.order) {
           dispatch({ type: `ORDER_${app.name}`, payload: app.order + 1 });
           return "what?";
@@ -145,7 +143,7 @@ function Desktop() {
   };
 
   const setOrder = (type) => {
-    Orders.map((app) => {
+    Orders.forEach((app) => {
       // 1. Checks if clicked component has latest order
       if (app.name === type && Order === app.order) {
         return;
