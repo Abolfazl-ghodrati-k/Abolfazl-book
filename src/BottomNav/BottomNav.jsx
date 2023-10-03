@@ -80,7 +80,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
         <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
           <div className="relative group">
             <p className={`hidden group-hover:block absolute -top-9 -right-4`}>
-              {navState.FILE_MANAGER.isOpen ? "FileManager" : null}
+              FileManager
             </p>
             <IconContainer
               icon={BsFolder}
@@ -91,7 +91,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
           </div>
           <div className="relative group">
             <p className={`hidden group-hover:block absolute -top-9 -right-4`}>
-              {navState.Contact.isOpen ? "ContactME" : null}
+              ContactME
             </p>
             <IconContainer
               icon={IoIosContact}
@@ -100,7 +100,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               onClick={() => handleAppClick("Contact", OPEN_CONTACTME)}
             />
           </div>
-          <div className="flex content-center relative group">
+          <div className="relative group">
             <p className={`hidden group-hover:block absolute -top-9 -left-1`}>
               Portfolio
             </p>
@@ -112,7 +112,10 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               size={"50px"}
             />
           </div>
-          <div>
+          <div className=" relative group">
+            <p className={`hidden group-hover:block absolute -top-9 -left-1`}>
+              Settings
+            </p>
             <IconContainer
               onClick={() => handleAppClick("SETTING", OPEN_SETTING)}
               icon={FiSettings}
@@ -120,7 +123,10 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               size={"50px"}
             />
           </div>
-          <div>
+          <div className=" relative group">
+            <p className={`hidden group-hover:block absolute -top-9 -left-1`}>
+              Shutdown
+            </p>
             <IconContainer
               onClick={() => handleAppClick("ShutDown", OPEN_SHUT_DOWN)}
               icon={GrPowerShutdown}
@@ -128,6 +134,8 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
               size={"50px"}
             />
           </div>
+
+          {/* Dynamic bottom nav items */}
           {navState.CMD.isOpen && (
             <div>
               <IconContainer
