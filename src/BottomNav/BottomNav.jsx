@@ -1,36 +1,33 @@
-import { React } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import IconContainer from "../Components/Icon";
-// importing icons
 import { BsFolder } from "react-icons/bs";
 import { IoIosContact } from "react-icons/io";
-import Resume from "../Assets/Icons/resume.png";
 import { FiSettings } from "react-icons/fi";
 import { GrPowerShutdown } from "react-icons/gr";
 import { BsCalculator } from "react-icons/bs";
-//
 import { GoTasklist } from "react-icons/go";
 import { VscTerminalCmd } from "react-icons/vsc";
-import "./style.css";
-import { useSelector, useDispatch } from "react-redux";
 import {
   OPEN_FILE_MANAGER,
   OPEN_CONTACTME,
   OPEN_SETTING,
   OPEN_SHUT_DOWN,
   RESIZE_CMD,
-  RESIZE_FILE_MANAGER,
-  OPEN_MODAL,
   RESIZE_CALCULATOR,
   RESIZE_TODO,
-  RESIZE_SETTING,
 } from "../redux/actionTypes";
 import useOrder from "../Hooks/useOrder";
-import { useNavigate } from "react-router";
+import ResumeImage from "../Assets/Icons/resume.png"; // You should import the Resume image
 
 function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { Order, Orders } = useOrder();
 
-  const NavState = {
+  const navState = {
     Browser: useSelector((state) => state.browser),
     FILE_MANAGER: useSelector((state) => state.fileManager),
     Contact: useSelector((state) => state.contactme),
@@ -41,264 +38,135 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     TODO: useSelector((state) => state.todo),
     CALCULATOR: useSelector((state) => state.calculator),
   };
-  const Modalcount = useSelector((state) => state.desktop.Modals);
-
-  const navigate = useNavigate()
-
-  const { Order, Orders } = useOrder();
 
   const setOrder = (type) => {
-    console.log(type);
     Orders?.forEach((app) => {
-      // 1. Checks if clicked component has latest order
       if (app.name === type && Order === app.order) {
         return;
-        // 2. Checks which components have been clicked
       } else if (app.name === type) {
-        console.log(
-          "well clicked application is: ",
-          app.name,
-          " and its order is: ",
-          app.order,
-          "|| im Increasing lower orders"
-        );
-        // 3. Finds clicked component order and changes previous orders
         IncreaseLowerOrders(app);
       }
     });
   };
 
-  // const BrowserClicked = () => {
-  //   dispatch({ type: OPEN_BROWSER });
-  //   if (NavState.Browser.isOpen) {
-  //     dispatch({ type: CLOSE_BROWSER });
-  //   }
-  // };
-  
-  const FileManagerClicked = () => {
-    // checks if component is opened or not if no: open it, set current order to component, decrease current order
-    if (NavState.FILE_MANAGER.isOpen) {
-      // dispatch({ type: CLOSE_FILE_MANAGER });
-      if (NavState.FILE_MANAGER.isMinimized) {
-        if (NavState.FILE_MANAGER.isMaximized) {
-          dispatch({
-            type: RESIZE_FILE_MANAGER,
-            payload: { minimized: false, maximized: true },
-          });
-        } else {
-          dispatch({
-            type: RESIZE_FILE_MANAGER,
-            payload: { minimized: false, maximized: false },
-          });
-        }
-      }
-      setOrder("FILE_MANAGER");
+  const handleAppClick = (type, action) => {
+    if (navState[type].isOpen) {
+      handleAppResize(type);
+      setOrder(type);
     } else {
-      dispatch({ type: OPEN_FILE_MANAGER });
-      dispatch({ type: "ORDER_FILE_MANAGER", payload: Order });
-      ChangingCurrentOrder();
-    }
-  };
-  
-  const ContactmeClicked = () => {
-    dispatch({ type: OPEN_CONTACTME });
-    if (NavState.Contact.isOpen) {
-      return;
-    }
-    if (Modalcount) {
-      dispatch({ type: OPEN_MODAL, payload: Modalcount + 1 });
-    } else {
-      dispatch({ type: OPEN_MODAL, payload: 1 });
-    }
-  };
-
-  const ResumeClicked = () => {
-    navigate("/portfolio")
-  };
-
-  const SETTINGClicked = () => {
-    if (NavState.SETTING.isOpen) {
-      if (NavState.SETTING.isMinimized) {
-        if (NavState.SETTING.isMaximized) {
-          dispatch({
-            type: RESIZE_SETTING,
-            payload: { minimized: false, maximized: true },
-          });
-        } else {
-          dispatch({
-            type: RESIZE_SETTING,
-            payload: { minimized: false, maximized: false },
-          });
-        }
-      }
-      setOrder("SETTING");
-    } else {
-      dispatch({ type: OPEN_SETTING });
-      dispatch({ type: "ORDER_SETTING", payload: Order });
+      dispatch({ type: action });
+      dispatch({ type: `ORDER_${type}`, payload: Order });
       ChangingCurrentOrder();
     }
   };
 
-  const ShutDownClicked = () => {
-    dispatch({ type: OPEN_SHUT_DOWN });
-    if (NavState.ShutDown.isOpen) {
-      return;
-    }
-    if (Modalcount) {
-      dispatch({ type: OPEN_MODAL, payload: Modalcount + 1 });
-    } else {
-      dispatch({ type: OPEN_MODAL, payload: 1 });
+  const handleAppResize = (type) => {
+    if (navState[type].isMinimized) {
+      const payload = {
+        minimized: false,
+        maximized: navState[type].isMaximized,
+      };
+      dispatch({ type: `RESIZE_${type}`, payload });
     }
   };
 
-  const CMDClicked = () => {
-    if (NavState.CMD.isMinimized) {
-      if (NavState.CMD.isMaximized) {
-        dispatch({
-          type: RESIZE_CMD,
-          payload: { maximized: true, minimized: false },
-        });
-      } else if (!NavState.CMD.isMaximized) {
-        dispatch({
-          type: RESIZE_CMD,
-          payload: { maximized: false, minimmized: false },
-        });
-      }
-      setOrder("CMD");
-    } else {
-      setOrder("CMD");
-    }
-  };
-
-  const CALCULATORClicked = () => {
-    if (NavState.CALCULATOR.isMinimized) {
-      if (NavState.CALCULATOR.isMaximized) {
-        dispatch({
-          type: RESIZE_CALCULATOR,
-          payload: { maximized: true, minimized: false },
-        });
-      } else if (!NavState.CALCULATOR.isMaximized) {
-        dispatch({
-          type: RESIZE_CALCULATOR,
-          payload: { maximized: false, minimmized: false },
-        });
-      }
-      setOrder("CALCULATOR");
-    } else {
-      setOrder("CALCULATOR");
-    }
-  };
-
-  const TODOClicked = () => {
-    if (NavState.TODO.isMinimized) {
-      if (NavState.TODO.isMaximized) {
-        dispatch({
-          type: RESIZE_TODO,
-          payload: { maximized: true, minimized: false },
-        });
-      } else if (!NavState.TODO.isMaximized) {
-        dispatch({
-          type: RESIZE_TODO,
-          payload: { maximized: false, minimmized: false },
-        });
-      }
-      setOrder("TODO");
-    } else {
-      setOrder("TODO");
-    }
+  const navigateToPortfolio = () => {
+    navigate("/portfolio");
   };
 
   return (
-    <>
-      <div className={`w-full absolute bottom-2 z-0`}>
-        <div className={`bg-CMD ml-auto lg:mx-auto max-w-[600px]  rounded-lg`}>
-          <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
-            {/* File manager */}
-            <div className="relative group">
-              <p className="hidden group-hover:block absolute -top-9 -right-4">FileManager</p>
-              <IconContainer
-                icon={BsFolder}
-                state={NavState.FILE_MANAGER.isOpen}
-                size={"50px"}
-                onClick={FileManagerClicked}
-              />
-            </div>
-            {/* Contact me */}
-            <div className="relative group">
-              <p className="hidden group-hover:block absolute -top-9 -right-4">ContactME</p>
-              <IconContainer
-                icon={IoIosContact}
-                state={NavState.Contact.isOpen}
-                size={"50px"}
-                onClick={ContactmeClicked}
-              />
-            </div>
-            {/* Portfolio */}
-            <div className="flex content-center relative group">
-            <p className="hidden group-hover:block absolute -top-9 -left-1">Portfolio</p>
-              <IconContainer
-                onClick={ResumeClicked}
-                img={true}
-                icon={Resume}
-                state={NavState.Portfolio.isOpen}
-                size={"50px"}
-              />
-            </div>
-            {/* SETTING */}
-            <div>
-              <IconContainer
-                onClick={SETTINGClicked}
-                icon={FiSettings}
-                state={NavState.SETTING.isOpen}
-                size={"50px"}
-              />
-            </div>
-            {/* ShutDown */}
-            <div>
-              <IconContainer
-                onClick={ShutDownClicked}
-                icon={GrPowerShutdown}
-                state={NavState.ShutDown.isOpen}
-                size={"50px"}
-              />
-            </div>
-            {/* CMD */}
-            {NavState.CMD.isOpen && (
-              <div>
-                <IconContainer
-                  onClick={CMDClicked}
-                  icon={VscTerminalCmd}
-                  state={NavState.CMD.isOpen}
-                  size={"50px"}
-                />
-              </div>
-            )}
-            {/* TODO */}
-            {NavState.TODO.isOpen && (
-              <div>
-                <IconContainer
-                  onClick={TODOClicked}
-                  icon={GoTasklist}
-                  state={NavState.TODO.isOpen}
-                  size={"50px"}
-                />
-              </div>
-            )}
-            {NavState.CALCULATOR.isOpen && (
-              <div>
-                <IconContainer
-                  onClick={CALCULATORClicked}
-                  icon={BsCalculator}
-                  state={NavState.CALCULATOR.isOpen}
-                  size={"50px"}
-                />
-              </div>
-            )}
+    <div className={`w-full absolute bottom-2 z-0`}>
+      <div className={`bg-CMD ml-auto lg:mx-auto max-w-[600px]  rounded-lg`}>
+        <div className="flex justify-center content-center [&>*]:py-1 [&>*]:px-[2px] ">
+          <div className="relative group">
+            <p className={`hidden group-hover:block absolute -top-9 -right-4`}>
+              {navState.FILE_MANAGER.isOpen ? "FileManager" : null}
+            </p>
+            <IconContainer
+              icon={BsFolder}
+              state={navState.FILE_MANAGER.isOpen}
+              size={"50px"}
+              onClick={() => handleAppClick("FILE_MANAGER", OPEN_FILE_MANAGER)}
+            />
           </div>
+          <div className="relative group">
+            <p className={`hidden group-hover:block absolute -top-9 -right-4`}>
+              {navState.Contact.isOpen ? "ContactME" : null}
+            </p>
+            <IconContainer
+              icon={IoIosContact}
+              state={navState.Contact.isOpen}
+              size={"50px"}
+              onClick={() => handleAppClick("Contact", OPEN_CONTACTME)}
+            />
+          </div>
+          <div className="flex content-center relative group">
+            <p className={`hidden group-hover:block absolute -top-9 -left-1`}>
+              Portfolio
+            </p>
+            <IconContainer
+              onClick={navigateToPortfolio}
+              img={true}
+              icon={ResumeImage}
+              state={navState.Portfolio.isOpen}
+              size={"50px"}
+            />
+          </div>
+          <div>
+            <IconContainer
+              onClick={() => handleAppClick("SETTING", OPEN_SETTING)}
+              icon={FiSettings}
+              state={navState.SETTING.isOpen}
+              size={"50px"}
+            />
+          </div>
+          <div>
+            <IconContainer
+              onClick={() => handleAppClick("ShutDown", OPEN_SHUT_DOWN)}
+              icon={GrPowerShutdown}
+              state={navState.ShutDown.isOpen}
+              size={"50px"}
+            />
+          </div>
+          {navState.CMD.isOpen && (
+            <div>
+              <IconContainer
+                onClick={() => handleAppClick("CMD", RESIZE_CMD)}
+                icon={VscTerminalCmd}
+                state={navState.CMD.isOpen}
+                size={"50px"}
+              />
+            </div>
+          )}
+          {navState.TODO.isOpen && (
+            <div>
+              <IconContainer
+                onClick={() => handleAppClick("TODO", RESIZE_TODO)}
+                icon={GoTasklist}
+                state={navState.TODO.isOpen}
+                size={"50px"}
+              />
+            </div>
+          )}
+          {navState.CALCULATOR.isOpen && (
+            <div>
+              <IconContainer
+                onClick={() => handleAppClick("CALCULATOR", RESIZE_CALCULATOR)}
+                icon={BsCalculator}
+                state={navState.CALCULATOR.isOpen}
+                size={"50px"}
+              />
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
+
+BottomNav.propTypes = {
+  IncreaseLowerOrders: PropTypes.func.isRequired,
+  ChangingCurrentOrder: PropTypes.func.isRequired,
+};
 
 export default BottomNav;

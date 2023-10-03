@@ -18,7 +18,6 @@ export default function CMDApp({ onClick }) {
 
   const [Width, setWidth] = useState(600);
   const [Height, setHeight] = useState(400);
-  const [ErrCount, setErrCount] = useState([]);
 
   const { errCount, isMaximized } = useSelector((state) => state.cmd);
 
@@ -68,7 +67,7 @@ export default function CMDApp({ onClick }) {
             <div className="flex justify-between content-center h-[7%]">
               <div className="text-[white]">Abolfazl CMD</div>
               <div className="flex justify-center items-center">
-                <MacNav type={"MINIMIZE"} Page={"CMD"} name={"CMD"} />
+                <MacNav type={"MINIMIZE"} Page={"CMD"} name={"CMD"} isMaximized={isMaximized} />
                 <MacNav
                   type={"MAXIMIZE"}
                   Page={"CMD"}
