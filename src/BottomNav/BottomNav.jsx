@@ -10,6 +10,7 @@ import { GrPowerShutdown } from "react-icons/gr";
 import { BsCalculator } from "react-icons/bs";
 import { GoTasklist } from "react-icons/go";
 import { VscTerminalCmd } from "react-icons/vsc";
+import { DiCode } from "react-icons/di"
 import {
   OPEN_FILE_MANAGER,
   OPEN_CONTACTME,
@@ -18,6 +19,7 @@ import {
   RESIZE_CMD,
   RESIZE_CALCULATOR,
   RESIZE_TODO,
+  RESIZE_CODE,
 } from "../redux/actionTypes";
 import useOrder from "../Hooks/useOrder";
 import ResumeImage from "../Assets/Icons/resume.png"; // You should import the Resume image
@@ -37,6 +39,7 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
     CMD: useSelector((state) => state.cmd),
     TODO: useSelector((state) => state.todo),
     CALCULATOR: useSelector((state) => state.calculator),
+    CODE: useSelector((state) => state.code),
   };
 
   const setOrder = (type) => {
@@ -136,6 +139,17 @@ function BottomNav({ IncreaseLowerOrders, ChangingCurrentOrder }) {
           </div>
 
           {/* Dynamic bottom nav items */}
+          {navState.CODE.isOpen && (
+            <div>
+              <IconContainer
+                onClick={() => handleAppClick("CODE", RESIZE_CODE)}
+                icon={DiCode}
+                state={navState.CODE.isOpen}
+                size={"50px"}
+              />
+            </div>
+          )}
+
           {navState.CMD.isOpen && (
             <div>
               <IconContainer

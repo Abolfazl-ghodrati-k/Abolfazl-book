@@ -27,7 +27,7 @@ class Calculator extends React.Component {
     return (
       <Draggable
         bounds="parent"
-        cancel=".cancelcmd"
+        cancel=".cancelcalc"
         handle=".handlecalc"
         defaultClassName="react-draggable calculator"
         defaultPosition={{ x: this.state.X, y: this.state.Y }}

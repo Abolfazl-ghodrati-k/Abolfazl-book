@@ -88,3 +88,11 @@ export const SET_CITY = "SET_CITY";
 export const SET_WEATHER_DATA = "SET_WEATHER_DATA";
 export const SET_WEATHER_ERROR = "SET_WEATHER_ERROR";
 export const HANDLE_SHOW_WEATHER = "HANDLE_SHOW_WEATHER";
+
+// CODE
+export const OPEN_CODE = "OPEN_CODE";
+export const CLOSE_CODE = "CLOSE_CODE";
+export const MAXIMIZE_CODE = "MAXIMIZE_CODE";
+export const MINIMIZE_CODE = "MINIMIZE_CODE";
+export const RESIZE_CODE = "RESIZE_CODE";
+export const ORDER_CODE = "ORDER_CODE";

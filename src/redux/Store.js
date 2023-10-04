@@ -14,6 +14,7 @@ import SettingReducer from "./reducers/setting";
 import ShutDownReducer from "./reducers/shutDownReducer";
 import CMDReducer from "./reducers/cmdReducer";
 import TodoReducer from "./reducers/TodoReducer";
+import codeReducer from "./reducers/codeReducer";
 import OrderReducer from "./reducers/order";
 import DesktopReducer from "./reducers/desktop";
 import CalculatorReducer from "./reducers/calculatorReducer";
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
   desktop: DesktopReducer,
   calculator: CalculatorReducer,
   weather: WeatherReducer,
-  loading: loadingReducer
+  loading: loadingReducer,
+  code: codeReducer
 });
 
 const persistConfig = {

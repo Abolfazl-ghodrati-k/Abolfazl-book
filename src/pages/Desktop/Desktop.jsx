@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {BounceLoader} from "react-spinners"
+import { BounceLoader } from "react-spinners";
 
 //pages
 import FileManagerApp from "../FileManager";
@@ -11,6 +11,7 @@ import ShutDownApp from "../ShutDown";
 import CMDApp from "../Apps/CMD/CMDApp";
 import TodoApp from "../Apps/Todo";
 import CalculatorApp from "../Apps/Calculator";
+import Code from "../Apps/LiveCode";
 
 //widgets
 import Weather from "../Widgets/Weather";
@@ -28,9 +29,15 @@ import "./style.css";
 import { GoTasklist } from "react-icons/go";
 import { VscTerminalCmd } from "react-icons/vsc";
 import { BsCalculator } from "react-icons/bs";
+import { DiCode } from "react-icons/di";
 
 // action types
-import { OPEN_CALCULATOR, OPEN_CMD, OPEN_TODO } from "../../redux/actionTypes";
+import {
+  OPEN_CALCULATOR,
+  OPEN_CMD,
+  OPEN_CODE,
+  OPEN_TODO,
+} from "../../redux/actionTypes";
 
 //HOOKS
 import useOrder from "../../Hooks/useOrder";
@@ -40,7 +47,7 @@ import Layout from "../../Components/Layout/Layout";
 import ModalLayout from "../../Components/Layout/ModalLayout";
 
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 function Desktop() {
   const dispatch = useDispatch();
@@ -56,6 +63,7 @@ function Desktop() {
   const loading = useSelector((store) => store.loading.loading);
   const weather = useSelector((store) => store.weather);
   const calculator = useSelector((store) => store.calculator);
+  const code = useSelector((store) => store.code);
 
   const { Order, Orders } = useOrder();
 
@@ -66,6 +74,7 @@ function Desktop() {
   useEffect(() => {
     console.log(Indexs);
     desktop.current.style.setProperty("--fileIndex", Indexs[1].zIndex);
+    desktop.current.style.setProperty("--codeIndex", Indexs[5].zIndex);
     desktop.current.style.setProperty("--cmdIndex", Indexs[0].zIndex);
     desktop.current.style.setProperty("--settingIndex", Indexs[2].zIndex);
     desktop.current.style.setProperty("--calcIndex", Indexs[3].zIndex);
@@ -116,6 +125,16 @@ function Desktop() {
     }
   };
 
+  const codeClicked = () => {
+    dispatch({ type: OPEN_CODE });
+    dispatch({ type: "ORDER_CODE", payload: Order });
+    if (code?.isOpen) {
+      return;
+    } else {
+      ChangingCurrentOrder();
+    }
+  };
+
   // const Types = ["CMD", "TODO", "SETTING", "FILE_MANAGER"];
 
   const IncreaseLowerOrders = (ClickedComponent) => {
@@ -150,6 +169,7 @@ function Desktop() {
         // 2. Checks which components have been clicked
       } else if (app.name === type) {
         // 3. Finds clicked component order and changes previous orders
+        console.log(app.name, type)
         IncreaseLowerOrders(app);
       }
     });
@@ -169,7 +189,7 @@ function Desktop() {
       <ToastContainer position="bottom-right" />
       {loading && (
         <div className="absolute right-0 z-[10000] left-0 bottom-0 top-0 bg-[#4b6632] text-[white] w-full h-full flex justify-center items-center">
-          <BounceLoader size={200}/>
+          <BounceLoader size={200} />
         </div>
       )}
 
@@ -214,6 +234,15 @@ function Desktop() {
             />
             <p className="text-[.9rem]">Todo app</p>
           </div>
+          <div className="flex flex-col items-center justify-center text-white">
+            <IconContainer
+              onClick={codeClicked}
+              icon={DiCode}
+              size={"50px"}
+              isDesktop
+            />
+            <p className="text-[.9rem]">Live Code</p>
+          </div>
         </div>
       )}
       {cmd.isOpen && !cmd.isMinimized && (
@@ -224,6 +253,11 @@ function Desktop() {
           }}
         />
       )}
+
+      {code.isOpen && !code.isMinimized && (
+        <Code onClick={() => setOrder("CODE")} />
+      )}
+
       {calculator.isOpen && !calculator.isMinimized && (
         <CalculatorApp onClick={() => setOrder("CALCULATOR")} />
       )}

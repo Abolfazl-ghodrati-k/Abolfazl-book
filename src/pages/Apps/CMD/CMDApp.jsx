@@ -9,8 +9,7 @@ import CMDcommands from "./CMDcommands";
 
 export default function CMDApp({ onClick }) {
   const dispatch = useDispatch();
-
-  const Element = useRef();
+  
   const commands = useRef();
 
   const [PositionX, setPositionX] = useState(40);
@@ -31,6 +30,7 @@ export default function CMDApp({ onClick }) {
   useEffect(() => {
     commands.current.scrollTo(0, commands.current.scrollHeight);
   });
+
   return (
     <Draggable
       bounds="parent"
@@ -62,7 +62,7 @@ export default function CMDApp({ onClick }) {
               : `max-w-[${Width}] max-h-[${Height}]`
           } flex flex-col gap-1 p-1 px-2 `}
         >
-          <div ref={Element} className="handlecmd w-full h-full">
+          <div className="handlecmd w-full h-full">
             {/* Header ---------------> */}
             <div className="flex justify-between content-center h-[7%]">
               <div className="text-[white]">Abolfazl CMD</div>
