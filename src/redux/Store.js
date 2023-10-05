@@ -21,6 +21,8 @@ import CalculatorReducer from "./reducers/calculatorReducer";
 import WeatherReducer from "./reducers/weather";
 import loadingReducer from "./reducers/loading";
 
+import userReducer from "./reducers/auth/userReducer";
+
 const rootReducer = combineReducers({
   browser: BrowserReducer,
   fileManager: FileManagerReducer,
@@ -35,7 +37,8 @@ const rootReducer = combineReducers({
   calculator: CalculatorReducer,
   weather: WeatherReducer,
   loading: loadingReducer,
-  code: codeReducer
+  code: codeReducer,
+  user: userReducer
 });
 
 const persistConfig = {

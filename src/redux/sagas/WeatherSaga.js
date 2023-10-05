@@ -11,7 +11,7 @@ import {
 function* weather_action(action) {
   const city = action.payload;
   yield put({ type: START_LOADING });
-  const { data, error } = yield call(recieve_data, city ?? "tehran");
+  const { data, error } = yield call(recieve_data, city || "tehran");
   yield put({ type: FINISH_LOADING });
   if (data) {
     yield put({ type: SET_WEATHER_DATA, payload: data });

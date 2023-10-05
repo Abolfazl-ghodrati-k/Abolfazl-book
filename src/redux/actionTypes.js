@@ -76,7 +76,7 @@ export const ORDER_TODO = "ORDER_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
 
 //CALCULATOR
-export const OPEN_CALCULATOR = "OPEN_CLACULATOR";
+export const OPEN_CALCULATOR = "OPEN_CALCULATOR";
 export const CLOSE_CALCULATOR = "CLOSE_CALCULATOR";
 export const ORDER_CALCULATOR = "ORDER_CALCULATOR";
 export const RESIZE_CALCULATOR = "RESIZE_CALCULATOR";
@@ -96,3 +96,10 @@ export const MAXIMIZE_CODE = "MAXIMIZE_CODE";
 export const MINIMIZE_CODE = "MINIMIZE_CODE";
 export const RESIZE_CODE = "RESIZE_CODE";
 export const ORDER_CODE = "ORDER_CODE";
+export const UPDATE_ROOMS = "UPDATE_ROOMS"
+export const SET_CODE_ERROR = "SET_CODE_ERROR"
+
+//  user
+export const LOG_IN = "LOG_IN";
+export const LOG_OUT = "LOG_OUT";
+export const SET_USER_ERROR = "SET_USER_ERROR";
