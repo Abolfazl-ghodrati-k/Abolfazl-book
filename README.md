@@ -24,7 +24,7 @@ Abolfazl-Book is a React app that showcases my skills in front-end development. 
 
 To get started with Abolfazl-Book, follow these steps:
 
-   1. Run `npm install -d --force` to install all dependencies
+   1. Run `npm install -d` to install all dependencies
    2. Run `npm run start` to run the app
 3. The app will be available at `http://localhost:3000`
 ## Skills
