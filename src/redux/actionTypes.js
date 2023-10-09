@@ -98,6 +98,7 @@ export const RESIZE_CODE = "RESIZE_CODE";
 export const ORDER_CODE = "ORDER_CODE";
 export const UPDATE_ROOMS = "UPDATE_ROOMS"
 export const SET_CODE_ERROR = "SET_CODE_ERROR"
+export const SET_ACTIVE_ROOM = "SET_ACTIVE_ROOM"
 
 //  user
 export const LOG_IN = "LOG_IN";

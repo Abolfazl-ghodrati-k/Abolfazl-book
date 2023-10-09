@@ -1,9 +1,10 @@
 import { Resizable } from "re-resizable";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Draggable from "react-draggable";
 import { useSelector } from "react-redux";
 import MacNav from "../../../Components/MacNav";
 import Users from "./components/Users";
+import MonacoEditorWrapper from "./components/MonacoEditorWrapper";
 
 const users = [
   {
@@ -30,8 +31,11 @@ const LiveCode = ({ onClick }) => {
   const [Height, setHeight] = useState(400);
   // TODO: check to see if user has an account
   // * options: have a global store for user, login modal
+  const { user, token } = useSelector((state) => state.user)
 
-  const { isMaximized } = useSelector((state) => state.code);
+  const { isMaximized, rooms, activeRoom } = useSelector((state) => state.code);
+
+  const selectedRoom = useMemo(() => rooms.find((room) => room.id === activeRoom), [activeRoom, rooms])
 
   useEffect(() => {
     if (isMaximized) {
@@ -69,12 +73,12 @@ const LiveCode = ({ onClick }) => {
             isMaximized
               ? "min-w-[100vw] min-h-[89vh] "
               : `max-w-[${Width}] max-h-[${Height}]`
-          } flex flex-col gap-1`}
+          } flex flex-col`}
         >
           <div className="handlecode border-b border-gray-100 flex items-center justify-between">
             <h3 className="text-white pl-3">Live coding v1.0.0</h3>
             <div className="flex items-center justify-end gap-4">
-              <Users users={users} />
+              <Users users={selectedRoom.users} />
               <div className="flex justify-end p-3 items-center border-l border-gray-100">
                 <MacNav
                   type={"MINIMIZE"}
@@ -97,7 +101,9 @@ const LiveCode = ({ onClick }) => {
               </div>
             </div>
           </div>
-          <div>welcome to my code editor...</div>
+          <div className="w-full h-[calc(100%-41px)]">
+            <MonacoEditorWrapper room={selectedRoom ?? undefined} />
+          </div>
         </div>
       </Resizable>
     </Draggable>

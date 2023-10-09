@@ -5,7 +5,8 @@ import {
   MINIMIZE_CODE,
   RESIZE_CODE,
   ORDER_CODE,
-  UPDATE_ROOMS
+  UPDATE_ROOMS,
+  SET_ACTIVE_ROOM
 } from "../actionTypes";
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
   isMaximized: false,
   isMinimized: false,
   order: null,
-  rooms: null
+  rooms: null,
+  activeRoom: null
 };
 
 /**
@@ -24,7 +26,7 @@ const initialState = {
   code: string, 
   language: string, 
   users: [
-    { role: 'owner' | 'editor' | 'visitor', email: string, status: 'online' | 'offline' }
+    { role: 'owner' | 'editor' | 'visitor', email: string, status: 'online' | 'offline', id: string }
   ]
  }
 */
@@ -59,6 +61,9 @@ export default function CodeReducer(state = initialState, action) {
 
     case UPDATE_ROOMS: 
       return Object.assign({}, state, { rooms: action.payload.rooms });
+
+    case SET_ACTIVE_ROOM:
+      return Object.assign({}, state, { activeRoom: action.payload.activeRoom });
     
       default:
       return state;

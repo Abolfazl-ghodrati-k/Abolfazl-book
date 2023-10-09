@@ -1,13 +1,14 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import IconContainer from "../../../../Components/Icon/IconContainer";
 
-const User = ({ email, role }) => {
+const User = ({ role, email, status, id }) => {
   const [showOptions, setShowOptions] = useState(false);
+  
 
-  const toggleOptions = () => {
+  const toggleOptions = useCallback(() => {
     setShowOptions(!showOptions);
-  };
+  }, [showOptions])
 
   const handleDelete = () => {
     // Implement delete functionality here
