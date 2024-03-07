@@ -24,7 +24,8 @@ function MusicContainer({ Type }) {
       default:
         break;
     }
-  });
+  }, [Type]);
+  
   return (
     <div className="w-full h-full flex flex-col p-2 ">
       {Data.map((music) => {

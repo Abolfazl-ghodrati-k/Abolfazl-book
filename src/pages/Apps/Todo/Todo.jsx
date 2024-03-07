@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Todo_title from "./Todo_title";
-import Todo_welcome from "./Todo_welcome";
-import "./style.css";
-import Todo_form from "./Todo_form";
-import Todo_container from "./Todo_container";
+import React, { useState } from "react";
+import TodoTitle from "./TodoTitle";
+import TodoWelcome from "./TodoWelcome";
+import TodoForm from "./TodoForm";
+import TodoContainer from "./TodoContainer";
 import Draggable from "react-draggable";
 import { Resizable } from "re-resizable";
 
@@ -33,10 +32,10 @@ function Todo({ onClick }) {
             className="bg-CMD rounded handletodo min-h-[500px] text-white p-3 flex flex-col items-start justify-start  relative"
             onClick={onClick}
           >
-            <Todo_welcome />
-            <Todo_title />
-            <Todo_form />
-            <Todo_container />
+            <TodoWelcome />
+            <TodoTitle />
+            <TodoForm />
+            <TodoContainer />
           </div>
         </div>
       </Resizable>

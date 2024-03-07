@@ -17,16 +17,17 @@ const CustomCursor = () => {
   });
 
   React.useEffect(() => {
+    let position = positionRef.current;
+    let cursor = mainCursor.current;
+    let secondCursor = secondaryCursor.current;
     document.addEventListener("mousemove", (event) => {
       const { clientX, clientY } = event;
 
       const mouseX = clientX;
       const mouseY = clientY;
 
-      positionRef.current.mouseX =
-        mouseX - secondaryCursor.current.clientWidth / 2;
-      positionRef.current.mouseY =
-        mouseY - secondaryCursor.current.clientHeight / 2;
+      position.mouseX = mouseX - secondaryCursor.current.clientWidth / 2;
+      position.mouseY = mouseY - secondaryCursor.current.clientHeight / 2;
       mainCursor.current.style.transform = `translate3d(${
         mouseX - mainCursor.current.clientWidth / 2
       }px, ${mouseY - mainCursor.current.clientHeight / 2}px, 0)`;
@@ -39,13 +40,11 @@ const CustomCursor = () => {
         const mouseX = clientX;
         const mouseY = clientY;
 
-        positionRef.current.mouseX =
-          mouseX - secondaryCursor.current.clientWidth / 2;
-        positionRef.current.mouseY =
-          mouseY - secondaryCursor.current.clientHeight / 2;
-        mainCursor.current.style.transform = `translate3d(${
-          mouseX - mainCursor.current.clientWidth / 2
-        }px, ${mouseY - mainCursor.current.clientHeight / 2}px, 0)`;
+        position.mouseX = mouseX - secondCursor.clientWidth / 2;
+        position.mouseY = mouseY - secondCursor.clientHeight / 2;
+        cursor.style.transform = `translate3d(${
+          mouseX - cursor.clientWidth / 2
+        }px, ${mouseY - cursor.clientHeight / 2}px, 0)`;
       });
   }, []);
 

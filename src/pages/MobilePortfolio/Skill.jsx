@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 
 function Skill({ icon, name, fill, link }) {
@@ -23,7 +23,7 @@ function Skill({ icon, name, fill, link }) {
         Component ? "justify-between" : "justify-end"
       } h-[50px] border rounded p-1 group cursor-pointer`}
       style={
-        size == 40
+        size === 40
           ? { width: "135px", height: "60px" }
           : { width: "130px", height: "50px" }
       }
@@ -31,7 +31,7 @@ function Skill({ icon, name, fill, link }) {
       {Component && (
         <Component fill={fill} size={size ? size : 30} className="icon-cont" />
       )}
-      <p className={`${name == 'Redux-saga' ? 'text-[0.9rem]' : ''}`}>{name}</p>
+      <p className={`${name === 'Redux-saga' ? 'text-[0.9rem]' : ''}`}>{name}</p>
     </div>
   );
 }

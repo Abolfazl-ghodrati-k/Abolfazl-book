@@ -29,8 +29,6 @@ import BottomNav from "../../BottomNav";
 import IconContainer from "../../Components/Icon/IconContainer";
 import AudioPlayer from "../../Components/AudioPlayer";
 
-import "./style.css";
-
 function Desktop() {
   const dispatch = useDispatch();
   const cmd = useSelector((state) => state.cmd);

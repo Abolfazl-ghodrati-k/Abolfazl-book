@@ -11,7 +11,7 @@ function Disks({ Disk, title, Setting, clicked, onClick }) {
     } else {
       setBold(false);
     }
-  });
+  }, [Disk, clicked, location.pathname, title]);
 
   function handleClick() {
     if (onClick) {

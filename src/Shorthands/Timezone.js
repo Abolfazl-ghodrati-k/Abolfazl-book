@@ -24,7 +24,7 @@ function Timezone() {
       <p>{Clock && Clock}</p>
       <p>
         {myDate && myDate.split(" ").map((part, index) => {
-          if (index == 2) {
+          if (index === 2) {
             return part;
           } else {
             return part + " / ";

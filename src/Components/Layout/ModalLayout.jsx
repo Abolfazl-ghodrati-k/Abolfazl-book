@@ -9,7 +9,8 @@ function ModalLayout({ children, zIndex }) {
     if (Modalcount) {
       setZIndex((Index) => (Index = Modalcount * 1000000));
     }
-  }, []);
+  }, [Modalcount]);
+  
   return (
     <div
       style={{

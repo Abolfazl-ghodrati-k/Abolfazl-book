@@ -80,11 +80,7 @@ const AudioPlayer = () => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration((sec) => (sec = seconds));
     progressBar.current.max = seconds;
-  }, [
-    audioPlayer?.current?.pause,
-    audioPlayer?.current?.ReadyState,
-    audioPlayer?.current?.duration,
-  ]);
+  }, [audioPlayer.current.pause, audioPlayer.current.ReadyState, audioPlayer.current.duration, isPlaying, dispatch]);
 
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);

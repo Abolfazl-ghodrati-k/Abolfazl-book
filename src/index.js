@@ -6,16 +6,12 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
-  Outlet,
 } from "react-router-dom";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import Musics from "./pages/FileManager/Musics/Musics";
 import Content from "./pages/FileManager/Components/Content";
 import Documents from "./pages/FileManager/Documents/Documents";
 import Videos from "./pages/FileManager/Videos/Videos";
-import ChangeColor from "./pages/Setting/ChangeColor/ChangeColor";
-import BackgroundImage from "./pages/Setting/BackgroundImage/BackgroundImage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

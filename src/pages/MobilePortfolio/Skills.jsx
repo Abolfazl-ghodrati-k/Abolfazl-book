@@ -10,7 +10,6 @@ import {
   SiMaterialui,
   SiVuedotjs,
   SiNuxtdotjs,
-  SiVuetify,
   SiExpress,
 } from "react-icons/si";
 import { TbBrandNextjs } from "react-icons/tb";

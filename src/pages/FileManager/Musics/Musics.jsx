@@ -17,7 +17,7 @@ function Musics() {
     } else if (location.pathname.includes("iranian")) {
       setActive((Active) => (Active = "iranian"));
     }
-  });
+  }, [location.pathname]);
 
   return (
     <div className="w-full h-full flex justify-start items-start">
@@ -48,7 +48,7 @@ function Musics() {
               >
                 R&B
               </span>
-              <span>{Active == "r&b" ? "→" : ""}</span>
+              <span>{Active === "r&b" ? "→" : ""}</span>
             </div>
           </Link>
           <Link to="/filemanager/musics/rap">

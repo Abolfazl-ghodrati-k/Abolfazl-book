@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Resizable } from "re-resizable";
 import React, { useEffect, useMemo, useState } from "react";
 import Draggable from "react-draggable";
@@ -31,11 +32,15 @@ const LiveCode = ({ onClick }) => {
   const [Height, setHeight] = useState(400);
   // TODO: check to see if user has an account
   // * options: have a global store for user, login modal
-  const { user, token } = useSelector((state) => state.user)
+  const { user, token } = useSelector((state) => state.user);
 
   const { isMaximized, rooms, activeRoom } = useSelector((state) => state.code);
 
-  const selectedRoom = useMemo(() => rooms.find((room) => room.id === activeRoom), [activeRoom, rooms])
+  const selectedRoom = useMemo(() => {
+    if (rooms) {
+      return rooms?.find((room) => room.id === activeRoom);
+    }
+  }, [activeRoom, rooms]);
 
   useEffect(() => {
     if (isMaximized) {
@@ -78,7 +83,7 @@ const LiveCode = ({ onClick }) => {
           <div className="handlecode border-b border-gray-100 flex items-center justify-between">
             <h3 className="text-white pl-3">Live coding v1.0.0</h3>
             <div className="flex items-center justify-end gap-4">
-              <Users users={selectedRoom.users} />
+              {selectedRoom && <Users users={selectedRoom.users} />}
               <div className="flex justify-end p-3 items-center border-l border-gray-100">
                 <MacNav
                   type={"MINIMIZE"}
@@ -101,9 +106,11 @@ const LiveCode = ({ onClick }) => {
               </div>
             </div>
           </div>
-          <div className="w-full h-[calc(100%-41px)]">
-            <MonacoEditorWrapper room={selectedRoom ?? undefined} />
-          </div>
+          {selectedRoom && (
+            <div className="w-full h-[calc(100%-41px)]">
+              <MonacoEditorWrapper room={selectedRoom} />
+            </div>
+          )}
         </div>
       </Resizable>
     </Draggable>

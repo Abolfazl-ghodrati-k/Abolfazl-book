@@ -1,11 +1,10 @@
-import React from "react";
-import { useEffect } from "react";
+import React from "react"
 import CMDhelp from "./CMDhelp";
 
 function CMDResponse({ err }) {
   return (
     <div className="flex items-start justify-start my-1">
-      {err.err == true && (
+      {err.err === true && (
         <div className="flex flex-col justify-start items-start text-[0.7rem] text-[gray] ">
           {err.preCmd && (
             <span>
@@ -25,7 +24,7 @@ function CMDResponse({ err }) {
       )}
       {err.Res && (
         <div>
-          {err.Text == "help" ? (
+          {err.Text === "help" ? (
             <div className="flex">
               <CMDhelp />
             </div>

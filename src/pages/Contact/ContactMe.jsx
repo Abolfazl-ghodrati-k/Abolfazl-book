@@ -16,7 +16,6 @@ import { toast } from "react-toastify";
 function Contactme() {
   const [onGoogle, setonGoogle] = useState(true);
   const [EmailText, setEmailText] = useState("");
-  const [EmailTextColor, setEmailTextColor] = useState("");
   const [Sending, setSending] = useState(false);
 
   const form = useRef();
@@ -25,6 +24,10 @@ function Contactme() {
     const timer = setTimeout(() => {
       setEmailText("");
     }, 3000);
+
+    return () => {
+      clearTimeout(timer)
+    }
   }, [EmailText]);
 
   const googleClicked = () => {
@@ -129,8 +132,8 @@ function Contactme() {
               {Sending ? "sending ..." : "send email"}
             </button>
             <p
-              style={{ color: EmailTextColor, fontSize: "16px" }}
-              className="font-thin pl-2"
+              
+              className="font-thin pl-2 text-[16px]"
             >
               {EmailText}
             </p>

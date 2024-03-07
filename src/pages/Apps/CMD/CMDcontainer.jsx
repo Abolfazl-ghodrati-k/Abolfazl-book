@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function CMDcontainer() {
@@ -18,6 +19,126 @@ function CMDcontainer() {
   useEffect(() => {
     console.log(ErrCount);
   }, [ErrCount]);
+
+  const CheckCommand = useCallback(
+    (command) => {
+      PreCommand.current.value = "";
+      PreCommand.current.focus();
+      CommandInput.current.value = "";
+      CommandInput.current.disabled = true;
+      CommandInput.current.style.display = "none";
+      PreCommand.current.style.color = "white";
+
+      // console.log(command);
+      switch (command) {
+        case "help":
+          {
+            let resObj = {
+              Res: true,
+              Text: "help",
+              Cmd: "help",
+            };
+            let instanceofRes = ErrCount;
+            instanceofRes.push(resObj);
+            dispatch({
+              type: "INCREASE_ERR",
+              payload: instanceofRes,
+            });
+          }
+          break;
+        case "cyrus-coin":
+          {
+            window.open("http://cyrus-coin.netlify.app", "_blank");
+            let resObj = {
+              Res: true,
+              Text: "Forwarded to cyrus-coin",
+              Cmd: "cyrus-coin",
+            };
+            let instanceofRes = ErrCount;
+            instanceofRes.push(resObj);
+            dispatch({
+              type: "INCREASE_ERR",
+              payload: instanceofRes,
+            });
+          }
+          break;
+        case "yola":
+          {
+            window.open("https://yola-tailwind.vercel.app/", "_blank");
+            let resObj = {
+              Res: true,
+              Text: "Forwarded to yola",
+              Cmd: "cyrus-coin",
+            };
+            let instanceofRes = ErrCount;
+            instanceofRes.push(resObj);
+            dispatch({
+              type: "INCREASE_ERR",
+              payload: instanceofRes,
+            });
+          }
+          break;
+        case "abolfazl-note":
+          {
+            let resObj = {
+              Res: true,
+              Text: "Forwarded to abolfazl note ...  come back here habibi😘",
+              Cmd: "abolfazl-note",
+            };
+            let instanceofErr = ErrCount;
+            instanceofErr.push(resObj);
+            dispatch({
+              type: "INCREASE_ERR",
+              payload: instanceofErr,
+            });
+            setTimeout(() => {
+              window.open("https://abolfazl-note.vercel.app/", "_self");
+            }, 1000);
+          }
+          break;
+        case "dandanino":
+          {
+            let resObj = {
+              Res: true,
+              Text: "Forwarded to dandanino ... come back here habibi😘",
+              Cmd: "abolfazl-note",
+            };
+            let instanceofErr = ErrCount;
+            instanceofErr.push(resObj);
+            dispatch({
+              type: "INCREASE_ERR",
+              payload: instanceofErr,
+            });
+            setTimeout(() => {
+              window.open("https://dandanino.vercel.app/", "_self");
+            }, 1000);
+          }
+          break;
+        case "clear":
+          dispatch({
+            type: "INCREASE_ERR",
+            payload: [],
+          });
+
+          break;
+        default:
+          setErr((err) => (err = true));
+          const errObj = {
+            preCmd: "",
+            Cmd: command,
+            err: true,
+          };
+          const instanceofErr = ErrCount;
+          instanceofErr.push(errObj);
+          dispatch({
+            type: "INCREASE_ERR",
+            payload: instanceofErr,
+          });
+          break;
+      }
+    },
+    [ErrCount, dispatch]
+  );
 
   useEffect(() => {
     PreCommand.current.addEventListener("keydown", (e) => {
@@ -50,7 +171,7 @@ function CMDcontainer() {
         CheckCommand(value);
       }
     });
-  }, []);
+  }, [CheckCommand, ErrCount, dispatch]);
 
   const handleChange = (e) => {
     // console.log(e);
@@ -74,130 +195,12 @@ function CMDcontainer() {
   };
 
   const handleChange2 = (e) => {
-    if (e.target.value == "") {
+    if (e.target.value === "") {
       CommandInput.current.style.display = "none";
       PreCommand.current.focus();
       CommandInput.current.disabled = true;
     }
     setCommandInstance((instance) => (instance = e.target.value));
-  };
-
-  const CheckCommand = (command) => {
-    PreCommand.current.value = "";
-    PreCommand.current.focus();
-    CommandInput.current.value = "";
-    CommandInput.current.disabled = true;
-    CommandInput.current.style.display = "none";
-    PreCommand.current.style.color = "white";
-
-    // console.log(command);
-    switch (command) {
-      case "help":
-        {
-          let resObj = {
-            Res: true,
-            Text: "help",
-            Cmd: "help",
-          };
-          let instanceofRes = ErrCount;
-          instanceofRes.push(resObj);
-          dispatch({
-            type: "INCREASE_ERR",
-            payload: instanceofRes,
-          });
-        }
-        break;
-      case "cyrus-coin":
-        {
-          window.open("http://cyrus-coin.netlify.app", "_blank");
-          let resObj = {
-            Res: true,
-            Text: "Forwarded to cyrus-coin",
-            Cmd: "cyrus-coin",
-          };
-          let instanceofRes = ErrCount;
-          instanceofRes.push(resObj);
-          dispatch({
-            type: "INCREASE_ERR",
-            payload: instanceofRes,
-          });
-        }
-        break;
-      case "yola":
-        {
-          window.open("https://yola-tailwind.vercel.app/", "_blank");
-          let resObj = {
-            Res: true,
-            Text: "Forwarded to yola",
-            Cmd: "cyrus-coin",
-          };
-          let instanceofRes = ErrCount;
-          instanceofRes.push(resObj);
-          dispatch({
-            type: "INCREASE_ERR",
-            payload: instanceofRes,
-          });
-        }
-        break;
-      case "abolfazl-note":
-        {
-          let resObj = {
-            Res: true,
-            Text: "Forwarded to abolfazl note ...  come back here habibi😘",
-            Cmd: "abolfazl-note",
-          };
-          let instanceofErr = ErrCount;
-          instanceofErr.push(resObj);
-          dispatch({
-            type: "INCREASE_ERR",
-            payload: instanceofErr,
-          });
-          setTimeout(() => {
-            window.open("https://abolfazl-note.vercel.app/", "_self");
-          }, 1000);
-        }
-        break;
-      case "dandanino":
-        {
-          let resObj = {
-            Res: true,
-            Text: "Forwarded to dandanino ... come back here habibi😘",
-            Cmd: "abolfazl-note",
-          };
-          let instanceofErr = ErrCount;
-          instanceofErr.push(resObj);
-          dispatch({
-            type: "INCREASE_ERR",
-            payload: instanceofErr,
-          });
-          setTimeout(() => {
-            window.open("https://dandanino.vercel.app/", "_self");
-          }, 1000);
-        }
-        break;
-      case "clear":
-        {
-          dispatch({
-            type: "INCREASE_ERR",
-            payload: [],
-          });
-        }
-        break;
-      default:
-        setErr((err) => (err = true));
-        const errObj = {
-          preCmd: "",
-          Cmd: command,
-          err: true,
-        };
-        const instanceofErr = ErrCount;
-        instanceofErr.push(errObj);
-        dispatch({
-          type: "INCREASE_ERR",
-          payload: instanceofErr,
-        });
-        break;
-    }
   };
 
   return (

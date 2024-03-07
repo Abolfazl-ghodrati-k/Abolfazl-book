@@ -19,7 +19,7 @@ function Portfolio() {
     }
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [navigate, pathname, state?.redirect]);
 
   return (
      <App />

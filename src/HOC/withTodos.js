@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 
 function withTodos(Component, date) {
   return (props) => {
     const [todos, changeReturnValue] = useState(null);
-    const [foundYears, setfoundYears] = useState(null)
+    const [foundYears, setfoundYears] = useState(null);
     const database = useSelector((store) => store.todo.todos);
 
-    useEffect(() => {
-      order_todos_by_date();
-    },[database]);
-
-    function order_todos_by_date(date) {
-      const found_years = find_years();
-      const ordered_by_year = return_todos_by_year(found_years);
-      const ordered_by_year_month = return_todos_by_year_month(ordered_by_year);
-      changeReturnValue(ordered_by_year_month);
-    }
-
-    function find_years() {
+    const find_years = useCallback(() => {
       var found_years = [];
       database?.forEach((todo) => {
         if (found_years?.includes(todo?.year)) {
@@ -27,10 +16,10 @@ function withTodos(Component, date) {
           found_years?.push(todo?.year);
         }
       });
-      found_years?.sort()
-      setfoundYears(found_years)
+      found_years?.sort();
+      setfoundYears(found_years);
       return found_years;
-    }
+    }, [database]);
 
     function find_months(this_years_todos) {
       var found_months = [];
@@ -44,26 +33,29 @@ function withTodos(Component, date) {
       return found_months;
     }
 
-    function return_todos_by_year(found_years) {
-      const ordered_by_year = {};
-      found_years?.forEach((year) => {
-        database?.forEach((todo) => {
-          if (todo?.year === year) {
-            if (ordered_by_year[year]?.length) {
-              const copy = ordered_by_year[year];
-              ordered_by_year[year] = [...copy, { ...todo }];
+    const return_todos_by_year = useCallback(
+      (found_years) => {
+        const ordered_by_year = {};
+        found_years?.forEach((year) => {
+          database?.forEach((todo) => {
+            if (todo?.year === year) {
+              if (ordered_by_year[year]?.length) {
+                const copy = ordered_by_year[year];
+                ordered_by_year[year] = [...copy, { ...todo }];
+              } else {
+                ordered_by_year[year] = [{ ...todo }];
+              }
             } else {
-              ordered_by_year[year] = [{ ...todo }];
+              return;
             }
-          } else {
-            return;
-          }
+          });
         });
-      });
-      return ordered_by_year;
-    }
+        return ordered_by_year;
+      },
+      [database]
+    );
 
-    function return_todos_by_year_month(ordered_by_year) {
+    const return_todos_by_year_month = useCallback((ordered_by_year) => {
       const ordered_by_year_month = {};
       //   for (let index = 0; index < Object.keys(ordered_by_year)?.length; index++) {
       //     console.log("me")
@@ -82,7 +74,18 @@ function withTodos(Component, date) {
       }
 
       return ordered_by_year_month;
-    }
+    }, []);
+
+    const order_todos_by_date = useCallback(() => {
+      const found_years = find_years();
+      const ordered_by_year = return_todos_by_year(found_years);
+      const ordered_by_year_month = return_todos_by_year_month(ordered_by_year);
+      changeReturnValue(ordered_by_year_month);
+    }, [find_years, return_todos_by_year, return_todos_by_year_month]);
+
+    useEffect(() => {
+      order_todos_by_date();
+    }, [database, order_todos_by_date]);
 
     function set(obj, path, value) {
       var schema = obj; // a moving reference to internal objects within obj

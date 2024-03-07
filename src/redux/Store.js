@@ -6,7 +6,6 @@ import { createLogger } from "redux-logger";
 import SetTransform from "./transforms";
 import rootSaga from "./sagas/rootSaga";
 //reducers
-import BrowserReducer from "./reducers/browserReducer";
 import FileManagerReducer from "./reducers/FileManagerReducer";
 import ContactMeReducer from "./reducers/contactme";
 import PortfolioReducer from "./reducers/portfolio";
@@ -24,7 +23,6 @@ import loadingReducer from "./reducers/loading";
 import userReducer from "./reducers/auth/userReducer";
 
 const rootReducer = combineReducers({
-  browser: BrowserReducer,
   fileManager: FileManagerReducer,
   contactme: ContactMeReducer,
   portfolio: PortfolioReducer,

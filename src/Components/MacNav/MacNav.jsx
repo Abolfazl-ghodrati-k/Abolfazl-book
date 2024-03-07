@@ -52,7 +52,7 @@ const MacNav = ({ type, name, isMaximized }) => {
         break;
       case "CLOSE":
         if (name) {
-          if (name == "CONTACTME") {
+          if (name === "CONTACTME") {
             dispatch({ type: `CLOSE_${name}` });
             return;
           }

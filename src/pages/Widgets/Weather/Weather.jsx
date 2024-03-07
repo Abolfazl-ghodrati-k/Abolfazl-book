@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WEATHER_ACTION } from "../../../redux/sagas";
-import { TiWeatherCloudy } from "react-icons/ti";
 import { SET_CITY, SET_WEATHER_ERROR } from "../../../redux/actionTypes";
 
 export const WeatherInfoIcons = {
@@ -35,7 +34,7 @@ const WeatherInfoComponent = (props) => {
   const { name, value } = props;
   return (
     <div className="flex my-[2px] mx-[10px] justify-center items-center">
-      <img className="w-[36px] h-[36px]" src={process.env.REACT_APP_DOMAINNAME+WeatherInfoIcons[name]} />
+      <img className="w-[36px] h-[36px]" src={process.env.REACT_APP_DOMAINNAME+WeatherInfoIcons[name]} alt="info" />
       <div className="flex flex-col text-[14px] m-[8px] text-black-200">
         {value}
         <span className="text-[12px] capitalize">{name}</span>
@@ -95,6 +94,7 @@ function Weather() {
           {`  |  ${data?.weather[0].description}`}
         </div>
         <img
+          alt="desc"
           className="w-[80px] h-[80px] my-[5px] mx-auto"
           src={WeatherIcons[data?.weather[0].icon]}
         />

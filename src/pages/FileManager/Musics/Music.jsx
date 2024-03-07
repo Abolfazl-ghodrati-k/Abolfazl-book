@@ -4,8 +4,6 @@ import { BsPauseFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
   OPEN_MUSIC,
-  START_MUSIC,
-  PAUSE_MUSIC,
   CONTROLL_MUSIC,
   SET_PLAYING_MUSIC,
 } from "../../../redux/actionTypes";
@@ -19,12 +17,12 @@ function Music({ src, title }) {
   const fileManager = useSelector((state) => state.fileManager);
 
   useEffect(() => {
-    if (fileManager?.playingSrc == src) {
+    if (fileManager?.playingSrc === src) {
       setShowIcon(true);
     } else {
       setShowIcon(false);
     }
-  }, [fileManager]);
+  }, [fileManager, src]);
 
   const OpenMusic = (src, title, id) => {
     // console.log(fileManager.isPlaying);
@@ -37,7 +35,7 @@ function Music({ src, title }) {
       dispatch({ type: OPEN_MUSIC });
       dispatch({ type: CONTROLL_MUSIC, payload: true });
     }
-    if (fileManager?.isPlaying && fileManager?.playingSrc == src) {
+    if (fileManager?.isPlaying && fileManager?.playingSrc === src) {
       dispatch({ type: CONTROLL_MUSIC, payload: false });
     }
     if (fileManager?.isPlaying && fileManager?.playingSrc !== src) {
@@ -56,17 +54,18 @@ function Music({ src, title }) {
     ankerTag.click();
     ankerTag.parentNode.removeChild(ankerTag);
   };
+
   return (
     <div
       className={`relative flex justify-between items-center rounded ${title==="Ashke Mahtab"? 'bg-[#ebc90b]' : 'bg-gray-200'} p-2 cursor-pointer mb-1`}
       onMouseEnter={() => {
-        if (fileManager?.playingSrc == src) {
+        if (fileManager?.playingSrc === src) {
           return;
         }
         setShowIcon((ShowIcon) => (ShowIcon = true));
       }}
       onMouseLeave={() => {
-        if (fileManager?.playingSrc == src) {
+        if (fileManager?.playingSrc === src) {
           return;
         }
         setShowIcon((ShowIcon) => (ShowIcon = false));
@@ -83,7 +82,7 @@ function Music({ src, title }) {
             transitionTimingFunction: "ease-in",
           }}
         >
-          {fileManager?.isPlaying && fileManager?.playingSrc == src ? (
+          {fileManager?.isPlaying && fileManager?.playingSrc === src ? (
             <BsPauseFill size={25} />
           ) : (
             <MdPlayArrow size={25} color="black" />

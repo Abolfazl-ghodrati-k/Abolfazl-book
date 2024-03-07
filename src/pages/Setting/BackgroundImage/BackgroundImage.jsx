@@ -15,7 +15,9 @@ const BackgroundImage = ({Width, Height}) => {
       }
     );
     setImages(response.data);
+    setloading(false)
   };
+
   useEffect(() => {
     fetchImages();
   }, []);

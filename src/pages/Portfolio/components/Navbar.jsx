@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import MacNav from "../../../Components/MacNav";
 import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { logo, menu, close } from "../assets";
-import CustomCursorContext from "../utils/CustomCursor/context/CustomCursorContext";
 
 const Navbar = () => {
   const [active, setActive] = useState("");
@@ -26,7 +24,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const { setType } = useContext(CustomCursorContext);
 
   return (
     <nav

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { HexColorPicker } from "react-colorful";
 import { useSelector, useDispatch } from "react-redux";
 import { PICK_COLOR } from "../../../redux/actionTypes";

@@ -20,19 +20,19 @@ function MobilePortfolio() {
         />
         <div className="flex pr-2 pt-1 [&>*]:cursor-pointer [&>*]:ml-3 items-center mb-2 nav w-[200px] justify-between">
           <span
-            className={`${Active_section == 0 ? "active-section" : ""}`}
+            className={`${Active_section === 0 ? "active-section" : ""}`}
             onClick={() => setActive_section((AS) => (AS = 0))}
           >
             ME
           </span>
           <span
-            className={`${Active_section == 1 ? "active-section" : ""}`}
+            className={`${Active_section === 1 ? "active-section" : ""}`}
             onClick={() => setActive_section((AS) => (AS = 1))}
           >
             Skills
           </span>
           <span
-            className={`${Active_section == 2 ? "active-section" : ""}`}
+            className={`${Active_section === 2 ? "active-section" : ""}`}
             onClick={() => setActive_section((AS) => (AS = 2))}
           >
             Projects
@@ -41,7 +41,7 @@ function MobilePortfolio() {
       </div>
       <div className="bg-[#124559] w-full h-[2px] z-0"></div>
       <div className="w-full pt-5">
-        {Active_section == 0 ? <Me /> : Active_section == 1 ? <Skills /> : <Projects />}
+        {Active_section === 0 ? <Me /> : Active_section === 1 ? <Skills /> : <Projects />}
       </div>
     </div>
   );

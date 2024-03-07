@@ -1,4 +1,4 @@
-import { call, delay, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { WEATHER_ACTION } from ".";
 import recieve_data from "../../services/api/weather";
 import {

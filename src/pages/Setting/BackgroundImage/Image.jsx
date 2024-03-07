@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useOutletContext } from "react-router";
 import { CHANGE_IMAGE } from "../../../redux/actionTypes";
 
 function EachImage({ image }) {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [ImageApplied, setImageApplied] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [_ImageApplied, setImageApplied] = useState(false);
   const dispatch = useDispatch()
 
   useEffect(() => {

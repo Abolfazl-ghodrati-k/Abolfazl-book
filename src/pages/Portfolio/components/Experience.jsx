@@ -3,14 +3,12 @@ import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import { motion } from "framer-motion";
 
 import "react-vertical-timeline-component/style.min.css";
 
 import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
-import { textVariant } from "../utils/motion";
 
 const ExperienceCard = ({ experience }) => {
   return (
@@ -27,7 +25,7 @@ const ExperienceCard = ({ experience }) => {
           <img
             src={experience.icon}
             alt={experience.company_name}
-            className={`w-[60%] ${experience.company_name == "Dandanino" ? "min-w-[60px]": "min-w-[80px]"} h-[60%] object-contain`}
+            className={`w-[60%] ${experience.company_name === "Dandanino" ? "min-w-[60px]": "min-w-[80px]"} h-[60%] object-contain`}
           />
         </div>
       }
