@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "./AudioPlayer.module.css";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { BsArrowRightShort } from "react-icons/bs";
@@ -36,51 +36,94 @@ const AudioPlayer = () => {
   const music = useRef(); // reference the playing animation
 
   useEffect(() => {
-    if (isPlaying && MusicReady) {
-      console.log("you asshole");
-      audioPlayer.current.play();
-      animationRef.current = requestAnimationFrame(whilePlaying);
+    setDuration(0);
+  }, [playingSrc]);
+
+  const changePlayerCurrentTime = useCallback(() => {
+    console.log(
+      "changing current time",
+      `${
+        (progressBar?.current?.value / duration) * 100 > 70
+          ? (progressBar?.current?.value / duration) * 100
+          : (progressBar?.current?.value / duration) * 100 + 2
+      }%`
+    );
+    if (progressBar?.current?.style) {
+      progressBar?.current.style.setProperty(
+        "--seek-before-width",
+        `${
+          (progressBar?.current?.value / duration) * 100 > 70
+            ? (progressBar?.current?.value / duration) * 100
+            : (progressBar?.current?.value / duration) * 100 + 2
+        }%`
+      );
     }
-  });
+    setCurrentTime(progressBar?.current?.value);
+  }, [duration]);
+
+  const whilePlaying = useCallback(() => {
+    // console.log(progressBar.current.value);
+    console.log("req");
+    if (progressBar?.current?.value) {
+      progressBar.current.value = audioPlayer?.current?.currentTime;
+    }
+    // console.log(audioPlayer.current.currentTime);
+
+    changePlayerCurrentTime();
+    animationRef.current = requestAnimationFrame(whilePlaying);
+    if (audioPlayer?.current?.currentTime === duration) {
+      if (progressBar?.current?.value) {
+        progressBar.current.value = 0;
+      }
+      // setIsPlaying(false);
+      dispatch({ type: CONTROLL_MUSIC, payload: false });
+      progressBar.current.style.setProperty("--seek-before-width", `${0}%`);
+      audioPlayer.current.currentTime = 0;
+      setCurrentTime((t) => (t = 0));
+      audioPlayer?.current.pause();
+      cancelAnimationFrame(animationRef.current);
+    }
+  }, [changePlayerCurrentTime, dispatch, duration]);
+
+  // useEffect(() => {
+  //   if (isPlaying && MusicReady) {
+  //     audioPlayer.current.play();
+  //     animationRef.current = requestAnimationFrame(whilePlaying);
+  //   }
+  // }, [MusicReady, isPlaying, whilePlaying]);
 
   useEffect(() => {
     if (isPlaying) {
       audioPlayer?.current.play();
+      animationRef.current = requestAnimationFrame(whilePlaying);
     } else {
       audioPlayer?.current.pause();
+      cancelAnimationFrame(animationRef.current);
     }
-  }, [isPlaying]);
+  }, [isPlaying, whilePlaying]);
 
-  useLayoutEffect(() => {
-    audioPlayer?.current.pause();
-    setLoading(true);
-  }, [playingSrc]);
+  // useLayoutEffect(() => {
+  //   audioPlayer?.current.pause();
+  //   setLoading(true);
+  // }, [playingSrc]);
 
-  useEffect(() => {
-    if (audioPlayer?.current?.ReadyState) {
-      setLoading(false);
-    }
-  }, [audioPlayer?.current?.ReadyState]);
-
-  useEffect(() => {
-    // console.log(isPlaying);
-    // checks if user try to pause music via keyboard
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "MediaPlayPause") {
-        if (isPlaying) {
-          audioPlayer.current.pause();
-          dispatch({ type: CONTROLL_MUSIC, payload: false });
-        } else {
-          audioPlayer.current.play();
-          dispatch({ type: CONTROLL_MUSIC, payload: true });
-        }
-      }
-    });
-    // music duration calculation
-    const seconds = Math.floor(audioPlayer.current.duration);
-    setDuration((sec) => (sec = seconds));
-    progressBar.current.max = seconds;
-  }, [audioPlayer.current.pause, audioPlayer.current.ReadyState, audioPlayer.current.duration, isPlaying, dispatch]);
+  // useEffect(() => {
+  //   // console.log(isPlaying);
+  //   // checks if user try to pause music via keyboard
+  //   window.addEventListener("keydown", (e) => {
+  //     if (e.key === "MediaPlayPause") {
+  //       if (isPlaying) {
+  //         audioPlayer?.current.pause();
+  //         dispatch({ type: CONTROLL_MUSIC, payload: false });
+  //       } else {
+  //         audioPlayer.current.play();
+  //         dispatch({ type: CONTROLL_MUSIC, payload: true });
+  //       }
+  //     }
+  //   });
+  //   console.log(duration);
+  //   progressBar.current.max = duration;
+  // }, [dispatch, duration, isPlaying]);
 
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
@@ -95,49 +138,17 @@ const AudioPlayer = () => {
     // setIsPlaying(!prevValue);
     dispatch({ type: CONTROLL_MUSIC, payload: !prevValue });
     if (!prevValue) {
-      audioPlayer.current.play();
-      animationRef.current = requestAnimationFrame(whilePlaying);
+      audioPlayer?.current.play();
     } else {
-      audioPlayer.current.pause();
-      cancelAnimationFrame(animationRef.current);
-    }
-  };
-
-  const whilePlaying = () => {
-    // console.log(progressBar.current.value);
-    progressBar.current.value = audioPlayer?.current.currentTime;
-    // console.log(audioPlayer.current.currentTime);
-
-    changePlayerCurrentTime();
-    animationRef.current = requestAnimationFrame(whilePlaying);
-    if (audioPlayer.current.currentTime === audioPlayer?.current.duration) {
-      progressBar.current.value = 0;
-      // setIsPlaying(false);
-      dispatch({ type: CONTROLL_MUSIC, payload: false });
-      progressBar.current.style.setProperty("--seek-before-width", `${0}%`);
-      audioPlayer.current.currentTime = 0;
-      setCurrentTime((t) => (t = 0));
-      audioPlayer.current.pause();
+      audioPlayer?.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
   };
 
   const changeRange = () => {
     setLoading(true);
-    audioPlayer.current.currentTime = progressBar.current.value;
+    audioPlayer.current.currentTime = progressBar?.current.value;
     changePlayerCurrentTime();
-  };
-
-  const changePlayerCurrentTime = () => {
-    progressBar.current.style.setProperty(
-      "--seek-before-width",
-      `${
-        (progressBar.current.value / duration) * 100 > 70
-          ? (progressBar.current.value / duration) * 100
-          : (progressBar.current.value / duration) * 100 + 2
-      }%`
-    );
-    setCurrentTime(progressBar.current.value);
   };
 
   const backThirty = () => {
@@ -146,17 +157,18 @@ const AudioPlayer = () => {
   };
 
   const forwardThirty = () => {
-    setLoading(true);
     progressBar.current.value = Number(+progressBar.current.value + 30);
-    if (+audioPlayer.current.duration - +audioPlayer.current.currentTime < 30) {
-      setLoading(false);
+    if (
+      +audioPlayer?.current.duration - +audioPlayer?.current.currentTime <
+      30
+    ) {
       progressBar.current.value = 0;
       // setIsPlaying(false);
       dispatch({ type: CONTROLL_MUSIC, payload: false });
-      progressBar.current.style.setProperty("--seek-before-width", `${0}%`);
+      progressBar?.current.style.setProperty("--seek-before-width", `${0}%`);
       audioPlayer.current.currentTime = 0;
       setCurrentTime((t) => (t = 0));
-      audioPlayer.current.pause();
+      audioPlayer?.current.pause();
       cancelAnimationFrame(animationRef.current);
     } else {
       changeRange();
@@ -164,24 +176,35 @@ const AudioPlayer = () => {
   };
 
   const ClosePlayer = () => {
+    audioPlayer?.current?.pause();
     dispatch({ type: CLOSE_MUSIC });
     dispatch({ type: CONTROLL_MUSIC, payload: false });
     dispatch({
       type: SET_PLAYING_MUSIC,
       payload: { Src: "", Title: "" },
     });
-    audioPlayer?.current?.pause();
   };
+
+  const getReadyMusic = useCallback(
+    (e) => {
+      setMusicReady(true);
+      setLoading(false);
+      if (!isPlaying) {
+        dispatch({ type: CONTROLL_MUSIC, payload: true });
+      }
+      let eventDuration = e.currentTarget.duration;
+      setDuration(Math.floor(eventDuration));
+      progressBar.current.max = eventDuration;
+    },
+    [dispatch, isPlaying]
+  );
 
   return (
     <Draggable cancel=".cancel-player">
       <div className="p-1 absolute z-[100000000]">
         <div className={styles.audioPlayer}>
           <audio
-            onCanPlayThrough={() => {
-              setMusicReady(true);
-              setLoading(false);
-            }}
+            onCanPlayThrough={getReadyMusic}
             onLoadStart={() => {
               setLoading(true);
             }}
@@ -198,7 +221,7 @@ const AudioPlayer = () => {
               AG player
             </span>
             <div
-              onClick={() => ClosePlayer()}
+              onClick={ClosePlayer}
               className="bg-[#840000] hover:opacity-50 cursor-pointer w-[11px] h-[11px] rounded-[50%]"
             ></div>
           </div>

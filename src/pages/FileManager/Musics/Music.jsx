@@ -33,12 +33,9 @@ function Music({ src, title }) {
         payload: { Src: src, Title: title },
       });
       dispatch({ type: OPEN_MUSIC });
-      dispatch({ type: CONTROLL_MUSIC, payload: true });
     }
-    if (fileManager?.isPlaying && fileManager?.playingSrc === src) {
+    if (fileManager?.isPlaying) {
       dispatch({ type: CONTROLL_MUSIC, payload: false });
-    }
-    if (fileManager?.isPlaying && fileManager?.playingSrc !== src) {
       dispatch({
         type: SET_PLAYING_MUSIC,
         payload: { Src: src, Title: title },
@@ -57,7 +54,9 @@ function Music({ src, title }) {
 
   return (
     <div
-      className={`relative flex justify-between items-center rounded ${title==="Ashke Mahtab"? 'bg-[#ebc90b]' : 'bg-gray-200'} p-2 cursor-pointer mb-1`}
+      className={`relative flex justify-between items-center rounded ${
+        title === "Ashke Mahtab" ? "bg-[#ebc90b]" : "bg-gray-200"
+      } p-2 cursor-pointer mb-1`}
       onMouseEnter={() => {
         if (fileManager?.playingSrc === src) {
           return;
