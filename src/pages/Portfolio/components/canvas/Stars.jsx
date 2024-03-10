@@ -1,11 +1,32 @@
 import { useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
-import * as random from "maath/random/dist/maath-random.esm";
+
+const generateSpherePoints = (numPoints, radius) => {
+  const points = new Float32Array(numPoints * 3);
+
+  for (let i = 0; i < numPoints; i++) {
+    const theta = Math.random() * Math.PI * 2; // Random angle around the vertical axis
+    const phi = Math.acos(2 * Math.random() - 1); // Random angle from top to bottom
+    const x = radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.sin(phi) * Math.sin(theta);
+    const z = radius * Math.cos(phi);
+
+    points[i * 3] = x;
+    points[i * 3 + 1] = y;
+    points[i * 3 + 2] = z;
+  }
+
+  return points;
+};
+
+// random/dist/maath-random.esm
 
 const Stars = (props) => {
   const ref = useRef();
-  const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
+  const sphereRadius = 1.2;
+  const numPoints = 5000;
+  const spherePoints = generateSpherePoints(numPoints, sphereRadius);
 
   useFrame((state, delta) => {
     ref.current.rotation.x -= delta / 10;
@@ -14,7 +35,7 @@ const Stars = (props) => {
 
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled {...props}>
+      <Points ref={ref} positions={spherePoints} stride={3} frustumCulled {...props}>
         <PointMaterial
           transparent
           color='#f272c8'

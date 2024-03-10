@@ -51,7 +51,7 @@ const persistreducer = persistReducer(persistConfig, rootReducer);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   persistreducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
+  composeEnhancers(applyMiddleware(sagaMiddleware, createLogger()))
 );
 sagaMiddleware.run(rootSaga);
 let persistor = persistStore(store);

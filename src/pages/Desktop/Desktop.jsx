@@ -4,7 +4,7 @@ import { BounceLoader } from "react-spinners";
 import { GoTasklist } from "react-icons/go";
 import { VscTerminalCmd } from "react-icons/vsc";
 import { BsCalculator } from "react-icons/bs";
-import { DiCode } from "react-icons/di"
+import { DiCode } from "react-icons/di";
 
 import useOrder from "../../Hooks/useOrder";
 import useIndex from "../../Hooks/useIndex";
@@ -27,7 +27,7 @@ import Weather from "../Widgets/Weather";
 import Shorthands from "../../Shorthands";
 import BottomNav from "../../BottomNav";
 import IconContainer from "../../Components/Icon/IconContainer";
-import AudioPlayer from "../../Components/AudioPlayer";
+import AudioPlayerWrapper from "../../Components/AudioPlayer/AudioPlayerWrapper";
 
 function Desktop() {
   const dispatch = useDispatch();
@@ -127,7 +127,9 @@ function Desktop() {
         </div>
       )}
 
-      {fileManager.Music_isOpen && <AudioPlayer />}
+      {fileManager.Music_isOpen && (
+        <AudioPlayerWrapper />
+      )}
 
       {maximizedApp === 0 && (
         <div className="absolute right-1 top-1 flex flex-col justify-center content-center gap-4 [&>*]:bg-CMD-100 [&>*]:p-1 [&>*]:rounded-md">

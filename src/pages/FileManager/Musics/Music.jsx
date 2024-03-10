@@ -25,8 +25,18 @@ function Music({ src, title }) {
   }, [fileManager, src]);
 
   const OpenMusic = (src, title, id) => {
-    // console.log(fileManager.isPlaying);
-    if (!fileManager?.isPlaying) {
+    if (src === fileManager.playingSrc) {
+      if (fileManager.isPlaying) {
+        dispatch({ type: CONTROLL_MUSIC, payload: false });
+      } else {
+        dispatch({ type: CONTROLL_MUSIC, payload: true });
+      }
+      return;
+    }
+    dispatch({ type: CONTROLL_MUSIC, payload: true });
+    // console.log(fileManager.isPlaying);1
+    if (!fileManager?.Music_isOpen) {
+      // dispatch({ type: CONTROLL_MUSIC, payload: true });
       //   setIsPlaying((ispalying) => (ispalying = true));
       dispatch({
         type: SET_PLAYING_MUSIC,
@@ -34,8 +44,8 @@ function Music({ src, title }) {
       });
       dispatch({ type: OPEN_MUSIC });
     }
-    if (fileManager?.isPlaying) {
-      dispatch({ type: CONTROLL_MUSIC, payload: false });
+    if (fileManager?.Music_isOpen) {
+      // dispatch({ type: CONTROLL_MUSIC, payload: true });
       dispatch({
         type: SET_PLAYING_MUSIC,
         payload: { Src: src, Title: title },

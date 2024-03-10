@@ -40,14 +40,14 @@ const AudioPlayer = () => {
   }, [playingSrc]);
 
   const changePlayerCurrentTime = useCallback(() => {
-    console.log(
-      "changing current time",
-      `${
-        (progressBar?.current?.value / duration) * 100 > 70
-          ? (progressBar?.current?.value / duration) * 100
-          : (progressBar?.current?.value / duration) * 100 + 2
-      }%`
-    );
+    // console.log(
+    //   "changing current time",
+    //   `${
+    //     (progressBar?.current?.value / duration) * 100 > 70
+    //       ? (progressBar?.current?.value / duration) * 100
+    //       : (progressBar?.current?.value / duration) * 100 + 2
+    //   }%`
+    // );
     if (progressBar?.current?.style) {
       progressBar?.current.style.setProperty(
         "--seek-before-width",
@@ -62,68 +62,38 @@ const AudioPlayer = () => {
   }, [duration]);
 
   const whilePlaying = useCallback(() => {
-    // console.log(progressBar.current.value);
-    console.log("req");
-    if (progressBar?.current?.value) {
-      progressBar.current.value = audioPlayer?.current?.currentTime;
-    }
-    // console.log(audioPlayer.current.currentTime);
-
-    changePlayerCurrentTime();
-    animationRef.current = requestAnimationFrame(whilePlaying);
-    if (audioPlayer?.current?.currentTime === duration) {
+    if (
+      Math.floor(audioPlayer?.current?.currentTime) === Math.floor(duration)
+    ) {
+      console.log("music finished");
       if (progressBar?.current?.value) {
         progressBar.current.value = 0;
       }
-      // setIsPlaying(false);
       dispatch({ type: CONTROLL_MUSIC, payload: false });
       progressBar.current.style.setProperty("--seek-before-width", `${0}%`);
       audioPlayer.current.currentTime = 0;
-      setCurrentTime((t) => (t = 0));
+      setCurrentTime(0);
       audioPlayer?.current.pause();
       cancelAnimationFrame(animationRef.current);
+    } else {
+      if (progressBar?.current?.value) {
+        progressBar.current.value = audioPlayer?.current?.currentTime;
+      }
+
+      changePlayerCurrentTime();
+      animationRef.current = requestAnimationFrame(whilePlaying);
     }
   }, [changePlayerCurrentTime, dispatch, duration]);
 
-  // useEffect(() => {
-  //   if (isPlaying && MusicReady) {
-  //     audioPlayer.current.play();
-  //     animationRef.current = requestAnimationFrame(whilePlaying);
-  //   }
-  // }, [MusicReady, isPlaying, whilePlaying]);
-
   useEffect(() => {
-    if (isPlaying) {
+    if (isPlaying && MusicReady) {
       audioPlayer?.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying);
     } else {
       audioPlayer?.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
-  }, [isPlaying, whilePlaying]);
-
-  // useLayoutEffect(() => {
-  //   audioPlayer?.current.pause();
-  //   setLoading(true);
-  // }, [playingSrc]);
-
-  // useEffect(() => {
-  //   // console.log(isPlaying);
-  //   // checks if user try to pause music via keyboard
-  //   window.addEventListener("keydown", (e) => {
-  //     if (e.key === "MediaPlayPause") {
-  //       if (isPlaying) {
-  //         audioPlayer?.current.pause();
-  //         dispatch({ type: CONTROLL_MUSIC, payload: false });
-  //       } else {
-  //         audioPlayer.current.play();
-  //         dispatch({ type: CONTROLL_MUSIC, payload: true });
-  //       }
-  //     }
-  //   });
-  //   console.log(duration);
-  //   progressBar.current.max = duration;
-  // }, [dispatch, duration, isPlaying]);
+  }, [MusicReady, isPlaying, whilePlaying]);
 
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
@@ -135,13 +105,12 @@ const AudioPlayer = () => {
 
   const togglePlayPause = () => {
     const prevValue = isPlaying;
-    // setIsPlaying(!prevValue);
     dispatch({ type: CONTROLL_MUSIC, payload: !prevValue });
     if (!prevValue) {
       audioPlayer?.current.play();
     } else {
       audioPlayer?.current.pause();
-      cancelAnimationFrame(animationRef.current);
+      cancelAnimationFrame(animationRef?.current);
     }
   };
 
@@ -185,19 +154,14 @@ const AudioPlayer = () => {
     });
   };
 
-  const getReadyMusic = useCallback(
-    (e) => {
-      setMusicReady(true);
-      setLoading(false);
-      if (!isPlaying) {
-        dispatch({ type: CONTROLL_MUSIC, payload: true });
-      }
-      let eventDuration = e.currentTarget.duration;
-      setDuration(Math.floor(eventDuration));
-      progressBar.current.max = eventDuration;
-    },
-    [dispatch, isPlaying]
-  );
+  const getReadyMusic = useCallback((e) => {
+    setMusicReady(true);
+    setLoading(false);
+    console.log("triggered");
+    let eventDuration = e?.currentTarget?.duration;
+    setDuration(Math.floor(eventDuration));
+    progressBar.current.max = eventDuration;
+  }, []);
 
   return (
     <Draggable cancel=".cancel-player">

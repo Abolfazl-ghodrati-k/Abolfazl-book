@@ -1,1 +1,1 @@
-export {default} from './AudioPlayer'
+export {default} from './AudioPlayerV2'

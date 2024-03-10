@@ -15,7 +15,6 @@ function Weather() {
   }
 
   React.useEffect(() => {
-    console.log(process.env, "process")
     if (!data) {
       dispatch({ type: WEATHER_ACTION, payload: "tehran" });
     }

@@ -18,7 +18,7 @@ function App() {
     function handleResize() {
       if (window.innerWidth < 850) {
         navigate("/portfolio", { state: { redirect: pathname } });
-      } else {
+      } else if(pathname.includes("portfolio")) {
         navigate(state?.redirect ?? "/");
       }
     }
