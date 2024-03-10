@@ -54,12 +54,7 @@ function Music({ src, title }) {
   };
 
   const DownloadMusic = (src, title) => {
-    const ankerTag = document.createElement("a");
-    ankerTag.href = src;
-    ankerTag.setAttribute("download", title + ".mp3");
-    document.body.appendChild(ankerTag);
-    ankerTag.click();
-    ankerTag.parentNode.removeChild(ankerTag);
+    window.open(src, "_blank");
   };
 
   return (

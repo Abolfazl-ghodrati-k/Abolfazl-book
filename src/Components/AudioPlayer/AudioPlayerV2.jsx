@@ -100,7 +100,6 @@ const AudioPlayerV2 = ({ src, title, onPlay, onPause, isPlaying }) => {
     animationRef.current = requestAnimationFrame(progressBarAnimation);
   }, [onPlay, progressBarAnimation]);
 
-
   const changeRange = () => {
     setLoading(true);
     audioPlayer.current.currentTime = progressBar?.current.value;
@@ -131,15 +130,30 @@ const AudioPlayerV2 = ({ src, title, onPlay, onPause, isPlaying }) => {
   // effects
 
   useEffect(() => {
-    if(musicIsReady) {
-      if(isPlaying) {
-        playMusic()
+    if (musicIsReady) {
+      if (isPlaying) {
+        playMusic();
       } else {
-        pauseMusic()
+        pauseMusic();
       }
     }
-
   }, [isPlaying, musicIsReady, pauseMusic, playMusic, playing, title]);
+
+  // const handleBeforeUnload = useCallback(() => {
+  //   console.log("unload")
+  //   if(onPause) {
+  //     onPause()
+  //   }
+  //   pauseMusic()
+  // }, [onPause, pauseMusic])
+
+  // useEffect(() => {
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   }
+  // }, [handleBeforeUnload])
 
   return (
     <div className={styles.audioPlayer}>
@@ -189,19 +203,20 @@ const AudioPlayerV2 = ({ src, title, onPlay, onPause, isPlaying }) => {
         <button className={styles.forwardBackward} onClick={backThirty}>
           <BsArrowLeftShort /> 30
         </button>
-        <button className={styles.playPause}>
-          {loading ? (
+
+        {loading ? (
+          <button className={styles.playPause}>
             <ClipLoader loading={loading} size={50} color="white" />
-          ) : playing && musicIsReady ? (
-            <div onClick={pauseMusic}>
-               <FaPause />
-            </div>
-          ) : (
-            <div onClick={playMusic}>
-              <FaPlay className={styles.play} />
-            </div>
-          )}
-        </button>
+          </button>
+        ) : playing && musicIsReady ? (
+          <button onClick={pauseMusic} className={styles.playPause}>
+            <FaPause />
+          </button>
+        ) : (
+          <button onClick={playMusic} className={styles.playPause}>
+            <FaPlay className={styles.play} />
+          </button>
+        )}
         <button className={styles.forwardBackward} onClick={forwardThirty}>
           30 <BsArrowRightShort />
         </button>
