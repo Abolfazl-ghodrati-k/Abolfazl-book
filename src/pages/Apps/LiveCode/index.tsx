@@ -32,8 +32,6 @@ const LiveCode = ({ onClick }) => {
   const [Height, setHeight] = useState(400);
   // TODO: check to see if user has an account
   // * options: have a global store for user, login modal
-  // @ts-expect-error TS(2339): Property 'user' does not exist on type 'unknown'.
-  const { user, token } = useSelector((state) => state.user);
 
   // @ts-expect-error TS(2339): Property 'code' does not exist on type 'unknown'.
   const { isMaximized, rooms, activeRoom } = useSelector((state) => state.code);

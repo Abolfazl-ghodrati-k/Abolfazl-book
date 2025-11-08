@@ -1,15 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function CMDcontainer() {
-  const [isAbolfazl, setIsAbolfazl] = useState(false);
-  const [Err, setErr] = useState(false);
-  const [Command, setCommand] = useState("");
-  const [preErr, setpreErr] = useState(false);
-  const [PreCmdErr, setPreCmdErr] = useState("");
-  const [CommandInstance, setCommandInstance] = useState("");
-
   const dispatch = useDispatch();
   // @ts-expect-error TS(2339): Property 'cmd' does not exist on type 'unknown'.
   const ErrCount = useSelector((state) => state.cmd.errCount);
@@ -129,7 +122,6 @@ function CMDcontainer() {
 
           break;
         default:
-          setErr((err) => (err = true));
           const errObj = {
             preCmd: "",
             Cmd: command,
@@ -154,8 +146,6 @@ function CMDcontainer() {
       if (e.code === "Enter") {
         // @ts-expect-error TS(2532): Object is possibly 'undefined'.
         const value = PreCommand.current.value;
-        setpreErr((err) => (err = true));
-        setPreCmdErr((msg) => (msg = e.target.value));
         const errObj = {
           preCmd: value,
           Cmd: "",
@@ -186,9 +176,7 @@ function CMDcontainer() {
 
   const handleChange = (e) => {
     // console.log(e);
-    setPreCmdErr((msg) => (msg = e.target.value));
     if (e.target.value.includes("Abolfazl")) {
-      setIsAbolfazl(true);
       e.target.style.color = "green";
       e.target.style.width = "50px";
       // @ts-expect-error TS(2532): Object is possibly 'undefined'.
@@ -204,7 +192,6 @@ function CMDcontainer() {
         CommandInput.current.focus();
       }
     } else {
-      setIsAbolfazl(false);
       e.target.style.color = "white";
       e.target.style.width = "auto";
     }
@@ -219,7 +206,6 @@ function CMDcontainer() {
       // @ts-expect-error TS(2532): Object is possibly 'undefined'.
       CommandInput.current.disabled = true;
     }
-    setCommandInstance((instance) => (instance = e.target.value));
   };
 
   return (
