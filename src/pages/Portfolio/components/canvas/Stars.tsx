@@ -1,4 +1,4 @@
-import { useState, useRef, Suspense } from "react";
+import { useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 
@@ -37,10 +37,16 @@ const Stars = (props) => {
 
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={spherePoints} stride={3} frustumCulled {...props}>
+      <Points
+        ref={ref}
+        positions={spherePoints}
+        stride={3}
+        frustumCulled
+        {...props}
+      >
         <PointMaterial
           transparent
-          color='#f272c8'
+          color="#f272c8"
           size={0.002}
           sizeAttenuation={true}
           depthWrite={false}
@@ -52,7 +58,7 @@ const Stars = (props) => {
 
 const StarsCanvas = () => {
   return (
-    <div className='w-full h-auto absolute inset-0 z-[-1]'>
+    <div className="w-full h-auto absolute inset-0 z-[-1]">
       <Canvas camera={{ position: [0, 0, 1] }}>
         <Suspense fallback={null}>
           <Stars />

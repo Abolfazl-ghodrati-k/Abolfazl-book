@@ -8,7 +8,9 @@ function EachImage({ image }) {
   const [selectedImage, setSelectedImage] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [_ImageApplied, setImageApplied] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  console.log(_ImageApplied);
 
   useEffect(() => {
     const img = new Image();
@@ -22,19 +24,19 @@ function EachImage({ image }) {
   };
 
   function ApplyImage() {
-    setImageApplied(true)
+    setImageApplied(true);
     document.getElementsByClassName(
       "desktop"
-    // @ts-expect-error TS(2339): Property 'style' does not exist on type 'Element'.
+      // @ts-expect-error TS(2339): Property 'style' does not exist on type 'Element'.
     )[0].style.backgroundImage = `url('${selectedImage?.urls.regular}')`;
   }
 
   function SetImage() {
     document.getElementsByClassName(
-        "desktop"
+      "desktop"
       // @ts-expect-error TS(2339): Property 'style' does not exist on type 'Element'.
-      )[0].style.backgroundImage = `url('${selectedImage?.urls.regular}')`;
-    dispatch({type: CHANGE_IMAGE, payload: selectedImage?.urls.regular})
+    )[0].style.backgroundImage = `url('${selectedImage?.urls.regular}')`;
+    dispatch({ type: CHANGE_IMAGE, payload: selectedImage?.urls.regular });
   }
   return (
     <div className="relative w-full h-full">

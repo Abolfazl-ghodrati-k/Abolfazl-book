@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-import App from "./App"
-import { useLocation, useNavigate } from "react-router";
+import App from "./App";
 
 function Portfolio() {
   // const navigate = useNavigate();
@@ -21,9 +19,7 @@ function Portfolio() {
   //   return () => window.removeEventListener("resize", handleResize);
   // }, [navigate, pathname, state?.redirect]);
 
-  return (
-     <App />
-  );
+  return <App />;
 }
 
 export default Portfolio;
